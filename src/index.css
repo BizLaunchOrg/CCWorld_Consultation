@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1152d4;
+  --color-teal-accent: #2dd4bf;
+  --color-gold-accent: #eab308;
+  --color-accent-emerald: #10b981;
+  --color-accent-sand: #fcd34d;
+  --color-background-light: #f8fafc;
+  --color-background-dark: #0f172a;
+  --color-card-dark: #1e293b;
+  --font-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-scroll {
+  display: flex;
+  animation: marquee 40s linear infinite;
+}
+.ticker-scroll span {
+  flex-shrink: 0;
+}
+
+.ticker-scroll {
+  display: flex;
+  animation: marquee 40s linear infinite;
+}
+.ticker-scroll span {
+  flex-shrink: 0;
+}
+
+@layer base {
+  body {
+    @apply bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 selection:bg-primary/30;
+  }
+}
+
+.mesh-gradient {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+}
+
+.grid-overlay {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
