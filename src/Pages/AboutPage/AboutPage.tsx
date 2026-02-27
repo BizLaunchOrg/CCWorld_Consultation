@@ -30,29 +30,6 @@ const approachSteps = [
   { num: '04', title: 'Evolution', desc: 'Continuous monitoring and optimization for emerging regulatory shifts.' },
 ];
 
-const teamMembers = [
-  {
-    name: 'Arthur Sterling',
-    role: 'Managing Partner, Ex-IMF Auditor',
-    bio: 'Over 20 years of experience in cross-border regulatory frameworks and policy development.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuChjehcrObGEOgfAiDehvrpouIpf2UTu-hFTnMTuSiffxV8eOzxG2XMrzc9nNbVctshCtz-UbDs6Hg8UysABfRYlT3OP0WsCdkd2l0EePZtODsgzX8cFgSMZkWdqOJERq-mBaqu6wKSornyCYSdbNOWK3cVfjBmJAB4ppc5izz64jOIrWzB9-f6tuZzYWGTalWOk3i9QufpzvoAWCZ8eFbV-ChI215xGvU1OLW8MY16FxxJLEHhfOSGz7JwhTA7x0ocReCUoabMTQ',
-    alt: 'Professional headshot of male executive in dark suit',
-  },
-  {
-    name: 'Elena Vance',
-    role: 'Director of Compliance Strategy',
-    bio: 'Lead consultant for top-tier fintechs specializing in digital asset compliance and AML protocols.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDNmRAarvvZru7fsXnizj_L0n_XV0eq0WXzWTWGtvdNVOBuaHl_yJepFFqdpgpewdsu9dQGjLB-WhTrKjA01OZKzp9Owe9cVkvz59o7Ptvx6fLKSe7L32kqGfGwXAXlFxvKX_KMHVHuDKCtv9Q1sOG4QGV4pqyJUwgqhIScZTe8RSU6gEh4bzYUOG0Z6vJSWb4WR1aTnt7-rKziGUJ5adS-IRQaMGFkpgBPmx58O1R75RjPwKrbJYFanzhlYKDZNEu1PL9Dld6QdQ',
-    alt: 'Professional headshot of female executive with confident expression',
-  },
-  {
-    name: 'Marcus Thorne',
-    role: 'Head of Regulatory Relations',
-    bio: 'Former senior advisor at the Central Bank with a focus on IMTO licensing and institutional oversight.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAX5n_y0iKZgM-yOl076_Dl-hdtDUr93pOaM3roNDwd8LQ17Ide2maVZEKgcnpIipx-yXxWmGdMILdwYUKDwgi8nT2OdUQHXmd5-gVFaJ_Nd2so2saP_heLOea4tmR0fZsFgqMFzIL3MMZ-ltdV_9ljvULXdr-lAzhmbyXNhwJBSYvkCSFtP33HWDKiU8v29sreyRLMhs7Ep3X7lbh0DqErH2eJHIlcRVwabbfwCEU49h3SGKW8zURu9cMZiLwyimWT0dQIfdo4-g',
-    alt: 'Professional headshot of male executive with glasses in modern office',
-  },
-];
 
 export function AboutPage() {
   const scrollToTeam = () => {
