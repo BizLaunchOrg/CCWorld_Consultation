@@ -265,8 +265,8 @@ export function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 px-6 bg-primary">
-        <div className="max-w-4xl mx-auto text-center space-y-10">
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto rounded-3xl bg-primary py-24 px-8 text-center space-y-10">
           <h2 className="text-4xl lg:text-6xl font-black text-white leading-tight">
             Ready to build a world-class compliance department?
           </h2>
