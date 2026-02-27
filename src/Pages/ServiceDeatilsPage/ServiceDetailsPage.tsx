@@ -8,8 +8,8 @@ export function ServiceDetailsPage() {
   if (!service) {
     return (
       <main className="max-w-7xl mx-auto px-6 py-24 pt-32 text-center">
-        <h1 className="text-2xl font-bold text-white mb-4">Service not found</h1>
-        <p className="text-slate-400 mb-8">The service you’re looking for doesn’t exist or the link may be wrong.</p>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Service not found</h1>
+        <p className="text-slate-600 dark:text-slate-400 mb-8">The service you’re looking for doesn’t exist or the link may be wrong.</p>
         <Link
           to="/services"
           className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90"
@@ -24,7 +24,7 @@ export function ServiceDetailsPage() {
     <main className="max-w-7xl mx-auto px-6 py-12 pt-24">
       {/* Hero */}
       <div className="relative w-full h-[320px] sm:h-[400px] rounded-3xl overflow-hidden mb-12">
-        <div className="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/60 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-50/95 dark:from-background-dark via-slate-100/80 dark:via-background-dark/60 to-transparent z-10" />
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -41,10 +41,10 @@ export function ServiceDetailsPage() {
               {service.duration}
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4">
             {service.title}
           </h1>
-          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
             {service.tagline}
           </p>
         </div>
@@ -54,26 +54,26 @@ export function ServiceDetailsPage() {
         {/* Main content */}
         <div className="flex-1 space-y-12">
           <nav className="flex items-center gap-2 text-sm font-medium">
-            <Link to="/" className="text-slate-500 hover:text-primary">Home</Link>
+            <Link to="/" className="text-slate-600 dark:text-slate-500 hover:text-primary">Home</Link>
             <span className="material-symbols-outlined text-xs text-slate-400">chevron_right</span>
-            <Link to="/services" className="text-slate-500 hover:text-primary">Services</Link>
+            <Link to="/services" className="text-slate-600 dark:text-slate-500 hover:text-primary">Services</Link>
             <span className="material-symbols-outlined text-xs text-slate-400">chevron_right</span>
             <span className="text-primary">{service.title}</span>
           </nav>
 
           <section id="overview">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-3 text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
               <span className="text-primary material-symbols-outlined">{service.icon}</span>
               Overview
             </h2>
-            <p className="text-slate-400 leading-loose">{service.summary}</p>
+            <p className="text-slate-600 dark:text-slate-400 leading-loose">{service.summary}</p>
           </section>
 
           <section id="outcomes">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-white">Key outcomes</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-slate-900 dark:text-white">Key outcomes</h2>
             <ul className="space-y-4">
               {service.outcomes.map((o) => (
-                <li key={o} className="flex items-start gap-3 text-slate-300">
+                <li key={o} className="flex items-start gap-3 text-slate-700 dark:text-slate-300">
                   <span className="material-symbols-outlined text-teal-accent shrink-0">check_circle</span>
                   {o}
                 </li>
@@ -82,7 +82,7 @@ export function ServiceDetailsPage() {
           </section>
 
           <section className="pb-12">
-            <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6">
+            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900/40 p-6">
               <div className="flex flex-wrap gap-2">
                 {service.categories.map((c) => (
                   <span
@@ -100,18 +100,18 @@ export function ServiceDetailsPage() {
         {/* Sidebar */}
         <aside className="w-full lg:w-80 shrink-0">
           <div className="sticky top-32 space-y-6">
-            <div className="bg-card-dark border border-slate-800 rounded-3xl p-6">
+            <div className="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-slate-800 rounded-3xl p-6">
               <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">This service</h4>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Duration</span>
-                  <span className="text-white font-medium">{service.duration}</span>
+                  <span className="text-slate-900 dark:text-white font-medium">{service.duration}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Level</span>
-                  <span className="text-white font-medium">{service.level}</span>
+                  <span className="text-slate-900 dark:text-white font-medium">{service.level}</span>
                 </div>
-                <div className="flex justify-between pt-3 border-t border-slate-700">
+                <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
                   <span className="text-slate-500">Amount</span>
                   <span className="text-primary font-bold">{service.amount}</span>
                 </div>

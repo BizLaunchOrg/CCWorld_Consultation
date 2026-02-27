@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import CCWorldLogo from '../assets/CCWorldLogo.png';
 
 const navLinks: { to: string; label: string }[] = [
   { to: '/', label: 'Home' },
@@ -12,13 +13,10 @@ export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-md">
+    <header className="fixed top-0 z-50 w-full border-b border-slate-200 dark:border-white/10 bg-white/90 dark:bg-background-dark/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3">
-          <img src="/logo.png" alt="CC World Consulting" className="h-20 w-20 object-contain" />
-          {/* <h2 className="text-xl font-extrabold tracking-tight">
-            CCWORLD <span className="text-primary">COMPLIANCE</span>
-          </h2> */}
+          <img src={CCWorldLogo} alt="CC World Consulting" className="h-20 w-20 object-contain" />
         </Link>
         <nav className="hidden md:flex items-center gap-10">
           {navLinks.map(({ to, label }) => (
@@ -27,7 +25,7 @@ export function Nav() {
               to={to}
               end={to === '/'}
               className={({ isActive }) =>
-                `text-sm font-semibold transition-colors hover:text-teal-accent ${isActive ? 'text-teal-accent' : ''}`
+                `text-sm font-semibold transition-colors hover:text-teal-accent ${isActive ? 'text-teal-accent' : 'text-slate-800 dark:text-slate-200'}`
               }
             >
               {label}
@@ -44,7 +42,7 @@ export function Nav() {
           <button
             type="button"
             onClick={() => setMobileOpen((o) => !o)}
-            className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+            className="md:hidden text-slate-800 dark:text-white p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
             <span className="material-symbols-outlined">
@@ -56,7 +54,7 @@ export function Nav() {
 
       {/* Mobile dropdown */}
       {mobileOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-background-dark/98 backdrop-blur-md border-b border-white/10 shadow-xl">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-background-dark/98 backdrop-blur-md border-b border-slate-200 dark:border-white/10 shadow-xl">
           <nav className="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-1">
             {navLinks.map(({ to, label }) => (
               <NavLink
@@ -65,7 +63,7 @@ export function Nav() {
                 end={to === '/'}
                 onClick={() => setMobileOpen(false)}
                 className={({ isActive }) =>
-                  `block py-3 px-4 rounded-xl text-sm font-semibold transition-colors ${isActive ? 'bg-primary/20 text-teal-accent' : 'text-slate-200 hover:bg-white/10 hover:text-white'}`
+                  `block py-3 px-4 rounded-xl text-sm font-semibold transition-colors ${isActive ? 'bg-primary/20 text-teal-accent' : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white'}`
                 }
               >
                 {label}

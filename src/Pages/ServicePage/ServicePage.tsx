@@ -215,9 +215,9 @@ export function ServicesPage() {
       case "Advanced":
         return { label: "Advanced", cls: "bg-primary/15 border-primary/25 text-primary" };
       case "Managed":
-        return { label: "Managed", cls: "bg-white/10 border-white/15 text-white" };
+        return { label: "Managed", cls: "bg-slate-200 dark:bg-white/10 border-slate-300 dark:border-white/15 text-slate-800 dark:text-white" };
       default:
-        return { label: "Service", cls: "bg-white/10 border-white/15 text-white" };
+        return { label: "Service", cls: "bg-slate-200 dark:bg-white/10 border-slate-300 dark:border-white/15 text-slate-800 dark:text-white" };
     }
   };
 
@@ -238,14 +238,14 @@ export function ServicesPage() {
               Compliance Consulting Services
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
               Services built for{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-accent to-primary">
                 banks, fintechs & IMTOs
               </span>
             </h1>
 
-            <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+            <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl">
               Choose a service and we’ll build the governance, people, processes, tooling, and reporting you need to become regulator-ready — without killing velocity.
             </p>
 
@@ -272,10 +272,10 @@ export function ServicesPage() {
                 { k: "8–12w", v: "Typical build-out", icon: "schedule" },
                 { k: "Audit-ready", v: "Evidence + reporting", icon: "shield" },
               ].map((x) => (
-                <div key={x.k} className="rounded-2xl border border-white/10 bg-slate-900/40 p-4">
+                <div key={x.k} className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-4 shadow-sm dark:shadow-none">
                   <span className="material-symbols-outlined text-teal-accent mb-2 block">{x.icon}</span>
-                  <div className="text-white font-black text-lg">{x.k}</div>
-                  <div className="text-slate-400 text-xs mt-1">{x.v}</div>
+                  <div className="text-slate-900 dark:text-white font-black text-lg">{x.k}</div>
+                  <div className="text-slate-600 dark:text-slate-400 text-xs mt-1">{x.v}</div>
                 </div>
               ))}
             </div>
@@ -285,13 +285,13 @@ export function ServicesPage() {
           <div className="lg:col-span-5">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-teal-accent to-primary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000" />
-              <div className="relative bg-slate-900/50 border border-white/10 p-7 rounded-2xl backdrop-blur-xl space-y-6">
+              <div className="relative bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 p-7 rounded-2xl backdrop-blur-xl space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="text-xs font-black uppercase tracking-[0.25em] text-slate-400">Service Navigator</div>
+                  <div className="text-xs font-black uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">Service Navigator</div>
                   <div className="text-xs font-black text-teal-accent">LIVE</div>
                 </div>
 
-                <div className="rounded-2xl bg-background-dark border border-white/10 p-5">
+                <div className="rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 p-5">
                   <div className="text-slate-500 text-xs font-black uppercase tracking-widest mb-3">Pick by pillar</div>
                   <div className="flex flex-wrap gap-2">
                     {["Governance", "Policies", "Processes", "Technology", "Monitoring"].map((x) => (
@@ -305,7 +305,7 @@ export function ServicesPage() {
                   </div>
                 </div>
 
-                <div className="rounded-2xl bg-background-dark border border-white/10 p-5">
+                <div className="rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 p-5">
                   <div className="text-slate-500 text-xs font-black uppercase tracking-widest mb-3">Typical outputs</div>
                   <div className="grid grid-cols-2 gap-3">
                     {[
@@ -314,7 +314,7 @@ export function ServicesPage() {
                       { icon: "account_tree", t: "Workflow Maps" },
                       { icon: "monitoring", t: "Dashboards & KPIs" },
                     ].map((x) => (
-                      <div key={x.t} className="flex items-start gap-2 text-slate-300 text-xs">
+                      <div key={x.t} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-xs">
                         <span className="material-symbols-outlined text-teal-accent text-sm">{x.icon}</span>
                         {x.t}
                       </div>
@@ -332,7 +332,7 @@ export function ServicesPage() {
       </section>
 
       {/* Risk Ticker */}
-      <section className="py-10 bg-primary/5 overflow-hidden whitespace-nowrap border-y border-white/5">
+      <section className="py-10 bg-primary/10 dark:bg-primary/5 overflow-hidden whitespace-nowrap border-y border-slate-200 dark:border-white/5">
         <div className={cx("flex items-center gap-12", !prefersReduced && "animate-[marquee_30s_linear_infinite]")}>
           {[...tickerItems, ...tickerItems].map((item, i) => (
             <div key={`${item.text}-${i}`} className={`flex items-center gap-3 font-mono text-sm ${item.color}`}>
@@ -345,7 +345,7 @@ export function ServicesPage() {
 
       {/* Filters */}
       <section className="max-w-7xl mx-auto px-6 pt-14">
-        <div className="rounded-3xl border border-white/10 bg-slate-900/40 p-5 sm:p-6">
+        <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-5 sm:p-6 shadow-sm dark:shadow-none">
           <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
             <div className="flex items-center gap-3">
               <span className="material-symbols-outlined text-teal-accent">tune</span>
@@ -365,7 +365,7 @@ export function ServicesPage() {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search (e.g. AML, IMTO, reporting, dashboards)…"
-                    className="w-full pl-12 pr-4 py-3 rounded-2xl bg-background-dark border border-white/10 text-slate-200 placeholder:text-slate-600 outline-none focus:border-teal-accent/30"
+                    className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-600 outline-none focus:border-teal-accent/30"
                   />
                 </div>
               </div>
@@ -374,10 +374,10 @@ export function ServicesPage() {
                 <select
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
-                  className="w-full py-3 px-4 rounded-2xl bg-background-dark border border-white/10 text-slate-200 outline-none focus:border-teal-accent/30"
+                  className="w-full py-3 px-4 rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 text-slate-900 dark:text-slate-200 outline-none focus:border-teal-accent/30"
                 >
                   {filters.map((f) => (
-                    <option key={f} value={f} className="bg-background-dark">
+                    <option key={f} value={f} className="bg-white dark:bg-background-dark text-slate-900 dark:text-slate-200">
                       {f}
                     </option>
                   ))}
@@ -390,7 +390,7 @@ export function ServicesPage() {
                   setFilter("All");
                   setQuery("");
                 }}
-                className="py-3 px-4 rounded-2xl border border-white/10 text-slate-300 hover:text-white hover:border-teal-accent/25 transition-all font-black"
+                className="py-3 px-4 rounded-2xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white hover:border-teal-accent/25 transition-all font-black"
               >
                 Reset
               </button>
@@ -427,8 +427,8 @@ export function ServicesPage() {
       <section className="max-w-7xl mx-auto px-6 py-14">
         <div className="flex items-end justify-between gap-6 mb-8">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-black text-white">All Services</h2>
-            <p className="text-slate-400 mt-2">
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">All Services</h2>
+            <p className="text-slate-600 dark:text-slate-400 mt-2">
               {filtered.length} service{filtered.length === 1 ? "" : "s"} shown
               {filter !== "All" ? ` • filtered by ${filter}` : ""}.
             </p>
@@ -446,7 +446,7 @@ export function ServicesPage() {
             return (
               <div
                 key={s.slug}
-                className="rounded-3xl border border-white/10 bg-slate-900/40 p-6 hover:border-teal-accent/25 transition-all group"
+                className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-6 hover:border-teal-accent/25 transition-all group shadow-sm dark:shadow-none"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4">
@@ -454,8 +454,8 @@ export function ServicesPage() {
                       <span className="material-symbols-outlined">{s.icon}</span>
                     </span>
                     <div>
-                      <div className="text-white font-black text-lg leading-tight">{s.title}</div>
-                      <div className="text-slate-500 text-xs mt-1">{s.tagline}</div>
+                      <div className="text-slate-900 dark:text-white font-black text-lg leading-tight">{s.title}</div>
+                      <div className="text-slate-600 dark:text-slate-500 text-xs mt-1">{s.tagline}</div>
                     </div>
                   </div>
 
@@ -464,32 +464,32 @@ export function ServicesPage() {
                   </span>
                 </div>
 
-                <p className="text-slate-400 text-sm leading-relaxed mt-5">{s.summary}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5">{s.summary}</p>
 
                 <div className="mt-5 flex flex-wrap gap-2">
                   {s.categories.slice(0, 4).map((c) => (
                     <span
                       key={c}
-                      className="px-3 py-1.5 rounded-full bg-background-dark border border-white/10 text-slate-300 text-[11px] font-black"
+                      className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-background-dark border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 text-[11px] font-black"
                     >
                       {c}
                     </span>
                   ))}
                   {s.categories.length > 4 ? (
-                    <span className="px-3 py-1.5 rounded-full bg-background-dark border border-white/10 text-slate-500 text-[11px] font-black">
+                    <span className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-background-dark border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-500 text-[11px] font-black">
                       +{s.categories.length - 4}
                     </span>
                   ) : null}
                 </div>
 
-                <div className="mt-6 rounded-2xl border border-white/10 bg-background-dark p-4">
+                <div className="mt-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark p-4">
                   <div className="flex items-center justify-between">
-                    <div className="text-slate-500 text-xs font-black uppercase tracking-widest">Typical outputs</div>
-                    <div className="text-slate-500 text-xs font-black">{s.duration}</div>
+                    <div className="text-slate-600 dark:text-slate-500 text-xs font-black uppercase tracking-widest">Typical outputs</div>
+                    <div className="text-slate-600 dark:text-slate-500 text-xs font-black">{s.duration}</div>
                   </div>
                   <div className="mt-3 space-y-2">
                     {s.outcomes.slice(0, 3).map((o) => (
-                      <div key={o} className="flex items-start gap-2 text-slate-300 text-xs">
+                      <div key={o} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-xs">
                         <span className="material-symbols-outlined text-teal-accent text-sm mt-0.5">check</span>
                         {o}
                       </div>
@@ -520,9 +520,9 @@ export function ServicesPage() {
 
         {/* Empty state */}
         {filtered.length === 0 ? (
-          <div className="mt-10 rounded-3xl border border-white/10 bg-slate-900/40 p-10 text-center">
-            <div className="text-white font-black text-xl">No services found</div>
-            <div className="text-slate-400 mt-2">Try a different keyword or switch filters.</div>
+          <div className="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/40 p-10 text-center">
+            <div className="text-slate-900 dark:text-white font-black text-xl">No services found</div>
+            <div className="text-slate-600 dark:text-slate-400 mt-2">Try a different keyword or switch filters.</div>
             <button
               type="button"
               onClick={() => {
@@ -538,11 +538,11 @@ export function ServicesPage() {
       </section>
 
       {/* How we engage (same “3-phase method” vibe) */}
-      <section className="py-20 bg-slate-900/30 border-y border-white/5">
+      <section className="py-20 bg-slate-100 dark:bg-slate-900/30 border-y border-slate-200 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-black text-white">How engagements work</h2>
-            <p className="text-slate-400 mt-3 max-w-3xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">How engagements work</h2>
+            <p className="text-slate-600 dark:text-slate-400 mt-3 max-w-3xl mx-auto">
               A consistent delivery approach across governance, policies, workflows, tooling, reporting, and culture — with auditable outputs at every stage.
             </p>
             <div className="h-1.5 w-24 bg-teal-accent mx-auto mt-7 rounded-full" />
@@ -569,15 +569,15 @@ export function ServicesPage() {
                 text: "Training, testing cadence, dashboards, and regulator-ready evidence packs for sustained compliance.",
               },
             ].map((x) => (
-              <div key={x.n} className="rounded-3xl border border-white/10 bg-background-dark p-7">
+              <div key={x.n} className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-background-dark p-7 shadow-sm dark:shadow-none">
                 <div className="flex items-center gap-4">
                   <span className="size-12 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center text-primary font-black text-lg">
                     {x.n}
                   </span>
                   <span className="material-symbols-outlined text-teal-accent">{x.icon}</span>
                 </div>
-                <div className="text-white font-black text-xl mt-5">{x.title}</div>
-                <p className="text-slate-400 mt-2 leading-relaxed">{x.text}</p>
+                <div className="text-slate-900 dark:text-white font-black text-xl mt-5">{x.title}</div>
+                <p className="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">{x.text}</p>
               </div>
             ))}
           </div>

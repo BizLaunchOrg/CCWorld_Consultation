@@ -16,42 +16,42 @@ export function ConsultationSuccessPage() {
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 text-primary mb-8">
           <span className="material-symbols-outlined text-5xl">check_circle</span>
         </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
           Payment Successful
         </h1>
-        <p className="text-slate-400 text-lg mb-8">
-          Your consultation has been secured. We&apos;ve sent a confirmation to your email.
+        <p className="text-slate-600 dark:text-slate-400 text-lg mb-8">
+          Your consultation has been secured. We've sent a confirmation to your email.
         </p>
 
-        <div className="bg-card-dark border border-slate-800 rounded-2xl p-6 text-left mb-10">
+        <div className="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-left mb-10">
           <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Booking details</h2>
           <dl className="space-y-3 text-sm">
             {state.fullName && (
               <div className="flex justify-between">
                 <dt className="text-slate-500">Booked for</dt>
-                <dd className="text-white font-medium">{state.fullName}</dd>
+                <dd className="text-slate-900 dark:text-white font-medium">{state.fullName}</dd>
               </div>
             )}
             {state.service && (
               <div className="flex justify-between">
                 <dt className="text-slate-500">Service</dt>
-                <dd className="text-white font-medium">{state.service}</dd>
+                <dd className="text-slate-900 dark:text-white font-medium">{state.service}</dd>
               </div>
             )}
             {state.consultationDate && (
               <div className="flex justify-between">
                 <dt className="text-slate-500">Date</dt>
-                <dd className="text-white font-medium">{state.consultationDate}</dd>
+                <dd className="text-slate-900 dark:text-white font-medium">{state.consultationDate}</dd>
               </div>
             )}
             {state.consultationTime && (
               <div className="flex justify-between">
                 <dt className="text-slate-500">Time</dt>
-                <dd className="text-white font-medium">{state.consultationTime}</dd>
+                <dd className="text-slate-900 dark:text-white font-medium">{state.consultationTime}</dd>
               </div>
             )}
             {state.amount && (
-              <div className="flex justify-between pt-3 border-t border-slate-700">
+              <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
                 <dt className="text-slate-500">Amount paid</dt>
                 <dd className="text-primary font-bold">{state.amount}</dd>
               </div>
@@ -62,7 +62,7 @@ export function ConsultationSuccessPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold border border-slate-600 text-slate-300 hover:bg-white/5 hover:text-white transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors"
           >
             Back to Home
           </Link>

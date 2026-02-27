@@ -50,12 +50,12 @@ export function HomePage() {
               </span>
               Next-Gen Compliance Standards
             </div>
-            <h1 className="text-5xl lg:text-7xl font-black leading-[1.1] tracking-tighter text-white">
+            <h1 className="text-5xl lg:text-7xl font-black leading-[1.1] tracking-tighter text-slate-900 dark:text-white">
               Equipping and Building an{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-accent to-primary">Effective</span>{' '}
               Compliance Department
             </h1>
-            <p className="text-lg lg:text-xl text-slate-400 max-w-2xl leading-relaxed">
+            <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
               Cinematic compliance consultancy for banks, fintechs, and IMTOs focusing on building and operationalizing excellence through rigorous frameworks and automated intelligence.
             </p>
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
@@ -76,7 +76,7 @@ export function HomePage() {
           <div className="lg:w-1/3 hidden lg:block">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-teal-accent to-primary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000" />
-              <div className="relative bg-slate-900/50 border border-white/10 p-8 rounded-2xl backdrop-blur-xl">
+              <div className="relative bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 p-8 rounded-2xl backdrop-blur-xl">
                 <div className="space-y-6">
                   <div className="h-2 w-24 bg-teal-accent/30 rounded-full" />
                   <div className="flex justify-between items-end h-32 gap-2">
@@ -97,9 +97,9 @@ export function HomePage() {
       </section>
 
       {/* Trust Bar */}
-      <section className="bg-background-dark border-y border-white/5 py-12">
+      <section className="bg-slate-100 dark:bg-background-dark border-y border-slate-200 dark:border-white/5 py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-slate-500 text-xs font-bold uppercase tracking-[0.3em] mb-10">
+          <p className="text-center text-slate-600 dark:text-slate-500 text-xs font-bold uppercase tracking-[0.3em] mb-10">
             Trusted by Global Financial Institutions
           </p>
           <div className="flex flex-wrap justify-center items-center gap-12 lg:gap-20 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
@@ -111,7 +111,7 @@ export function HomePage() {
       </section>
 
       {/* Risk Ticker */}
-      <section className="py-10 bg-primary/5 overflow-hidden whitespace-nowrap">
+      <section className="py-10 bg-primary/10 dark:bg-primary/5 overflow-hidden whitespace-nowrap border-y border-slate-200 dark:border-transparent">
         <div className="flex animate-[marquee_30s_linear_infinite] items-center gap-12">
           {[...tickerItems, ...tickerItems].map((item, i) => (
             <div key={`${item.text}-${i}`} className={`flex items-center gap-3 font-mono text-sm ${item.color}`}>
@@ -125,95 +125,95 @@ export function HomePage() {
       {/* Core Deliverables */}
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="mb-16 text-center lg:text-left">
-          <h2 className="text-3xl lg:text-5xl font-extrabold text-white mb-6">Core Deliverables</h2>
-          <p className="text-slate-400 max-w-2xl">We don&apos;t just advise; we build the infrastructure required to scale securely.</p>
+          <h2 className="text-3xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-6">Core Deliverables</h2>
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl">We don&apos;t just advise; we build the infrastructure required to scale securely.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {deliverables.map(({ icon, title, desc }) => (
             <div
               key={title}
-              className="p-6 bg-slate-900/40 border border-white/5 rounded-xl hover:border-teal-accent/30 transition-all group"
+              className="p-6 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-xl hover:border-teal-accent/30 transition-all group shadow-sm dark:shadow-none"
             >
               <span className="material-symbols-outlined text-teal-accent mb-4 group-hover:scale-110 transition-transform block">
                 {icon}
               </span>
-              <h3 className="font-bold text-white mb-2">{title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">{desc}</p>
+              <h3 className="font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-500 leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* The Framework */}
-      <section className="py-24 bg-slate-900/30">
+      <section className="py-24 bg-slate-100 dark:bg-slate-900/30">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-extrabold text-white">The Framework</h2>
+            <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white">The Framework</h2>
             <div className="h-1.5 w-24 bg-teal-accent mx-auto mt-6 rounded-full" />
           </div>
           <div className="space-y-4">
-            <div className="border border-white/10 rounded-2xl bg-background-dark p-6 cursor-pointer hover:bg-slate-800 transition-all">
+            <div className="border border-slate-200 dark:border-white/10 rounded-2xl bg-white dark:bg-background-dark p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-6">
                   <span className="size-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
                     <span className="material-symbols-outlined">architecture</span>
                   </span>
                   <div>
-                    <h3 className="text-xl font-bold text-white">Architectural Baseline</h3>
-                    <p className="text-slate-400 text-sm">Structural assessment and risk appetite definition.</p>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">Architectural Baseline</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">Structural assessment and risk appetite definition.</p>
                   </div>
                 </div>
-                <span className="material-symbols-outlined text-slate-600">expand_more</span>
+                <span className="material-symbols-outlined text-slate-500 dark:text-slate-600">expand_more</span>
               </div>
             </div>
-            <div className="border border-white/10 rounded-2xl bg-background-dark p-6 cursor-pointer border-l-4 border-l-teal-accent">
+            <div className="border border-slate-200 dark:border-white/10 rounded-2xl bg-white dark:bg-background-dark p-6 cursor-pointer border-l-4 border-l-teal-accent">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-6">
                   <span className="size-12 rounded-xl bg-teal-accent/20 flex items-center justify-center text-teal-accent">
                     <span className="material-symbols-outlined">settings_suggest</span>
                   </span>
                   <div>
-                    <h3 className="text-xl font-bold text-white">Operationalization Phase</h3>
-                    <p className="text-slate-400 text-sm">Embedding controls into live transaction workflows.</p>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">Operationalization Phase</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">Embedding controls into live transaction workflows.</p>
                   </div>
                 </div>
                 <span className="material-symbols-outlined text-teal-accent">expand_less</span>
               </div>
-              <div className="mt-6 pt-6 border-t border-white/5 grid grid-cols-2 gap-8">
+              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-white/5 grid grid-cols-2 gap-8">
                 <ul className="space-y-3">
-                  <li className="flex items-center gap-2 text-sm text-slate-300">
+                  <li className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                     <span className="material-symbols-outlined text-teal-accent text-sm">check_circle</span>
                     API Integration
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-slate-300">
+                  <li className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                     <span className="material-symbols-outlined text-teal-accent text-sm">check_circle</span>
                     Manual Override Workflow
                   </li>
                 </ul>
                 <ul className="space-y-3">
-                  <li className="flex items-center gap-2 text-sm text-slate-300">
+                  <li className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                     <span className="material-symbols-outlined text-teal-accent text-sm">check_circle</span>
                     Real-time Screening
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-slate-300">
+                  <li className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                     <span className="material-symbols-outlined text-teal-accent text-sm">check_circle</span>
                     SAR Generation
                   </li>
                 </ul>
               </div>
             </div>
-            <div className="border border-white/10 rounded-2xl bg-background-dark p-6 cursor-pointer hover:bg-slate-800 transition-all">
+            <div className="border border-slate-200 dark:border-white/10 rounded-2xl bg-white dark:bg-background-dark p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-6">
                   <span className="size-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
                     <span className="material-symbols-outlined">verified_user</span>
                   </span>
                   <div>
-                    <h3 className="text-xl font-bold text-white">Continuous Assurance</h3>
-                    <p className="text-slate-400 text-sm">Independent audits and iterative system tuning.</p>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">Continuous Assurance</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">Independent audits and iterative system tuning.</p>
                   </div>
                 </div>
-                <span className="material-symbols-outlined text-slate-600">expand_more</span>
+                <span className="material-symbols-outlined text-slate-500 dark:text-slate-600">expand_more</span>
               </div>
             </div>
           </div>
@@ -224,23 +224,23 @@ export function HomePage() {
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div className="sticky top-32">
-            <h2 className="text-5xl font-black text-white leading-tight mb-8">
+            <h2 className="text-5xl font-black text-slate-900 dark:text-white leading-tight mb-8">
               The 3-Phase <br />Signature Method
             </h2>
-            <p className="text-slate-400 text-lg leading-relaxed mb-10">
+            <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-10">
               Our proprietary engagement model ensures your compliance department isn&apos;t just a cost center, but a strategic advantage.
             </p>
             <div className="space-y-4">
-              <div className="flex items-center gap-4 text-white font-bold">
-                <span className="size-10 rounded-full bg-primary flex items-center justify-center">1</span>
+              <div className="flex items-center gap-4 text-slate-900 dark:text-white font-bold">
+                <span className="size-10 rounded-full bg-primary flex items-center justify-center text-white">1</span>
                 Phase I: Discovery & GAP
               </div>
-              <div className="flex items-center gap-4 text-slate-500 font-bold">
-                <span className="size-10 rounded-full border border-white/20 flex items-center justify-center">2</span>
+              <div className="flex items-center gap-4 text-slate-600 dark:text-slate-500 font-bold">
+                <span className="size-10 rounded-full border-2 border-slate-300 dark:border-white/20 flex items-center justify-center">2</span>
                 Phase II: Integration
               </div>
-              <div className="flex items-center gap-4 text-slate-500 font-bold">
-                <span className="size-10 rounded-full border border-white/20 flex items-center justify-center">3</span>
+              <div className="flex items-center gap-4 text-slate-600 dark:text-slate-500 font-bold">
+                <span className="size-10 rounded-full border-2 border-slate-300 dark:border-white/20 flex items-center justify-center">3</span>
                 Phase III: Operational Handover
               </div>
             </div>
@@ -250,13 +250,13 @@ export function HomePage() {
               <div key={title} className="relative pl-12 border-l-2 border-primary/30">
                 <div
                   className={`absolute -left-[11px] top-0 size-5 rounded-full border-2 border-primary ${
-                    active ? 'bg-primary shadow-[0_0_15px_rgba(17,82,212,0.8)]' : 'bg-slate-800'
+                    active ? 'bg-primary shadow-[0_0_15px_rgba(17,82,212,0.8)]' : 'bg-slate-200 dark:bg-slate-800'
                   }`}
                 />
-                <h3 className="text-3xl font-bold text-white mb-6">{title}</h3>
-                <div className="bg-slate-900/50 p-8 rounded-2xl border border-white/5 space-y-6">
+                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">{title}</h3>
+                <div className="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-2xl border border-slate-200 dark:border-white/5 space-y-6">
                   <img className="w-full rounded-lg" alt={alt} src={src} />
-                  <p className="text-slate-400">{text}</p>
+                  <p className="text-slate-600 dark:text-slate-400">{text}</p>
                 </div>
               </div>
             ))}

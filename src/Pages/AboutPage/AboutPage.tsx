@@ -51,7 +51,7 @@ export function AboutPage() {
               The Gold Standard in Financial Compliance
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
-              Empowering banks, fintechs, and IMTOs with ccworld compliance frameworks built on integrity and evidence.
+              Empowering banks, fintechs, and IMTOs with CC World Consulting frameworks built on integrity and evidence.
               We don&apos;t just meet standards; we set them.
             </p>
             <div className="flex gap-4">
@@ -105,7 +105,7 @@ export function AboutPage() {
                 <div className="size-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all">
                   <span className="material-symbols-outlined text-3xl">{icon}</span>
                 </div>
-                <h3 className="text-xl font-bold mb-3 dark:text-white">{title}</h3>
+                <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">{title}</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
@@ -116,7 +116,7 @@ export function AboutPage() {
       {/* Strategic Approach */}
       <section className="py-24 overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-16 dark:text-white">Our Strategic Approach</h2>
+          <h2 className="text-3xl font-bold text-center mb-16 text-slate-900 dark:text-white">Our Strategic Approach</h2>
           <div className="relative">
             <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-800 hidden lg:block" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
@@ -124,12 +124,12 @@ export function AboutPage() {
                 <div key={num} className="flex flex-col items-center text-center group">
                   <div
                     className={`size-16 rounded-full flex items-center justify-center font-bold text-xl mb-6 shadow-lg outline outline-8 outline-background-light dark:outline-background-dark transition-colors ${
-                      i === 0 ? 'bg-primary text-white shadow-primary/30' : 'bg-slate-800 text-white group-hover:bg-primary'
+                      i === 0 ? 'bg-primary text-white shadow-primary/30' : 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white group-hover:bg-primary group-hover:text-white'
                     }`}
                   >
                     {num}
                   </div>
-                  <h4 className="font-bold text-lg mb-2 dark:text-white">{title}</h4>
+                  <h4 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">{title}</h4>
                   <p className="text-slate-500 dark:text-slate-400 text-sm">{desc}</p>
                 </div>
               ))}

@@ -97,7 +97,7 @@ export function InsightsPage() {
           {/* Main Content */}
           <div className="flex-1">
             <div className="mb-12">
-              <h1 className="text-5xl font-extrabold mb-4 tracking-tight leading-tight">
+              <h1 className="text-5xl font-extrabold mb-4 tracking-tight leading-tight text-slate-900 dark:text-white">
                 Insights & <br />
                 <span className="text-primary italic font-serif">Strategic Intelligence</span>
               </h1>
@@ -170,7 +170,7 @@ export function InsightsPage() {
                       </span>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors text-slate-900 dark:text-white">
                     {article.title}
                   </h3>
                   <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">
@@ -200,16 +200,16 @@ export function InsightsPage() {
           {/* Sidebar */}
           <aside className="w-full lg:w-80 shrink-0 space-y-8">
             {/* Subscribe */}
-            <div className="bg-slate-900 rounded-2xl p-8 text-white relative overflow-hidden border border-slate-800">
+            <div className="bg-slate-100 dark:bg-slate-900 rounded-2xl p-8 text-slate-900 dark:text-white relative overflow-hidden border border-slate-200 dark:border-slate-800">
               <div className="absolute top-0 right-0 p-4 opacity-10">
                 <span className="material-symbols-outlined text-6xl">mail</span>
               </div>
               <h4 className="text-xl font-bold mb-4 relative z-10">Compliance Brief</h4>
               {subscribed ? (
-                <p className="text-slate-300 text-sm relative z-10">Thanks for subscribing. Check your inbox for the next digest.</p>
+                <p className="text-slate-600 dark:text-slate-300 text-sm relative z-10">Thanks for subscribing. Check your inbox for the next digest.</p>
               ) : (
                 <>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-6 relative z-10">
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 relative z-10">
                     Get our weekly digest of regulatory changes and expert analysis delivered directly to your inbox.
                   </p>
                   <form onSubmit={handleSubscribe} className="space-y-3 relative z-10">
@@ -218,7 +218,7 @@ export function InsightsPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Email address"
-                      className="w-full bg-slate-800 border border-slate-700 rounded-lg text-sm focus:ring-primary focus:border-primary px-4 py-3 text-white placeholder:text-slate-500"
+                      className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary focus:border-primary px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-500"
                       required
                     />
                     <button
@@ -263,16 +263,16 @@ export function InsightsPage() {
 
             {/* Trending */}
             <div>
-              <h4 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
+              <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-2">
                 Trending
                 <span className="h-px bg-slate-200 dark:bg-slate-800 flex-1" />
               </h4>
               <ul className="space-y-4">
                 {TRENDING.map(({ num, title, reads }) => (
                   <li key={num} className="flex items-start gap-4 group cursor-pointer">
-                    <span className="text-2xl font-black text-slate-200 dark:text-slate-800">{num}</span>
+                    <span className="text-2xl font-black text-slate-400 dark:text-slate-800">{num}</span>
                     <div>
-                      <h5 className="text-sm font-bold leading-snug group-hover:text-primary transition-colors">
+                      <h5 className="text-sm font-bold leading-snug group-hover:text-primary transition-colors text-slate-900 dark:text-white">
                         {title}
                       </h5>
                       <p className="text-xs text-slate-500 mt-1">{reads}</p>
