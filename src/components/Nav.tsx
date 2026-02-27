@@ -1,6 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import CCWorldLogo from '../assets/CCWorldLogo.png';
 
 const navLinks: { to: string; label: string }[] = [
   { to: '/', label: 'Home' },
@@ -16,7 +15,7 @@ export function Nav() {
     <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-background-dark/95 dark:bg-background-dark/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3">
-          <img src={CCWorldLogo} alt="CC World Consulting" className="h-20 w-20 object-contain" />
+          <img src="/logo.png" alt="CC World Consulting" className="h-20 w-20 object-contain" />
         </Link>
         <nav className="hidden md:flex items-center gap-10">
           {navLinks.map(({ to, label }) => (

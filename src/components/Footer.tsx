@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import CCWorldLogo from '../assets/CCWorldLogo.png';
 
 const solutionsLinks = [
   { to: '#', label: 'Fintech Banking' },
@@ -20,7 +19,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-2 space-y-6">
           <div className="flex items-center gap-3">
-            <img src={CCWorldLogo} alt="CC World Consulting" className="h-10 w-10 object-contain" />
+            <img src="/logo.png" alt="CC World Consulting" className="h-10 w-10 object-contain" />
             <h2 className="text-xl font-extrabold tracking-tight text-white">
               CC World <span className="text-primary">Consulting</span>
             </h2>
