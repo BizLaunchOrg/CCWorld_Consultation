@@ -24,7 +24,7 @@ export function Footer() {
               CC World <span className="text-primary">Consulting</span>
             </h2>
           </div>
-          <p className="text-slate-400 max-w-sm">
+          <p className="text-slate-400 max-w-sm">t
             Strategic compliance advisory for the Nigerian financial landscape. Lagos-based, serving banks, fintechs, and IMTOs.
           </p>
         </div>

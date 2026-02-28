@@ -98,7 +98,7 @@ export function ConsultationPage() {
     region: string;
     gap?: string;
   }) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (import.meta.env.DEV) {
       console.log('Consultation request payload:', payload);
     }
     return Promise.resolve({ success: true });
