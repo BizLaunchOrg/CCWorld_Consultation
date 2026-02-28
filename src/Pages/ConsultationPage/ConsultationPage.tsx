@@ -1,7 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
-const CONSULTATION_FEE = 'NGN 450,000';
+import { useState, useMemo, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const ORG_TYPES = [
   { value: 'bank', label: 'Bank', desc: 'Established commercial banking', icon: 'account_balance' },
@@ -41,8 +39,9 @@ function getServiceLabel(orgType: string, customOrg?: string): string {
 }
 
 export function ConsultationPage() {
-  const navigate = useNavigate();
   const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const today = useMemo(() => {
     const t = new Date();
@@ -62,19 +61,13 @@ export function ConsultationPage() {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>('09:00 AM');
 
-  // Step 2 – personal details (no picture)
+  // Step 2 – personal details
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
-
-  // Step 3 – payment
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'transfer'>('card');
-  const [cardName, setCardName] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvv, setCardCvv] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleStep1 = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,24 +79,101 @@ export function ConsultationPage() {
     setStep(3);
   };
 
-  const handlePayment = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate('/consultation/success', {
-      state: {
-        fullName: fullName || undefined,
-        consultationDate: consultationDate || undefined,
-        consultationTime: consultationTimeSlot || undefined,
-        amount: CONSULTATION_FEE,
-        service: getServiceLabel(orgType, customOrgName),
-      },
-    });
-  };
-
   const consultationDate =
     selectedYear != null && selectedMonth != null && selectedDay != null
       ? `${MONTH_NAMES[selectedMonth - 1]} ${selectedDay}, ${selectedYear}`
       : '';
   const consultationTimeSlot = selectedTime ? `${selectedTime} (WAT)` : '';
+
+  async function submitConsultationRequest(payload: {
+    fullName: string;
+    email: string;
+    phone: string;
+    companyName?: string;
+    jobTitle?: string;
+    service: string;
+    consultationDate?: string;
+    consultationTime?: string;
+    teamSize: string;
+    region: string;
+    gap?: string;
+  }) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Consultation request payload:', payload);
+    }
+    return Promise.resolve({ success: true });
+  }
+
+  function resetForm() {
+    setStep(1);
+    setFullName('');
+    setEmail('');
+    setPhone('');
+    setCompanyName('');
+    setJobTitle('');
+    setCustomOrgName('');
+    setOrgType('bank');
+    setTeamSize(TEAM_SIZES[0]);
+    setRegion(REGIONS[0]);
+    setGap('');
+    setSelectedYear(null);
+    setSelectedMonth(null);
+    setSelectedDay(null);
+    setSelectedTime('09:00 AM');
+    setDisplayYear(today.year);
+    setDisplayMonth(today.month);
+  }
+
+  const handleSubmitRequest = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!fullName?.trim() || !email?.trim() || !phone?.trim()) return;
+    setSubmitting(true);
+    try {
+      await submitConsultationRequest({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        companyName: companyName.trim() || undefined,
+        jobTitle: jobTitle.trim() || undefined,
+        service: getServiceLabel(orgType, customOrgName),
+        consultationDate: consultationDate || undefined,
+        consultationTime: consultationTimeSlot || undefined,
+        teamSize,
+        region,
+        gap: gap.trim() || undefined,
+      });
+      setSuccessModalOpen(true);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!successModalOpen) return;
+    const el = modalRef.current;
+    if (!el) return;
+    const focusables = el.querySelectorAll<HTMLElement>('button, [href]');
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    first?.focus();
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') setSuccessModalOpen(false);
+      if (e.key !== 'Tab') return;
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [successModalOpen]);
 
   return (
     <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 pt-24">
@@ -362,6 +432,7 @@ export function ConsultationPage() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+234 800 000 0000"
+                    required
                     className="w-full h-12 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent px-4 text-slate-900 dark:text-white"
                   />
                 </div>
@@ -397,7 +468,7 @@ export function ConsultationPage() {
                     type="submit"
                     className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
                   >
-                    Continue to Confirm & Pay
+                    Request Consultation
                     <span className="material-symbols-outlined">arrow_forward</span>
                   </button>
                 </div>
@@ -407,24 +478,22 @@ export function ConsultationPage() {
         </>
       )}
 
-      {/* Step 3: Confirm & Secure Session – show their details, only Lagos */}
+      {/* Step 3: Review & Submit (no payment) */}
       {step === 3 && (
         <div className="px-0 lg:px-4 py-8 lg:py-12">
           <div className="max-w-[1100px] mx-auto">
-            {/* Progress */}
             <div className="mb-12">
               <div className="flex gap-6 justify-between items-end mb-3 flex-wrap">
                 <div>
                   <h1 className="text-slate-900 dark:text-white text-3xl lg:text-4xl font-extrabold tracking-tight">
-                    Confirm & Secure Session
+                    Review & Submit
                   </h1>
                   <p className="text-slate-500 dark:text-slate-400 mt-2 text-base">
-                    Review your consultation details and complete the secure payment.
+                    Review your consultation request and submit. We&apos;ll get back to you shortly.
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-primary text-sm font-bold uppercase tracking-wider">Step 3 of 3</p>
-                  <p className="text-slate-900 dark:text-white text-lg font-bold">100% Complete</p>
                 </div>
               </div>
               <div className="h-2.5 w-full rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
@@ -433,14 +502,12 @@ export function ConsultationPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-              {/* Left: Summary – their details */}
               <div className="lg:col-span-5 space-y-8">
                 <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
                   <h3 className="text-slate-900 dark:text-white text-lg font-bold mb-6 flex items-center gap-2">
                     <span className="material-symbols-outlined text-primary">event_available</span>
-                    Consultation Summary
+                    Request Summary
                   </h3>
-                  {/* Consultant (no client picture) */}
                   <div className="flex items-center gap-4 mb-6 p-4 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700">
                     <div
                       className="size-14 rounded-lg bg-cover bg-center shrink-0"
@@ -457,7 +524,7 @@ export function ConsultationPage() {
                   </div>
                   <div className="space-y-4">
                     <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
-                      <span className="text-slate-500 dark:text-slate-400 text-sm">Booking for</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-sm">Request for</span>
                       <span className="text-slate-900 dark:text-white font-medium text-right">{fullName || '—'}</span>
                     </div>
                     {companyName && (
@@ -466,30 +533,39 @@ export function ConsultationPage() {
                         <span className="text-slate-900 dark:text-white font-medium text-right">{companyName}</span>
                       </div>
                     )}
+                    {jobTitle && (
+                      <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
+                        <span className="text-slate-500 dark:text-slate-400 text-sm">Job Title</span>
+                        <span className="text-slate-900 dark:text-white font-medium text-right">{jobTitle}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
                       <span className="text-slate-500 dark:text-slate-400 text-sm">Service</span>
                       <span className="text-slate-900 dark:text-white font-medium text-right">{getServiceLabel(orgType, customOrgName)}</span>
                     </div>
-                    <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
-                      <span className="text-slate-500 dark:text-slate-400 text-sm">Date & Time</span>
-                      <span className="text-slate-900 dark:text-white font-medium text-right">
-                        {consultationDate}
-                        <br />
-                        {consultationTimeSlot} · 60 Minutes
-                      </span>
-                    </div>
+                    {consultationDate && (
+                      <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
+                        <span className="text-slate-500 dark:text-slate-400 text-sm">Preferred date</span>
+                        <span className="text-slate-900 dark:text-white font-medium text-right">{consultationDate}</span>
+                      </div>
+                    )}
+                    {consultationTimeSlot && (
+                      <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
+                        <span className="text-slate-500 dark:text-slate-400 text-sm">Preferred time</span>
+                        <span className="text-slate-900 dark:text-white font-medium text-right">{consultationTimeSlot}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
                       <span className="text-slate-500 dark:text-slate-400 text-sm">Duration</span>
                       <span className="text-slate-900 dark:text-white font-medium text-right">60 Minutes</span>
                     </div>
-                    <div className="flex justify-between items-start pt-3">
-                      <span className="text-slate-500 dark:text-slate-400 text-sm font-bold">Session Fee</span>
-                      <span className="text-primary text-xl font-extrabold tracking-tight">{CONSULTATION_FEE}</span>
+                    <div className="flex justify-between items-start py-3">
+                      <span className="text-slate-500 dark:text-slate-400 text-sm">Contact</span>
+                      <span className="text-slate-900 dark:text-white font-medium text-right text-sm">{email}<br />{phone}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* What happens next */}
                 <div className="p-6">
                   <h3 className="text-slate-900 dark:text-white text-lg font-bold mb-6">What happens next?</h3>
                   <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-primary before:via-slate-300 dark:before:via-slate-700 before:to-transparent">
@@ -498,8 +574,8 @@ export function ConsultationPage() {
                         <span className="material-symbols-outlined text-lg">mail</span>
                       </div>
                       <div>
-                        <p className="text-slate-900 dark:text-white font-bold text-sm">Instant Confirmation</p>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Receive an email at {email || 'your email'} with your session details and receipt.</p>
+                        <p className="text-slate-900 dark:text-white font-bold text-sm">Instant confirmation</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">We&apos;ll send an email to {email || 'your email'} with your request details.</p>
                       </div>
                     </div>
                     <div className="relative flex items-center gap-6">
@@ -507,8 +583,8 @@ export function ConsultationPage() {
                         <span className="material-symbols-outlined text-lg">assignment</span>
                       </div>
                       <div>
-                        <p className="text-slate-900 dark:text-white font-bold text-sm">Pre-consultation Brief</p>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">We&apos;ll send a brief questionnaire to maximize our time together.</p>
+                        <p className="text-slate-900 dark:text-white font-bold text-sm">Pre-consultation brief</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">We&apos;ll send a short questionnaire to make the most of our time together.</p>
                       </div>
                     </div>
                     <div className="relative flex items-center gap-6">
@@ -516,139 +592,92 @@ export function ConsultationPage() {
                         <span className="material-symbols-outlined text-lg">videocam</span>
                       </div>
                       <div>
-                        <p className="text-slate-900 dark:text-white font-bold text-sm">Zoom Link & Calendar</p>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Calendar invite with a secure meeting link will be shared.</p>
+                        <p className="text-slate-900 dark:text-white font-bold text-sm">Meeting link & calendar</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">A calendar invite with a meeting link (Zoom or Google Meet) will be shared once we confirm.</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Right: Payment */}
               <div className="lg:col-span-7">
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-xl">
-                  <div className="flex items-center justify-between mb-8">
-                    <h3 className="text-slate-900 dark:text-white text-xl font-bold">Secure Payment</h3>
-                    <div className="flex gap-2">
-                      <span className="material-symbols-outlined text-slate-400">lock</span>
-                      <span className="text-slate-400 text-xs font-medium uppercase mt-1">SSL Encrypted</span>
-                    </div>
-                  </div>
-                  <form onSubmit={handlePayment} className="space-y-6">
-                    <div className="grid grid-cols-2 gap-4">
-                      <label
-                        className={`relative flex flex-col p-4 rounded-xl cursor-pointer group border-2 transition-colors ${
-                          paymentMethod === 'card' ? 'border-primary bg-primary/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
-                        }`}
+                  <form onSubmit={handleSubmitRequest} className="space-y-6">
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                      Confirm your details above, then submit your request. Our team will contact you via email or phone to confirm the consultation.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setStep(2)}
+                        className="px-6 py-3 border border-slate-200 dark:border-slate-700 rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300"
                       >
-                        <input
-                          type="radio"
-                          name="payment"
-                          checked={paymentMethod === 'card'}
-                          onChange={() => setPaymentMethod('card')}
-                          className="absolute opacity-0"
-                        />
-                        <span className={`material-symbols-outlined mb-2 ${paymentMethod === 'card' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>credit_card</span>
-                        <span className="text-slate-900 dark:text-white font-bold text-sm">Card Payment</span>
-                        <span className="text-slate-500 text-[10px] mt-1">Visa, Mastercard, AMEX</span>
-                      </label>
-                      <label
-                        className={`relative flex flex-col p-4 rounded-xl cursor-pointer group border-2 transition-all ${
-                          paymentMethod === 'transfer' ? 'border-primary bg-primary/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="payment"
-                          checked={paymentMethod === 'transfer'}
-                          onChange={() => setPaymentMethod('transfer')}
-                          className="absolute opacity-0"
-                        />
-                        <span className={`material-symbols-outlined mb-2 ${paymentMethod === 'transfer' ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>account_balance</span>
-                        <span className="text-slate-900 dark:text-white font-bold text-sm">Bank Transfer</span>
-                        <span className="text-slate-500 text-[10px] mt-1">Bank Transfer</span>
-                      </label>
-                    </div>
-
-                    {paymentMethod === 'card' && (
-                      <div className="space-y-4 pt-4">
-                        <div className="space-y-2">
-                          <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Cardholder Name</label>
-                          <input
-                            type="text"
-                            value={cardName}
-                            onChange={(e) => setCardName(e.target.value)}
-                            placeholder="Johnathan Doe"
-                            className="w-full h-12 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-white px-4"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Card Number</label>
-                          <input
-                            type="text"
-                            value={cardNumber}
-                            onChange={(e) => setCardNumber(e.target.value)}
-                            placeholder="0000 0000 0000 0000"
-                            className="w-full h-12 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-white px-4"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Expiry Date</label>
-                            <input
-                              type="text"
-                              value={cardExpiry}
-                              onChange={(e) => setCardExpiry(e.target.value)}
-                              placeholder="MM / YY"
-                              className="w-full h-12 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-white px-4"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">CVV</label>
-                            <input
-                              type="password"
-                              value={cardCvv}
-                              onChange={(e) => setCardCvv(e.target.value)}
-                              placeholder="123"
-                              className="w-full h-12 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent text-slate-900 dark:text-white px-4"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="flex flex-col items-center gap-6 pt-6 border-t border-slate-100 dark:border-slate-800">
+                        Back to details
+                      </button>
                       <button
                         type="submit"
-                        className="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 text-lg"
+                        disabled={submitting}
+                        className="flex-1 h-14 bg-primary hover:bg-primary/90 disabled:opacity-70 text-white font-bold rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 text-lg"
                       >
-                        <span className="material-symbols-outlined">security</span>
-                        Pay {CONSULTATION_FEE} & Secure Slot
+                        {submitting ? (
+                          <>Submitting…</>
+                        ) : (
+                          <>
+                            <span className="material-symbols-outlined">send</span>
+                            Submit Request
+                          </>
+                        )}
                       </button>
-                      <div className="flex flex-wrap justify-center items-center gap-6 grayscale opacity-60">
-                        <span className="font-black text-slate-900 dark:text-white text-sm">paystack</span>
-                        <span className="font-black text-slate-900 dark:text-white text-sm tracking-tight">flutterwave</span>
-                        <span className="flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">verified</span>
-                          <span className="text-[10px] font-bold uppercase tracking-widest">PCI-DSS Compliant</span>
-                        </span>
-                      </div>
-                      <p className="text-slate-400 text-xs text-center max-w-xs leading-relaxed">
-                        Your payment is processed securely. We do not store your full card details on our servers.
-                      </p>
                     </div>
                   </form>
                 </div>
-                <div className="mt-8 flex justify-between items-center text-sm px-2 flex-wrap gap-4">
-                  <a href="#" className="text-slate-500 hover:text-primary flex items-center gap-1 transition-colors">
-                    <span className="material-symbols-outlined text-lg">help_outline</span>
-                    Refund & Cancellation Policy
-                  </a>
-                  <span className="text-slate-500">
-                    Need help? <a href="#" className="text-primary font-bold">Chat with us</a>
-                  </span>
-                </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success modal */}
+      {successModalOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={(e) => e.target === e.currentTarget && setSuccessModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="success-modal-title"
+          aria-describedby="success-modal-desc"
+        >
+          <div
+            ref={modalRef}
+            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">
+              <span className="material-symbols-outlined text-4xl">check_circle</span>
+            </div>
+            <h2 id="success-modal-title" className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">
+              Request received
+            </h2>
+            <p id="success-modal-desc" className="text-slate-600 dark:text-slate-400 mb-8">
+              You&apos;ve successfully requested a consultation. We&apos;ll contact you shortly via email or phone.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-bold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              >
+                Back to Home
+              </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  setSuccessModalOpen(false);
+                  resetForm();
+                }}
+                className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-bold bg-primary text-white hover:bg-primary/90 transition-colors"
+              >
+                Submit another request
+              </button>
             </div>
           </div>
         </div>

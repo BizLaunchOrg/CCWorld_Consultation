@@ -4,7 +4,6 @@ import { HomePage } from './Pages/HomePage/HomePage';
 import { ServicesPage } from './Pages/ServicePage/ServicePage';
 import { ServiceDetailsPage } from './Pages/ServiceDeatilsPage/ServiceDetailsPage';
 import { ConsultationPage } from './Pages/ConsultationPage/ConsultationPage';
-import { ConsultationSuccessPage } from './Pages/ConsultationPage/ConsultationSuccessPage';
 import { AboutPage } from './Pages/AboutPage/AboutPage';
 import { InsightsPage } from './Pages/InsightsPage/InsightsPage';
 
@@ -18,7 +17,6 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/insights" element={<InsightsPage />} />
         <Route path="/consultation" element={<ConsultationPage />} />
-        <Route path="/consultation/success" element={<ConsultationSuccessPage />} />
       </Route>
     </Routes>
   );
