@@ -65,12 +65,12 @@ export function HomePage() {
               >
                 Request a Consultation <span className="material-symbols-outlined">arrow_forward</span>
               </Link>
-              <button
-                type="button"
-                className="px-8 py-4 border-2 border-gold-accent/50 text-gold-accent text-base font-black rounded-xl hover:bg-gold-accent/10 transition-all"
+              <Link
+                to="/training"
+                className="px-8 py-4 border-2 border-gold-accent/50 text-gold-accent text-base font-black rounded-xl hover:bg-gold-accent/10 transition-all flex items-center gap-2"
               >
-                Download Blueprint
-              </button>
+                Trainings <span className="material-symbols-outlined">arrow_forward</span>
+              </Link>
             </div>
           </div>
           <div className="lg:w-1/3 hidden lg:block">
