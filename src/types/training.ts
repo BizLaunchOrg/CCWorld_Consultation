@@ -9,14 +9,20 @@ export interface Training {
   benefits: string[];
   priceNGN: number;
   category: TrainingCategory;
-  /** Who it's for (demo) */
   whoItsFor?: string;
-  /** What you'll learn - module titles (demo) */
   modules?: string[];
-  /** Delivery format (demo) */
   deliveryFormat?: string;
-  /** FAQ entries (demo) */
   faq?: { q: string; a: string }[];
+  /** e.g. "1 day", "2 weeks" */
+  duration_label?: string;
+  /** Who it's for (list items) */
+  audience?: string[];
+  /** What's included list */
+  includes?: string[];
+  icon?: string;
+  sort_order?: number;
+  updated_at?: string;
+  published?: boolean;
 }
 
 export type TransactionStatus = 'pending' | 'paid' | 'failed';

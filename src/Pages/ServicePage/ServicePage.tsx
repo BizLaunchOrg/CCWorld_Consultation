@@ -1,156 +1,12 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-
-type Service = {
-  slug: string;
-  icon: string;
-  title: string;
-  tagline: string;
-  summary: string;
-  categories: string[];
-  outcomes: string[];
-  duration: string;
-  level: "Foundation" | "Build" | "Advanced" | "Managed";
-  amount: string; // e.g. "NGN 450,000"
-};
+import { getPublishedServices } from "../../data/services";
+import type { Service } from "../../types/service";
 
 const cx = (...a: Array<string | false | null | undefined>) => a.filter(Boolean).join(" ");
 
-// Shared so ServiceDetailsPage can show the selected service
-export const SERVICES_LIST: Service[] = [
-  {
-    slug: "compliance-department-buildout",
-    icon: "architecture",
-    title: "Compliance Department Build-out",
-    tagline: "Equipping and building an effective compliance function.",
-    summary:
-      "We design and operationalize governance, staffing blueprint, policy suite, workflows, reporting cadence, and regulator-ready evidence structure — built to scale.",
-    categories: ["Governance", "People", "Policies", "Processes", "Technology", "Culture", "Monitoring", "Regulatory"],
-    outcomes: ["Board-approved charter + risk appetite", "Policy suite + process maps", "Monitoring/testing + reporting cadence"],
-    duration: "8–12 weeks",
-    level: "Build",
-    amount: "NGN 450,000",
-  },
-  {
-    slug: "imto-setup-licensing-readiness",
-    icon: "verified",
-    title: "IMTO Setup & Licensing Readiness",
-    tagline: "Regulator-ready setup for money transfer operations.",
-    summary:
-      "From governance to operating controls — we help structure compliance requirements, documentation, workflows, and readiness packs for licensing and examinations.",
-    categories: ["Governance", "Policies", "Processes", "Regulatory"],
-    outcomes: ["Licensing-ready documentation pack", "Operational controls + evidence plan", "Exam readiness playbook"],
-    duration: "6–10 weeks",
-    level: "Build",
-    amount: "NGN 380,000",
-  },
-  {
-    slug: "aml-cft-program-design",
-    icon: "warning",
-    title: "AML/CFT Program Design",
-    tagline: "Risk-based controls that stand up in exams.",
-    summary:
-      "We build your AML/CFT policy suite, STR/SAR readiness, escalation workflows, monitoring design, and testing plan — aligned to your risk profile.",
-    categories: ["Policies", "Processes", "Monitoring", "Regulatory"],
-    outcomes: ["AML/CFT policy suite", "STR/SAR readiness workflow", "Monitoring + testing plan"],
-    duration: "4–8 weeks",
-    level: "Advanced",
-    amount: "NGN 320,000",
-  },
-  {
-    slug: "sanctions-pep-screening-program",
-    icon: "shield",
-    title: "Sanctions & PEP Screening Program",
-    tagline: "Screening governance, match handling, audit trails.",
-    summary:
-      "We design sanctions/PEP screening procedures, match resolution playbooks, list governance, escalation thresholds, and evidence logs for audit defense.",
-    categories: ["Policies", "Processes", "Technology", "Monitoring"],
-    outcomes: ["Screening SOPs + match handling", "Escalation thresholds", "Audit-ready evidence logging"],
-    duration: "3–6 weeks",
-    level: "Advanced",
-    amount: "NGN 280,000",
-  },
-  {
-    slug: "compliance-monitoring-testing",
-    icon: "fact_check",
-    title: "Compliance Monitoring & Testing",
-    tagline: "Ongoing assurance, thematic reviews, KPIs.",
-    summary:
-      "We set up monitoring programs, thematic reviews, testing cadence, issue tracking, remediation workflow, and board-ready dashboards & reports.",
-    categories: ["Monitoring", "Processes", "Regulatory"],
-    outcomes: ["Monitoring program + thematic reviews", "Testing plan + remediation workflow", "Dashboards + board reporting templates"],
-    duration: "3–6 weeks",
-    level: "Advanced",
-    amount: "NGN 280,000",
-  },
-  {
-    slug: "regulatory-reporting-exam-readiness",
-    icon: "receipt_long",
-    title: "Regulatory Reporting & Exam Readiness",
-    tagline: "Returns, filings, query response, evidence pack.",
-    summary:
-      "We structure regulatory returns, define reporting owners and timelines, and build your evidence library so exams stop feeling like emergencies.",
-    categories: ["Regulatory", "Processes", "Monitoring"],
-    outcomes: ["Returns calendar + responsibilities", "Exam readiness evidence pack", "Regulator query response playbook"],
-    duration: "2–5 weeks",
-    level: "Foundation",
-    amount: "NGN 220,000",
-  },
-  {
-    slug: "training-and-compliance-culture",
-    icon: "school",
-    title: "Training & Compliance Culture",
-    tagline: "Induction, role-based training, attestations.",
-    summary:
-      "We design your training calendar, role-based learning paths, board/senior leadership sessions, and culture campaigns with measurable completion evidence.",
-    categories: ["Culture", "People"],
-    outcomes: ["Training calendar + role-based modules", "Attestation workflow", "Culture campaigns + reporting"],
-    duration: "2–4 weeks",
-    level: "Foundation",
-    amount: "NGN 180,000",
-  },
-  {
-    slug: "regtech-integration-and-dashboards",
-    icon: "hub",
-    title: "RegTech Integration & Dashboards",
-    tagline: "Tooling roadmap, integration map, KPIs.",
-    summary:
-      "We plan and architect compliance tooling — KYC/CDD, transaction monitoring, screening, case management, dashboards — with audit logging and control evidence.",
-    categories: ["Technology", "Processes", "Monitoring"],
-    outcomes: ["Integration roadmap + data flow", "KPI dashboards definition", "Audit logging + evidence design"],
-    duration: "3–7 weeks",
-    level: "Advanced",
-    amount: "NGN 300,000",
-  },
-  {
-    slug: "compliance-risk-assessment-cra",
-    icon: "analytics",
-    title: "Compliance Risk Assessment (CRA)",
-    tagline: "Annual risk posture + prioritized controls.",
-    summary:
-      "We run an institutional CRA, score risk drivers, map obligations, and deliver a prioritized roadmap with quick wins, owners, timelines, and metrics.",
-    categories: ["Continuous Improvement", "Governance", "Monitoring"],
-    outcomes: ["Risk scoring model + findings", "Prioritized roadmap", "Board-ready report pack"],
-    duration: "2–4 weeks",
-    level: "Foundation",
-    amount: "NGN 200,000",
-  },
-  {
-    slug: "managed-compliance-retainer",
-    icon: "support_agent",
-    title: "Managed Compliance Retainer",
-    tagline: "Ongoing support after setup.",
-    summary:
-      "Monthly/quarterly managed compliance support including monitoring oversight, reporting, thematic reviews, regulatory updates, and continuous tuning of controls.",
-    categories: ["Monitoring", "Regulatory", "Continuous Improvement", "Culture"],
-    outcomes: ["Continuous assurance cadence", "Regulatory horizon scanning", "Ongoing dashboards + board reporting"],
-    duration: "Monthly / Quarterly",
-    level: "Managed",
-    amount: "NGN 150,000 / month",
-  },
-];
-
-export function ServicesPage() {
+export default function ServicePage() {
+  const services = getPublishedServices();
   const prefersReduced =
     typeof window !== "undefined" &&
     window.matchMedia &&
@@ -183,9 +39,6 @@ export function ServicesPage() {
     ],
     [],
   );
-
-  // Use shared list
-  const services = SERVICES_LIST;
 
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<string>("All");
@@ -485,7 +338,7 @@ export function ServicesPage() {
                 <div className="mt-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark p-4">
                   <div className="flex items-center justify-between">
                     <div className="text-slate-600 dark:text-slate-500 text-xs font-black uppercase tracking-widest">Typical outputs</div>
-                    <div className="text-slate-600 dark:text-slate-500 text-xs font-black">{s.duration}</div>
+                    <div className="text-slate-600 dark:text-slate-500 text-xs font-black">{s.duration_label}</div>
                   </div>
                   <div className="mt-3 space-y-2">
                     {s.outcomes.slice(0, 3).map((o) => (
@@ -621,3 +474,4 @@ export function ServicesPage() {
     </main>
   );
 }
+export { ServicePage as ServicesPage };

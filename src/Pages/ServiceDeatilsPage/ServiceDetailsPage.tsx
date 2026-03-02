@@ -1,9 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
-import { SERVICES_LIST } from '../ServicePage/ServicePage';
+import { getServiceBySlug } from '../../data/services';
 
 export function ServiceDetailsPage() {
   const { serviceSlug } = useParams<{ serviceSlug: string }>();
-  const service = serviceSlug ? SERVICES_LIST.find((s) => s.slug === serviceSlug) : null;
+  const service = serviceSlug ? getServiceBySlug(serviceSlug) : null;
 
   if (!service) {
     return (
@@ -38,7 +38,7 @@ export function ServiceDetailsPage() {
               {service.level}
             </span>
             <span className="px-3 py-1 bg-accent-sand/20 text-accent-sand text-xs font-bold uppercase tracking-widest rounded-full">
-              {service.duration}
+              {service.duration_label}
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4">
@@ -105,7 +105,7 @@ export function ServiceDetailsPage() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Duration</span>
-                  <span className="text-slate-900 dark:text-white font-medium">{service.duration}</span>
+                  <span className="text-slate-900 dark:text-white font-medium">{service.duration_label}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Level</span>

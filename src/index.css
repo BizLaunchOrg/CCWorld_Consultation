@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Class-based dark mode so ThemeProvider can toggle it */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: #1152d4;
   --color-teal-accent: #2dd4bf;

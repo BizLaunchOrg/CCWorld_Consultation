@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { ThemeToggle } from './ThemeToggle';
 
 const navLinks: { to: string; label: string }[] = [
   { to: '/', label: 'Home' },
@@ -33,6 +34,7 @@ export function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <Link
             to="/consultation"
             className="hidden lg:block px-6 py-2.5 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 transition-all"
@@ -76,6 +78,9 @@ export function Nav() {
             >
               Request Consultation
             </Link>
+            <div className="mt-3 flex justify-center">
+              <ThemeToggle />
+            </div>
           </nav>
         </div>
       )}

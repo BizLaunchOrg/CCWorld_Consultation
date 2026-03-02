@@ -32,6 +32,10 @@ export const DEMO_TRAININGS: Training[] = [
       { q: 'How long does the program run?', a: 'Typically 2–4 weeks with flexible scheduling.' },
       { q: 'Do we get certificates?', a: 'Yes. Completion certificates and evidence packs for regulators.' },
     ],
+    duration_label: '2–4 weeks',
+    icon: 'school',
+    updated_at: '2025-02-28T10:00:00Z',
+    published: true,
   },
   {
     id: 't2',
@@ -61,6 +65,10 @@ export const DEMO_TRAININGS: Training[] = [
       { q: 'Is this tailored to our license type?', a: 'Yes. We customize for banks, fintechs, IMTOs, or mixed audiences.' },
       { q: 'Do you provide materials?', a: 'Yes. Slide packs, checklists, and optional takeaway guides.' },
     ],
+    duration_label: '1–2 days',
+    icon: 'menu_book',
+    updated_at: '2025-02-27T15:00:00Z',
+    published: true,
   },
   {
     id: 't3',
@@ -90,6 +98,10 @@ export const DEMO_TRAININGS: Training[] = [
       { q: 'Can we run this annually?', a: 'Yes. We offer recurring statutory training and refreshers.' },
       { q: 'What evidence do we get?', a: 'Attendance records, assessments, and certificates suitable for audit.' },
     ],
+    duration_label: '2–4 weeks',
+    icon: 'gavel',
+    updated_at: '2025-02-26T09:00:00Z',
+    published: true,
   },
   {
     id: 't4',
@@ -119,6 +131,10 @@ export const DEMO_TRAININGS: Training[] = [
       { q: 'How many sessions are included?', a: 'Depends on scope. We agree a calendar and number of cohorts upfront.' },
       { q: 'Can you train our remote staff?', a: 'Yes. We support fully remote delivery and recording for async completion.' },
     ],
+    duration_label: 'Ongoing',
+    icon: 'groups',
+    updated_at: '2025-02-25T11:00:00Z',
+    published: true,
   },
   // Advisory offerings
   {
@@ -149,6 +165,10 @@ export const DEMO_TRAININGS: Training[] = [
       { q: 'How is this different from a CRA?', a: 'This is a broader risk review and recommendation engagement; we can include CRA as part of it or run it standalone.' },
       { q: 'Do you present to the board?', a: 'Yes. We can present findings and recommendations to the board or audit committee if required.' },
     ],
+    duration_label: '3–6 weeks',
+    icon: 'recommend',
+    updated_at: '2025-02-24T10:00:00Z',
+    published: true,
   },
   {
     id: 'a2',
@@ -178,6 +198,10 @@ export const DEMO_TRAININGS: Training[] = [
       { q: 'What does the deliverable look like?', a: 'A written report with findings, recommendations, and priority, plus a live debrief with your team.' },
       { q: 'Can we scope only certain areas?', a: 'Yes. We can focus on specific pillars (e.g. AML, sanctions, reporting) if you prefer.' },
     ],
+    duration_label: '2–4 weeks',
+    icon: 'health_and_safety',
+    updated_at: '2025-02-23T14:00:00Z',
+    published: true,
   },
 ];
 
