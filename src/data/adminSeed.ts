@@ -43,7 +43,7 @@ export const seedConsultations: AdminConsultation[] = [
     company: 'Fintech NG Ltd',
     job_title: 'Head of Compliance',
     service_selected: 'Compliance Department Build-out',
-    note: 'We need to prepare for CBN examination in Q2. Can we schedule a discovery call next week?',
+    note: 'We need to prepare for examination in Q2. Can we schedule a discovery call next week?',
     preferred_date: '2025-03-10',
     preferred_time: '10:00',
     status: 'new',

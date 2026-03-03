@@ -1,9 +1,11 @@
 import { Link, useParams } from 'react-router-dom';
 import { getServiceBySlug } from '../../data/services';
+import { useChat } from '../../contexts/ChatContext';
 
 export function ServiceDetailsPage() {
   const { serviceSlug } = useParams<{ serviceSlug: string }>();
   const service = serviceSlug ? getServiceBySlug(serviceSlug) : null;
+  const { openChat } = useChat();
 
   if (!service) {
     return (
@@ -130,9 +132,16 @@ export function ServiceDetailsPage() {
                 Book a diagnostic session to see how this service fits your needs.
               </p>
               <span className="inline-block w-full bg-white text-primary font-bold py-4 rounded-2xl hover:bg-slate-100 transition-colors relative z-10 shadow-xl shadow-black/20 text-center">
-                Request Consultation
+                Request a Consultation
               </span>
             </Link>
+            <button
+              type="button"
+              onClick={openChat}
+              className="block w-full mt-4 py-4 px-6 rounded-2xl border-2 border-gold-accent/50 text-gold-accent font-black hover:bg-gold-accent/10 transition-all text-center"
+            >
+              Live Chat
+            </button>
           </div>
         </aside>
       </div>

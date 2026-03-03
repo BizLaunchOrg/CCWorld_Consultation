@@ -70,7 +70,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
           onClick={onClose}
           className="block py-4 px-4 rounded-2xl bg-primary text-white text-center font-bold text-base hover:bg-primary/90 transition-colors touch-manipulation"
         >
-          Request Consultation / Inquiry
+          Request Consultation
         </Link>
         <button
           type="button"
@@ -117,7 +117,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
             className="block px-4 py-3 text-sm font-semibold text-slate-200 hover:bg-white/10 hover:text-white transition-colors border-b border-white/10"
             role="menuitem"
           >
-            Request Consultation / Inquiry
+            Request Consultation
           </Link>
           <button
             type="button"

@@ -25,7 +25,7 @@ const values = [
 
 const approachSteps = [
   { num: '01', title: 'Assessment', desc: 'Deep-dive diagnostic of current compliance architecture and risk exposure.' },
-  { num: '02', title: 'Blueprint', desc: 'Designing a custom framework aligned with local and global regulatory bodies.' },
+  { num: '02', title: 'Blueprint', desc: 'Designing a custom framework aligned with local and international requirements.' },
   { num: '03', title: 'Implementation', desc: 'Deploying protocols, training staff, and integrating compliance software.' },
   { num: '04', title: 'Evolution', desc: 'Continuous monitoring and optimization for emerging regulatory shifts.' },
 ];
@@ -45,7 +45,7 @@ export function AboutPage() {
           <div className="flex flex-col gap-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider w-fit">
               <span className="material-symbols-outlined text-sm">verified</span>
-              Regulator-Ready Excellence
+              Compliance Excellence
             </div>
             <h1 className="text-4xl md:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
               The Gold Standard in Financial Compliance
@@ -79,7 +79,7 @@ export function AboutPage() {
             <div className="absolute -bottom-6 -left-6 bg-white dark:bg-slate-900 p-6 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 max-w-xs">
               <p className="text-primary font-bold text-3xl italic">100%</p>
               <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                Successful regulatory audit record for all long-term partners.
+                Successful compliance audit record for all long-term partners.
               </p>
             </div>
           </div>
@@ -93,7 +93,7 @@ export function AboutPage() {
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Our Mission</h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
               To transform compliance from a hurdle into a competitive advantage by building resilient,
-              regulator-ready departments for the world&apos;s leading financial institutions.
+              compliance-ready departments for the world&apos;s leading financial institutions.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -145,7 +145,7 @@ export function AboutPage() {
             <div>
               <h2 className="text-3xl font-bold dark:text-white mb-4">Leadership Team</h2>
               <p className="text-slate-600 dark:text-slate-400">
-                Industry veterans from global regulatory bodies and top-tier financial firms.
+                Industry veterans from top-tier financial firms and compliance leadership roles.
               </p>
             </div>
             <Link
@@ -201,7 +201,7 @@ export function AboutPage() {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
             <div className="relative z-10 flex flex-col items-center gap-8">
               <h2 className="text-3xl md:text-5xl font-black text-white leading-tight max-w-2xl">
-                Ready to build a regulator-ready department?
+                Ready to build a compliance-ready department?
               </h2>
               <p className="text-white/80 text-lg max-w-xl">
                 Schedule a confidential consultation with our partners to audit your current frameworks.

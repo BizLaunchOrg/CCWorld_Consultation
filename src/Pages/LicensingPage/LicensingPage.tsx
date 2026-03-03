@@ -16,16 +16,16 @@ export function LicensingPage() {
             <span className="material-symbols-outlined text-xs">chevron_right</span>
             <Link to="/services" className="hover:text-teal-accent">Services</Link>
             <span className="material-symbols-outlined text-xs">chevron_right</span>
-            <span className="text-teal-accent">Licensing Advisory</span>
+            <span className="text-teal-accent">Payment Licensing</span>
           </nav>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-accent/10 border border-teal-accent/20 text-teal-accent text-xs font-black uppercase tracking-widest mb-6">
-            CBN Licensing
+            Payment Licensing
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white mb-4">
-            Licensing Advisory <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-accent to-primary">(CBN)</span>
+            Licensing & Compliance Advisory
           </h1>
           <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl">
-            Dedicated support for Payment Solution Service Provider (PSSP), Payment Terminal Service Provider (PTSP), and CBN Regulatory Sandbox participation.
+            Dedicated support for Payment Solution Service Provider (PSSP), Payment Terminal Service Provider (PTSP), and Regulatory Sandbox participation.
           </p>
         </div>
       </section>
@@ -55,27 +55,30 @@ export function LicensingPage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 flex gap-3 flex-wrap">
+              <div className="mt-6 flex flex-col gap-3">
                 <Link
                   to={`/licensing/${s.slug}`}
-                  className="flex-1 min-w-[120px] text-center px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
+                  className="w-full text-center px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
                 >
                   View Details
                 </Link>
-                <Link
-                  to="/consultation"
-                  className="px-5 py-3 rounded-2xl border border-gold-accent/40 text-gold-accent font-black hover:bg-gold-accent/10 transition-all"
-                >
-                  Engage Us
-                </Link>
-                <button
-                  type="button"
-                  onClick={openChat}
-                  className="p-3 rounded-2xl border border-slate-200 dark:border-white/20 text-slate-600 dark:text-slate-300 hover:bg-white/10 transition-all"
-                  aria-label="Live chat"
-                >
-                  <span className="material-symbols-outlined">chat</span>
-                </button>
+                <div className="flex gap-3">
+                  <Link
+                    to="/consultation"
+                    className="flex-1 min-w-0 text-center px-5 py-3 rounded-2xl bg-primary text-white font-black hover:bg-primary/90 transition-all"
+                  >
+                    Request a Consultation
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={openChat}
+                    className="px-5 py-3 rounded-2xl border border-gold-accent/40 text-gold-accent font-black hover:bg-gold-accent/10 transition-all flex items-center justify-center gap-1.5"
+                    aria-label="Live chat"
+                  >
+                    <span className="material-symbols-outlined text-lg">chat</span>
+                    Live Chat
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -93,7 +96,7 @@ export function LicensingPage() {
               to="/consultation"
               className="px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all flex items-center gap-2"
             >
-              Request Engagement <span className="material-symbols-outlined">arrow_forward</span>
+              Request a Consultation <span className="material-symbols-outlined">arrow_forward</span>
             </Link>
             <button
               type="button"

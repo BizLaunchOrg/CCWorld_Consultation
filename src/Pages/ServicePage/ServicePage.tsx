@@ -102,7 +102,7 @@ export default function ServicePage() {
             </h1>
 
             <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl">
-              Choose a service and we’ll build the governance, people, processes, tooling, and reporting you need to become regulator-ready — without killing velocity.
+              Choose a service and we’ll build the governance, people, processes, tooling, and reporting you need to become compliance-ready — without killing velocity.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -115,7 +115,14 @@ export default function ServicePage() {
 
               <button
                 type="button"
-                className="px-8 py-4 border-2 border-gold-accent/50 text-gold-accent text-sm sm:text-base font-black rounded-xl hover:bg-gold-accent/10 transition-all"
+                onClick={openChat}
+                className="px-8 py-4 border-2 border-gold-accent/50 text-gold-accent text-sm sm:text-base font-black rounded-xl hover:bg-gold-accent/10 transition-all flex items-center gap-2"
+              >
+                Live Chat <span className="material-symbols-outlined">chat</span>
+              </button>
+              <button
+                type="button"
+                className="px-8 py-4 border-2 border-slate-200 dark:border-white/20 text-slate-600 dark:text-slate-300 text-sm sm:text-base font-black rounded-xl hover:bg-white/10 transition-all"
               >
                 Download Blueprint
               </button>
@@ -199,12 +206,12 @@ export default function ServicePage() {
         </div>
       </section>
 
-      {/* Licensing Advisory (CBN) */}
+      {/* Licensing & Compliance Advisory */}
       <section className="max-w-7xl mx-auto px-6 py-14">
         <div className="mb-8">
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">Licensing Advisory (CBN)</h2>
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">Licensing & Compliance Advisory</h2>
           <p className="text-slate-600 dark:text-slate-400 mt-2">
-            Dedicated support for CBN payment and sandbox licensing.
+            Dedicated support for payment licensing and regulatory sandbox participation.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -234,28 +241,31 @@ export default function ServicePage() {
                   ))}
                 </ul>
               </div>
-              <div className="mt-6 flex gap-3 flex-wrap">
+              <div className="mt-6 flex flex-col gap-3">
                 <Link
                   to={`/licensing/${s.slug}`}
-                  className="flex-1 min-w-[120px] text-center px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
+                  className="w-full text-center px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
                 >
                   View Details
                 </Link>
-                <Link
-                  to="/consultation"
-                  className="px-5 py-3 rounded-2xl border border-gold-accent/40 text-gold-accent font-black hover:bg-gold-accent/10 transition-all"
-                  aria-label="Engage us"
-                >
-                  Engage Us
-                </Link>
-                <button
-                  type="button"
-                  onClick={openChat}
-                  className="p-3 rounded-2xl border border-slate-200 dark:border-white/20 text-slate-600 dark:text-slate-300 hover:bg-white/10 transition-all"
-                  aria-label="Live chat"
-                >
-                  <span className="material-symbols-outlined">chat</span>
-                </button>
+                <div className="flex gap-3">
+                  <Link
+                    to="/consultation"
+                    className="flex-1 min-w-0 text-center px-5 py-3 rounded-2xl bg-primary text-white font-black hover:bg-primary/90 transition-all"
+                    aria-label="Request a consultation"
+                  >
+                    Request a Consultation
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={openChat}
+                    className="px-5 py-3 rounded-2xl border border-gold-accent/40 text-gold-accent font-black hover:bg-gold-accent/10 transition-all flex items-center justify-center gap-1.5"
+                    aria-label="Live chat"
+                  >
+                    <span className="material-symbols-outlined text-lg">chat</span>
+                    Live Chat
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -485,7 +495,7 @@ export default function ServicePage() {
                 n: "3",
                 icon: "verified",
                 title: "Handover & Assurance",
-                text: "Training, testing cadence, dashboards, and regulator-ready evidence packs for sustained compliance.",
+                text: "Training, testing cadence, dashboards, and audit-ready evidence packs for sustained compliance.",
               },
             ].map((x) => (
               <div key={x.n} className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-background-dark p-7 shadow-sm dark:shadow-none">
@@ -501,13 +511,20 @@ export default function ServicePage() {
             ))}
           </div>
 
-          <div className="mt-10 text-center">
+          <div className="mt-10 text-center flex flex-wrap justify-center gap-4">
             <Link
               to="/consultation"
               className="inline-flex items-center gap-2 px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all"
             >
               Request a Consultation <span className="material-symbols-outlined">arrow_forward</span>
             </Link>
+            <button
+              type="button"
+              onClick={openChat}
+              className="inline-flex items-center gap-2 px-8 py-4 border-2 border-gold-accent/50 text-gold-accent font-black rounded-xl hover:bg-gold-accent/10 transition-all"
+            >
+              Live Chat <span className="material-symbols-outlined">chat</span>
+            </button>
           </div>
         </div>
       </section>

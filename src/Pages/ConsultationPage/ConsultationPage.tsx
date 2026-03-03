@@ -53,10 +53,10 @@ function getServiceLabel(engagementType: EngagementType, orgType: string, custom
   if (engagementType === 'licensing_sandbox') return 'Licensing Advisory: Regulatory Sandbox';
   if (engagementType === 'training') return 'Training';
   if (engagementType === 'advisory') return 'Advisory (Risk review & recommendation)';
-  if (orgType === 'bank') return 'Regulatory Advisory for Banks';
-  if (orgType === 'fintech') return 'Regulatory Advisory for Fintechs';
-  if (orgType === 'imto') return 'Regulatory Advisory for IMTOs';
-  return customOrg ? `Regulatory Advisory for ${customOrg}` : 'Regulatory Advisory';
+  if (orgType === 'bank') return 'Compliance Advisory for Banks';
+  if (orgType === 'fintech') return 'Compliance Advisory for Fintechs';
+  if (orgType === 'imto') return 'Compliance Advisory for IMTOs';
+  return customOrg ? `Compliance Advisory for ${customOrg}` : 'Compliance Advisory';
 }
 
 const isLicensingEngagement = (e: EngagementType) =>
@@ -234,7 +234,7 @@ export function ConsultationPage() {
               Book Your Compliance Consultation
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
-              Tailored regulatory guidance for Banks, Fintechs, and IMTOs in Nigeria.
+              Tailored compliance guidance for Banks, Fintechs, and IMTOs in Nigeria.
             </p>
           </div>
 

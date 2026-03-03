@@ -83,7 +83,7 @@ export function LicensingDetailPage() {
         <span className="material-symbols-outlined text-xs">chevron_right</span>
         <Link to="/services" className="hover:text-teal-accent">Services</Link>
         <span className="material-symbols-outlined text-xs">chevron_right</span>
-        <Link to="/licensing" className="hover:text-teal-accent">Licensing Advisory</Link>
+        <Link to="/licensing" className="hover:text-teal-accent">Licensing & Compliance Advisory</Link>
         <span className="material-symbols-outlined text-xs">chevron_right</span>
         <span className="text-teal-accent">{service.title}</span>
       </nav>
@@ -123,11 +123,10 @@ export function LicensingDetailPage() {
             </section>
           )}
 
-          {/* CTA block */}
           <div className="rounded-3xl border border-teal-accent/20 bg-teal-accent/5 dark:bg-teal-accent/10 p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white">
-                {service.slug === 'sandbox' ? 'Request Sandbox Support' : 'Request engagement'}
+                Request a Consultation
               </h3>
               <p className="text-slate-600 dark:text-slate-400 mt-1">No payment required. We'll discuss your licensing needs and next steps.</p>
             </div>
@@ -136,7 +135,7 @@ export function LicensingDetailPage() {
                 to="/consultation"
                 className="px-6 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.3)] transition-all"
               >
-                {service.slug === 'sandbox' ? 'Request Sandbox Support' : 'Request Engagement'}
+                Request a Consultation
               </Link>
               <button
                 type="button"
@@ -156,7 +155,7 @@ export function LicensingDetailPage() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Type</span>
-                  <span className="text-slate-900 dark:text-white font-medium">Licensing Advisory</span>
+                  <span className="text-slate-900 dark:text-white font-medium">Payment Licensing Advisory</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Engagement</span>

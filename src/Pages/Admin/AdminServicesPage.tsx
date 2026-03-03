@@ -245,7 +245,7 @@ export function AdminServicesPage() {
                   filter === f ? 'bg-teal-accent text-background-dark' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
-                {f === 'licensing' ? 'Licensing (CBN)' : f}
+                {f === 'licensing' ? 'Payment Licensing' : f}
               </button>
             ))}
           </div>
@@ -278,7 +278,7 @@ export function AdminServicesPage() {
               <div className="shrink-0 flex flex-col items-end gap-1">
                 {isLicensing && (
                   <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-primary/15 text-primary border border-primary/25">
-                    Licensing (CBN)
+                    Payment Licensing
                   </span>
                 )}
                 <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-teal-accent/10 text-teal-accent">

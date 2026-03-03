@@ -16,7 +16,7 @@ export function TrainingPage() {
   const [trainings, setTrainings] = useState<Training[]>(DEMO_TRAININGS);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<string>('All');
-  const openChat = useChat();
+  const { openChat } = useChat();
 
   useEffect(() => {
     fetchTrainings().then(setTrainings);
@@ -196,12 +196,18 @@ export function TrainingPage() {
                 >
                   {t.category === 'advisory' ? 'View Advisory' : 'View Training'}
                 </Link>
+                <Link
+                  to="/consultation"
+                  className="px-5 py-3 rounded-2xl bg-primary text-white font-black hover:bg-primary/90 transition-all"
+                >
+                  Request a Consultation
+                </Link>
                 <button
                   type="button"
-                  onClick={() => openChat.openChat()}
+                  onClick={() => openChat()}
                   className="px-5 py-3 rounded-2xl border border-gold-accent/40 text-gold-accent font-black hover:bg-gold-accent/10 transition-all"
                 >
-                  Chat with us
+                  Live Chat
                 </button>
               </div>
             </div>
@@ -267,19 +273,19 @@ export function TrainingPage() {
             Get in touch and we’ll scope training or advisory to your needs.
           </p>
           <div className="flex flex-wrap justify-center gap-6">
-            <button
-              type="button"
-              onClick={() => openChat.openChat()}
-              className="px-10 py-5 bg-white text-primary text-lg font-black rounded-xl hover:scale-105 transition-transform"
-            >
-              Chat with us
-            </button>
             <Link
               to="/consultation"
+              className="px-10 py-5 bg-white text-primary text-lg font-black rounded-xl hover:scale-105 transition-transform"
+            >
+              Request a Consultation
+            </Link>
+            <button
+              type="button"
+              onClick={() => openChat()}
               className="px-10 py-5 border-2 border-white text-white text-lg font-black rounded-xl hover:bg-white/10 transition-all"
             >
-              Request Consultation
-            </Link>
+              Live Chat
+            </button>
           </div>
         </div>
       </section>
