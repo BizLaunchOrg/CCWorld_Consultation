@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Service, ServiceLevel } from '../../types/service';
 import { SERVICES_LIST } from '../../data/services';
 import { Modal } from '../../components/admin/Modal';
@@ -82,6 +82,14 @@ export function AdminServicesPage() {
   const [editing, setEditing] = useState<Service | null>(null);
   const [form, setForm] = useState<typeof emptyForm>({ ...emptyForm });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (toast) {
+      const t = setTimeout(() => setToast(null), 2500);
+      return () => clearTimeout(t);
+    }
+  }, [toast]);
 
   const filtered = useMemo(() => {
     let list = services;
@@ -205,12 +213,14 @@ export function AdminServicesPage() {
       ]);
     }
     setModalOpen(false);
+    setToast('Changes saved');
   }
 
   function togglePublished(s: Service) {
     setServices((prev) =>
       prev.map((x) => (x.id === s.id ? { ...x, published: !x.published, updated_at: new Date().toISOString() } : x))
     );
+    setToast('Saved');
   }
 
   return (
@@ -528,6 +538,18 @@ export function AdminServicesPage() {
           </div>
         </div>
       </Modal>
+
+      {toast && (
+        <div
+          className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 px-4 py-3 rounded-2xl bg-teal-accent text-background-dark font-bold shadow-lg"
+          style={{ animation: 'fadeIn 0.2s ease-out' }}
+          role="status"
+          aria-live="polite"
+        >
+          <span className="material-symbols-outlined text-lg">check_circle</span>
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

@@ -11,6 +11,9 @@ const navLinks: { to: string; label: string }[] = [
   { to: '/insights', label: 'Insights' },
 ];
 
+/** Solid dark background for nav/mobile menu - matches theme background-dark */
+const NAV_BG = '#0f172a';
+
 export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -34,7 +37,8 @@ export function Nav() {
   }, [mobileOpen]);
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#0f172a] dark:bg-[#0f172a] backdrop-blur-md">
+    <>
+    <header className="fixed top-0 z-50 w-full border-b border-white/10 backdrop-blur-md" style={{ backgroundColor: NAV_BG }}>
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3">
           <img src="/logo.png" alt="CC World Consulting" className="h-20 w-20 object-contain" />
@@ -79,20 +83,32 @@ export function Nav() {
           </button>
         </div>
       </div>
+    </header>
 
-      {/* Mobile menu: full-screen overlay layer above everything + drawer from right */}
+      {/* Mobile menu: rendered outside header so it's not affected by header context. Full viewport overlay + solid drawer. */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[100] md:hidden" role="dialog" aria-modal="true" aria-label="Main menu">
+        <div
+          className="fixed inset-0 z-[100] md:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Main menu"
+          style={{ isolation: 'isolate' }}
+        >
           <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            className="absolute inset-0"
+            style={{ backgroundColor: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)' }}
             aria-hidden="true"
             onClick={closeMobile}
           />
           <div
-            className="absolute top-0 right-0 bottom-0 w-full max-w-sm border-l border-white/10 shadow-2xl flex flex-col bg-[#0f172a]"
-            style={{ animation: 'slideInRight 0.25s ease-out' }}
+            className="absolute top-0 right-0 bottom-0 w-full max-w-sm flex flex-col border-l border-white/10 shadow-2xl"
+            style={{
+              backgroundColor: NAV_BG,
+              animation: 'slideInRight 0.25s ease-out',
+              minHeight: '100vh',
+            }}
           >
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0">
               <span className="text-sm font-bold text-slate-300">Menu</span>
               <button
                 type="button"
@@ -103,7 +119,7 @@ export function Nav() {
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
-            <nav className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-1">
+            <nav className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-1 min-h-0">
               {navLinks.map(({ to, label }) => (
                 <NavLink
                   key={to}
@@ -119,7 +135,7 @@ export function Nav() {
               ))}
               <EngageUsDropdown variant="mobile" onClose={closeMobile} />
             </nav>
-            <div className="p-6 border-t border-white/10 space-y-4">
+            <div className="p-6 border-t border-white/10 space-y-4 shrink-0" style={{ backgroundColor: NAV_BG }}>
               <div className="flex items-center justify-between gap-4">
                 <span className="text-sm font-semibold text-slate-400">Theme</span>
                 <ThemeToggle />
@@ -144,6 +160,6 @@ export function Nav() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

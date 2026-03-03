@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import type { AdminConsultation, ConsultationStatus } from '../../types/admin';
+import { useState, useEffect, useMemo } from 'react';
+import type { AdminConsultation, ConsultationStatus, EngagementType } from '../../types/admin';
 import { seedConsultations } from '../../data/adminSeed';
 import { ListCard } from '../../components/admin/ListCard';
 import { Drawer } from '../../components/admin/Drawer';
@@ -31,11 +31,48 @@ function formatStage(s?: string): string {
   return map[s] ?? s;
 }
 
+const STATUS_OPTIONS: { value: ConsultationStatus | 'all'; label: string }[] = [
+  { value: 'all', label: 'All statuses' },
+  { value: 'new', label: 'New' },
+  { value: 'in_review', label: 'In review' },
+  { value: 'scheduled', label: 'Scheduled' },
+  { value: 'completed', label: 'Completed' },
+];
+
+const ENGAGEMENT_OPTIONS: { value: EngagementType | 'all'; label: string }[] = [
+  { value: 'all', label: 'All types' },
+  { value: 'licensing_pssp', label: 'Licensing: PSSP' },
+  { value: 'licensing_ptsp', label: 'Licensing: PTSP' },
+  { value: 'licensing_sandbox', label: 'Licensing: Sandbox' },
+  { value: 'training', label: 'Training' },
+  { value: 'advisory', label: 'Advisory' },
+];
+
 export function AdminConsultationsPage() {
   const [consultations, setConsultations] = useState<AdminConsultation[]>(() => [...seedConsultations]);
   const [selected, setSelected] = useState<AdminConsultation | null>(null);
   const [status, setStatus] = useState<ConsultationStatus>(selected?.status ?? 'new');
   const [internalNotes, setInternalNotes] = useState(selected?.internal_notes ?? '');
+  const [statusFilter, setStatusFilter] = useState<ConsultationStatus | 'all'>('all');
+  const [engagementFilter, setEngagementFilter] = useState<EngagementType | 'all'>('all');
+  const [toast, setToast] = useState<string | null>(null);
+
+  const newCount = useMemo(() => consultations.filter((c) => c.status === 'new').length, [consultations]);
+
+  const filtered = useMemo(() => {
+    return consultations.filter((c) => {
+      const matchStatus = statusFilter === 'all' || c.status === statusFilter;
+      const matchEngagement = engagementFilter === 'all' || c.engagement_type === engagementFilter;
+      return matchStatus && matchEngagement;
+    });
+  }, [consultations, statusFilter, engagementFilter]);
+
+  useEffect(() => {
+    if (toast) {
+      const t = setTimeout(() => setToast(null), 2500);
+      return () => clearTimeout(t);
+    }
+  }, [toast]);
 
   useEffect(() => {
     if (selected) {
@@ -57,36 +94,103 @@ export function AdminConsultationsPage() {
         c.id === selected.id ? { ...c, status, internal_notes: internalNotes } : c
       )
     );
-    setSelected((s) => (s ? { ...s, status, internal_notes: internalNotes } : null));
+    setSelected(null);
+    setToast('Changes saved');
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 className="text-2xl font-black text-slate-900 dark:text-white md:hidden">Consultation requests</h1>
-        <p className="text-slate-600 dark:text-slate-400 text-sm">All requests (inquiries only, no payment).</p>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h1 className="text-2xl font-black text-slate-900 dark:text-white md:hidden">Consultation requests</h1>
+            {newCount > 0 && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold bg-teal-accent/20 text-teal-accent border border-teal-accent/30">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-accent opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-accent" />
+                </span>
+                {newCount} new
+              </span>
+            )}
+          </div>
+          <p className="text-slate-600 dark:text-slate-400 text-sm">All requests (inquiries only, no payment).</p>
+        </div>
+
+        <div className="flex flex-wrap gap-3 items-center">
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">Status</label>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as ConsultationStatus | 'all')}
+              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
+            >
+              {STATUS_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">Type</label>
+            <select
+              value={engagementFilter}
+              onChange={(e) => setEngagementFilter(e.target.value as EngagementType | 'all')}
+              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none min-w-[180px]"
+            >
+              {ENGAGEMENT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+          <button
+            type="button"
+            onClick={() => { setStatusFilter('all'); setEngagementFilter('all'); }}
+            className="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-teal-accent"
+          >
+            Clear filters
+          </button>
+        </div>
       </div>
 
       <div className="space-y-3">
-        {consultations.map((c) => (
+        {filtered.map((c) => (
           <ListCard
             key={c.id}
             title={c.customer_name}
             subtitle={c.service_selected}
             meta={`Submitted ${formatDate(c.created_at)}`}
             badge={
-              <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400">
-                {c.status}
-              </span>
+              <div className="flex items-center gap-2">
+                {c.status === 'new' && (
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-accent text-background-dark uppercase">
+                    New
+                  </span>
+                )}
+                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400">
+                  {c.status}
+                </span>
+              </div>
             }
             onClick={() => openDetail(c)}
           />
         ))}
       </div>
 
-      {consultations.length === 0 && (
+      {filtered.length === 0 && (
         <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
-          No consultation requests yet.
+          {consultations.length === 0 ? 'No consultation requests yet.' : 'No requests match the selected filters.'}
+        </div>
+      )}
+
+      {toast && (
+        <div
+          className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 px-4 py-3 rounded-2xl bg-teal-accent text-background-dark font-bold shadow-lg"
+          style={{ animation: 'fadeIn 0.2s ease-out' }}
+          role="status"
+          aria-live="polite"
+        >
+          <span className="material-symbols-outlined text-lg">check_circle</span>
+          {toast}
         </div>
       )}
 
