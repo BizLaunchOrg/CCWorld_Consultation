@@ -72,8 +72,12 @@ Deno.serve(async (req) => {
     const publicKey = Deno.env.get('SEERBIT_PUBLIC_KEY');
     const secretKey = Deno.env.get('SEERBIT_SECRET_KEY');
     if (!publicKey || !secretKey) {
+      const missing = [(!publicKey && 'SEERBIT_PUBLIC_KEY'), (!secretKey && 'SEERBIT_SECRET_KEY')].filter(Boolean);
       return new Response(
-        JSON.stringify({ error: 'Payment configuration error' }),
+        JSON.stringify({
+          error: 'Payment configuration error',
+          detail: `Add these secrets in Dashboard → Edge Functions → seerbit-init → Secrets: ${missing.join(', ')}`,
+        }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
