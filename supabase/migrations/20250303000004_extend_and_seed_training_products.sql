@@ -1,0 +1,128 @@
+-- Extend training_products with all fields the UI needs (tagline, category, benefits, modules, FAQ, etc.)
+alter table public.training_products
+  add column if not exists tagline text,
+  add column if not exists category text default 'training' check (category in ('training', 'advisory')),
+  add column if not exists who_its_for text,
+  add column if not exists modules jsonb not null default '[]',
+  add column if not exists benefits jsonb not null default '[]',
+  add column if not exists delivery_format text,
+  add column if not exists duration_label text,
+  add column if not exists icon text default 'school',
+  add column if not exists faq jsonb not null default '[]';
+
+-- Full seed matching original DEMO_TRAININGS / UI (run after 000003 seed so slugs exist)
+insert into public.training_products (
+  name, slug, amount, active, summary, tagline, category, who_its_for, modules, benefits, delivery_format, duration_label, icon, faq
+)
+values
+  (
+    'Compliance Culture Training',
+    'compliance-culture-training',
+    250000,
+    true,
+    'Structured programs to embed compliance awareness, role-based learning paths, and measurable completion evidence across your organization.',
+    'Build a culture of compliance from the ground up.',
+    'training',
+    'Compliance officers, HR, and department heads who need to roll out organization-wide compliance awareness and attestations.',
+    '["Introduction to compliance culture","Regulatory expectations and accountability","Role-based responsibilities","Escalation and reporting","Case studies and assessments"]'::jsonb,
+    '["Board and senior leadership sessions","Role-based learning paths","Attestation and completion tracking","Culture campaigns with reporting","Audit-ready evidence of training"]'::jsonb,
+    'Online, onsite, or hybrid. Typically 2–4 sessions over 2–4 weeks.',
+    '2–4 weeks',
+    'school',
+    '[{"q":"How long does the program run?","a":"Typically 2–4 weeks with flexible scheduling."},{"q":"Do we get certificates?","a":"Yes. Completion certificates and evidence packs for audits and compliance."}]'::jsonb
+  ),
+  (
+    'Compliance Landscape Training',
+    'compliance-landscape-training',
+    320000,
+    true,
+    'Deep-dive into payment, securities, and sector-specific requirements, obligations mapping, and how to stay ahead of regulatory changes.',
+    'Master the regulatory landscape for your sector.',
+    'training',
+    'New compliance staff, legal, and operations leads who need a clear map of applicable rules and how they apply day to day.',
+    '["Key frameworks and sector architecture (payment, securities, others)","Licensing and ongoing obligations","Reporting and filing calendar","Enforcement trends and case studies","Staying current: horizon scanning"]'::jsonb,
+    '["Current regulatory framework overview","Obligations mapping by function","Horizon scanning and change management","Exam and audit readiness tips","Q&A with practitioners"]'::jsonb,
+    'Online or onsite. Full-day workshop or 2 half-days.',
+    '1–2 days',
+    'menu_book',
+    '[{"q":"Is this tailored to our license type?","a":"Yes. We customize for banks, fintechs, IMTOs, or mixed audiences."},{"q":"Do you provide materials?","a":"Yes. Slide packs, checklists, and optional takeaway guides."}]'::jsonb
+  ),
+  (
+    'Statutory Training',
+    'statutory-training',
+    180000,
+    true,
+    'Curriculum aligned to statutory and regulatory training requirements, with evidence of completion for audits and exams.',
+    'Meet mandatory training requirements with confidence.',
+    'training',
+    'Organizations that must demonstrate mandatory compliance training (AML/CFT, sanctions, code of conduct) to auditors and for exam readiness.',
+    '["Statutory and regulatory training obligations","AML/CFT and sanctions awareness","Code of conduct and ethics","Board and senior management modules","Documentation and evidence"]'::jsonb,
+    '["Aligned to statutory requirements","Audit-ready completion records","Refresher and annual updates","Multi-level (board to frontline)","Evidence packs for audits and compliance"]'::jsonb,
+    'Online preferred for scale; onsite available. Can be scheduled annually or per cohort.',
+    '2–4 weeks',
+    'gavel',
+    '[{"q":"Can we run this annually?","a":"Yes. We offer recurring statutory training and refreshers."},{"q":"What evidence do we get?","a":"Attendance records, assessments, and certificates suitable for audit."}]'::jsonb
+  ),
+  (
+    'Outsourcing Internal Training',
+    'outsourcing-internal-training',
+    450000,
+    true,
+    'We design and deliver your internal training calendar, role-based modules, and reporting so you focus on operations while staying compliant.',
+    'Let us run your internal compliance training program.',
+    'training',
+    'Teams that want a full internal training program delivered by experts without building an in-house training function.',
+    '["Needs assessment and calendar design","Core compliance modules","Role-specific deep-dives","Assessments and attestations","Reporting and evidence packs"]'::jsonb,
+    '["Custom training calendar","Role-based modules and assessments","Delivery and facilitation by our team","Completion and attestation reporting","Reduced internal training burden"]'::jsonb,
+    'Hybrid. We deliver online and/or onsite per your schedule; typically quarterly or per cohort.',
+    'Ongoing',
+    'groups',
+    '[{"q":"How many sessions are included?","a":"Depends on scope. We agree a calendar and number of cohorts upfront."},{"q":"Can you train our remote staff?","a":"Yes. We support fully remote delivery and recording for async completion."}]'::jsonb
+  ),
+  (
+    'Risk Review & Recommendations',
+    'risk-review-and-recommendations',
+    550000,
+    true,
+    'We conduct an independent risk review of your compliance posture, control environment, and key processes, then deliver clear recommendations and a prioritized action plan.',
+    'Work with our organization to conduct risk review and make recommendations.',
+    'advisory',
+    'Boards, C-suite, and compliance leads who want an external view of their compliance and operational risk before exams or strategic decisions.',
+    '["Scoping and information gathering","Risk and control assessment","Gap analysis and benchmarking","Recommendations and prioritization","Report and presentation"]'::jsonb,
+    '["Independent risk assessment and gap analysis","Recommendations aligned to your risk appetite","Prioritized action plan with owners and timelines","Board-ready report and executive summary","Follow-up support to implement key actions"]'::jsonb,
+    'Onsite and remote. Typically 3–6 weeks from kick-off to final report.',
+    '3–6 weeks',
+    'recommend',
+    '[{"q":"How is this different from a CRA?","a":"This is a broader risk review and recommendation engagement; we can include CRA as part of it or run it standalone."},{"q":"Do you present to the board?","a":"Yes. We can present findings and recommendations to the board or audit committee if required."}]'::jsonb
+  ),
+  (
+    'Compliance Health Check',
+    'compliance-health-check',
+    380000,
+    true,
+    'A focused advisory engagement to assess the health of your compliance program, identify quick wins, and flag areas that need deeper work or training.',
+    'Quick diagnostic of your compliance function and key controls.',
+    'advisory',
+    'Organizations that want a fast, external view of compliance health before an audit, exam, or licensing step.',
+    '["Document and process review","Interviews with key stakeholders","Control testing and evidence review","Findings and recommendations","Report and debrief"]'::jsonb,
+    '["Structured diagnostic across governance, policies, and processes","Quick wins and medium-term recommendations","Benchmark against peer practice where relevant","Clear report with findings and next steps","Optional follow-on for implementation support"]'::jsonb,
+    'Hybrid. Usually 2–4 weeks with a mix of remote and onsite as needed.',
+    '2–4 weeks',
+    'health_and_safety',
+    '[{"q":"What does the deliverable look like?","a":"A written report with findings, recommendations, and priority, plus a live debrief with your team."},{"q":"Can we scope only certain areas?","a":"Yes. We can focus on specific pillars (e.g. AML, sanctions, reporting) if you prefer."}]'::jsonb
+  )
+on conflict (slug) do update set
+  name = excluded.name,
+  amount = excluded.amount,
+  active = excluded.active,
+  summary = excluded.summary,
+  tagline = excluded.tagline,
+  category = excluded.category,
+  who_its_for = excluded.who_its_for,
+  modules = excluded.modules,
+  benefits = excluded.benefits,
+  delivery_format = excluded.delivery_format,
+  duration_label = excluded.duration_label,
+  icon = excluded.icon,
+  faq = excluded.faq,
+  updated_at = now();

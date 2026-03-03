@@ -1,5 +1,7 @@
 import { supabase } from './supabase';
 
+export type TrainingCategory = 'training' | 'advisory';
+
 export interface TrainingProduct {
   id: string;
   name: string;
@@ -9,6 +11,15 @@ export interface TrainingProduct {
   summary: string | null;
   created_at: string;
   updated_at: string;
+  tagline?: string | null;
+  category?: TrainingCategory;
+  who_its_for?: string | null;
+  modules?: string[];
+  benefits?: string[];
+  delivery_format?: string | null;
+  duration_label?: string | null;
+  icon?: string | null;
+  faq?: { q: string; a: string }[];
 }
 
 export async function fetchTrainingProducts(): Promise<TrainingProduct[]> {
