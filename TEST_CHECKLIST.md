@@ -8,6 +8,7 @@ Use this to verify the full flow after deployment and Supabase/Seerbit setup.
 - Auth: Email confirmation enabled; Site URL / Redirect URLs set to `https://www.ccworldconsultation.com` (or your dev URL).
 - Edge Functions deployed: `seerbit-init`, `seerbit-webhook`. Deploy **seerbit-init** with `--no-verify-jwt` to avoid gateway 401 Invalid JWT (e.g. with ES256 tokens). Secrets: `SEERBIT_PUBLIC_KEY`, `SEERBIT_SECRET_KEY`, `SITE_URL`, `SUPABASE_ANON_KEY`.
 - Seerbit webhook URL configured to your `seerbit-webhook` function URL (deploy webhook with `--no-verify-jwt`).
+- Optional: add `RESEND_API_KEY` (and optionally `RESEND_FROM`, `SITE_NAME`) to **seerbit-webhook** secrets to send “We’ve received your payment” emails. See `docs/EMAIL_TEMPLATES.md`.
 
 ---
 
@@ -41,6 +42,7 @@ Use this to verify the full flow after deployment and Supabase/Seerbit setup.
 - [ ] Log in and ensure email is confirmed; click **Pay Now**.
 - [ ] Expect redirect to Seerbit checkout URL (no frontend error).
 - [ ] Complete or cancel payment on Seerbit.
+- [ ] After success, you are redirected to **Training payment success** page (“We’ve received your payment”, “We’ll get back to you shortly”). If Resend is configured, the customer receives a confirmation email.
 
 ## 5. Webhook → order status update
 

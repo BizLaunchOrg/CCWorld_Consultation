@@ -12,6 +12,7 @@ import { InsightsPage } from './Pages/InsightsPage/InsightsPage';
 import { TrainingPage } from './Pages/TrainingPage/TrainingPage';
 import { TrainingDetailsPage } from './Pages/TrainingDetailsPage/TrainingDetailsPage';
 import { TrainingCheckoutPage } from './Pages/TrainingCheckoutPage/TrainingCheckoutPage';
+import { TrainingPaymentSuccessPage } from './Pages/TrainingPaymentSuccessPage/TrainingPaymentSuccessPage';
 import { LicensingPage } from './Pages/LicensingPage/LicensingPage';
 import { LicensingDetailPage } from './Pages/LicensingDetailPage/LicensingDetailPage';
 import { LoginPage } from './Pages/LoginPage/LoginPage';
@@ -65,6 +66,7 @@ function App() {
           <Route path="/training" element={<TrainingPage />} />
           <Route path="/training/:slug" element={<TrainingDetailsPage />} />
           <Route path="/checkout/training/:slug" element={<TrainingCheckoutPage />} />
+          <Route path="/training/payment/success" element={<TrainingPaymentSuccessPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
         </Route>

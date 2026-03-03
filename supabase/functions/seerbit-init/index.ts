@@ -141,7 +141,7 @@ Deno.serve(async (req) => {
         email: user.email,
         fullName,
         tokenize: 'false',
-        callbackUrl: `${callbackUrl}/training?payment=return`,
+        callbackUrl: `${callbackUrl}/training/payment/success`,
       }),
     });
     const paymentData = await paymentRes.json();
