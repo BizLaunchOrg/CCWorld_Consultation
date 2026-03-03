@@ -26,16 +26,28 @@ Deno.serve(async (req) => {
       );
     }
 
+    const anonKey = Deno.env.get('SUPABASE_ANON_KEY');
+    if (!anonKey) {
+      return new Response(
+        JSON.stringify({
+          error: 'Server misconfiguration: SUPABASE_ANON_KEY not set. Add it in Dashboard → Edge Functions → seerbit-init → Secrets.',
+        }),
+        { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const token = authHeader.replace('Bearer ', '');
     const supabaseAuth = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      anonKey,
       { global: { headers: { Authorization: authHeader } } }
     );
     const { data: { user }, error: userError } = await supabaseAuth.auth.getUser(token);
     if (userError || !user) {
       return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
+        JSON.stringify({
+          error: 'Invalid or expired session. Please log out and log in again, then try paying again.',
+        }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
