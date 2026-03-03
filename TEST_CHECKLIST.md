@@ -6,7 +6,7 @@ Use this to verify the full flow after deployment and Supabase/Seerbit setup.
 
 - Supabase project created; migrations applied (`supabase/migrations/20250303000001_initial_schema.sql`).
 - Auth: Email confirmation enabled; Site URL / Redirect URLs set to `https://www.ccworldconsultation.com` (or your dev URL).
-- Edge Functions deployed: `seerbit-init`, `seerbit-webhook`. Secrets set: `SEERBIT_PUBLIC_KEY`, `SEERBIT_SECRET_KEY`, `SITE_URL`. For `seerbit-init`, `SUPABASE_ANON_KEY` is required for JWT validation (or use project anon key from env).
+- Edge Functions deployed: `seerbit-init`, `seerbit-webhook`. Deploy **seerbit-init** with `--no-verify-jwt` to avoid gateway 401 Invalid JWT (e.g. with ES256 tokens). Secrets: `SEERBIT_PUBLIC_KEY`, `SEERBIT_SECRET_KEY`, `SITE_URL`, `SUPABASE_ANON_KEY`.
 - Seerbit webhook URL configured to your `seerbit-webhook` function URL (deploy webhook with `--no-verify-jwt`).
 
 ---

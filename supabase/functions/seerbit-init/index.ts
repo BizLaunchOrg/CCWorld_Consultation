@@ -1,7 +1,9 @@
 // Supabase Edge Function: seerbit-init
 // Requires authenticated + email confirmed. Creates training_orders with server-controlled price,
 // calls Seerbit to get checkout link, returns checkout_url to client.
-// Secrets: SEERBIT_PUBLIC_KEY, SEERBIT_SECRET_KEY (set in Supabase Dashboard → Edge Functions → seerbit-init)
+// Deploy with: supabase functions deploy seerbit-init --no-verify-jwt
+//   (Gateway JWT verification can fail with ES256-signed tokens; this function validates the user via getUser() instead.)
+// Secrets: SEERBIT_PUBLIC_KEY, SEERBIT_SECRET_KEY, SUPABASE_ANON_KEY (set in Dashboard -> Edge Functions -> seerbit-init)
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
