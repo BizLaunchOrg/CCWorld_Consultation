@@ -20,8 +20,11 @@ export async function initTrainingPayment(trainingId: string): Promise<{
   order_id?: string;
   error?: string;
 }> {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) return { error: 'You must be logged in to pay' };
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  if (sessionError || !session) return { error: 'You must be logged in to pay' };
+
+  // Refresh session so the Edge Function receives a valid, non-expired JWT (gateway returns 401 Invalid JWT otherwise)
+  await supabase.auth.refreshSession({ refresh_token: session.refresh_token });
 
   const { data, error } = await supabase.functions.invoke('seerbit-init', {
     body: { training_id: trainingId },
