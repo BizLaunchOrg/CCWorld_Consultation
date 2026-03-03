@@ -8,6 +8,29 @@ function formatDate(iso: string): string {
   return new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
 }
 
+function formatEngagementType(t?: string): string {
+  if (!t) return '—';
+  const map: Record<string, string> = {
+    licensing_pssp: 'Licensing Advisory: PSSP',
+    licensing_ptsp: 'Licensing Advisory: PTSP',
+    licensing_sandbox: 'Licensing Advisory: Regulatory Sandbox',
+    training: 'Training',
+    advisory: 'Advisory (Risk review & recommendation)',
+  };
+  return map[t] ?? t;
+}
+
+function formatStage(s?: string): string {
+  if (!s) return '—';
+  const map: Record<string, string> = {
+    pre_application: 'Pre-application',
+    aip: 'AIP',
+    existing_ops: 'Existing Ops',
+    not_sure: 'Not sure',
+  };
+  return map[s] ?? s;
+}
+
 export function AdminConsultationsPage() {
   const [consultations, setConsultations] = useState<AdminConsultation[]>(() => [...seedConsultations]);
   const [selected, setSelected] = useState<AdminConsultation | null>(null);
@@ -75,9 +98,9 @@ export function AdminConsultationsPage() {
         {selected && (
           <div className="space-y-5">
             <div className="rounded-2xl border border-slate-200 dark:border-white/10 p-4 space-y-3 text-sm">
-              <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Engagement type</span>{selected.engagement_type ?? '—'}</p>
-              {selected.license_type && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">License type</span>{selected.license_type}</p>}
-              {selected.stage && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Stage</span>{selected.stage}</p>}
+              <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Engagement type</span>{formatEngagementType(selected.engagement_type)}</p>
+              {selected.license_type && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">License type</span><span className="capitalize">{selected.license_type}</span></p>}
+              {selected.stage && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Stage</span>{formatStage(selected.stage)}</p>}
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Full name</span>{selected.customer_name}</p>
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Email</span>{selected.email}</p>
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Phone</span>{selected.phone}</p>

@@ -79,7 +79,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
         >
           Live Chat
         </button>
-        <div className="py-4 px-4 rounded-2xl border border-white/10 bg-white/5">
+        <div className="py-4 px-4 rounded-2xl border border-white/10 bg-[#0f172a]">
           <div className="text-xs font-bold text-slate-400 mb-2">Email Us</div>
           {OFFICIAL_EMAILS.map(({ email, label }) => (
             <EmailRow key={email} email={email} label={label} onCopy={handleCopy} />
@@ -108,7 +108,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
       </button>
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 w-72 rounded-2xl border border-white/10 bg-background-dark/98 dark:bg-slate-900/98 backdrop-blur-xl shadow-xl overflow-hidden z-50"
+          className="absolute right-0 top-full mt-2 w-72 rounded-2xl border border-white/10 shadow-xl overflow-hidden z-50 bg-[#0f172a]"
           role="menu"
         >
           <Link

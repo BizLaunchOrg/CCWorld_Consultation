@@ -34,7 +34,7 @@ export function Nav() {
   }, [mobileOpen]);
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-background-dark/95 dark:bg-background-dark/95 backdrop-blur-md">
+    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#0f172a] dark:bg-[#0f172a] backdrop-blur-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3">
           <img src="/logo.png" alt="CC World Consulting" className="h-20 w-20 object-contain" />
@@ -89,7 +89,7 @@ export function Nav() {
             onClick={closeMobile}
           />
           <div
-            className="absolute top-0 right-0 bottom-0 w-full max-w-sm bg-background-dark dark:bg-slate-900 border-l border-white/10 shadow-2xl flex flex-col"
+            className="absolute top-0 right-0 bottom-0 w-full max-w-sm border-l border-white/10 shadow-2xl flex flex-col bg-[#0f172a]"
             style={{ animation: 'slideInRight 0.25s ease-out' }}
           >
             <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">

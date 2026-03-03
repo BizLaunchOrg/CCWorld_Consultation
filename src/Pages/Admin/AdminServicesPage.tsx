@@ -76,7 +76,7 @@ function ListEditor({
 
 export function AdminServicesPage() {
   const [services, setServices] = useState<Service[]>(() => [...SERVICES_LIST]);
-  const [filter, setFilter] = useState<'all' | 'published' | 'draft'>('all');
+  const [filter, setFilter] = useState<'all' | 'published' | 'draft' | 'licensing'>('all');
   const [search, setSearch] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Service | null>(null);
@@ -87,6 +87,7 @@ export function AdminServicesPage() {
     let list = services;
     if (filter === 'published') list = list.filter((s) => s.published);
     if (filter === 'draft') list = list.filter((s) => !s.published);
+    if (filter === 'licensing') list = list.filter((s) => s.categories.includes('Licensing'));
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       list = list.filter(
@@ -225,7 +226,7 @@ export function AdminServicesPage() {
             className="flex-1 min-w-[200px] rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 px-4 py-2.5 text-slate-900 dark:text-slate-100 text-sm placeholder:text-slate-500 focus:border-teal-accent/50 outline-none"
           />
           <div className="flex rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden">
-            {(['all', 'published', 'draft'] as const).map((f) => (
+            {(['all', 'published', 'draft', 'licensing'] as const).map((f) => (
               <button
                 key={f}
                 type="button"
@@ -234,7 +235,7 @@ export function AdminServicesPage() {
                   filter === f ? 'bg-teal-accent text-background-dark' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
-                {f}
+                {f === 'licensing' ? 'Licensing (CBN)' : f}
               </button>
             ))}
           </div>
@@ -250,7 +251,9 @@ export function AdminServicesPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filtered.map((s) => (
+        {filtered.map((s) => {
+          const isLicensing = s.categories.includes('Licensing');
+          return (
           <div
             key={s.id}
             className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-5 shadow-sm dark:shadow-none"
@@ -262,9 +265,16 @@ export function AdminServicesPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">{s.tagline}</p>
                 <p className="text-primary font-bold mt-2">{s.amount}</p>
               </div>
-              <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-bold bg-teal-accent/10 text-teal-accent">
-                {s.level}
-              </span>
+              <div className="shrink-0 flex flex-col items-end gap-1">
+                {isLicensing && (
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-primary/15 text-primary border border-primary/25">
+                    Licensing (CBN)
+                  </span>
+                )}
+                <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-teal-accent/10 text-teal-accent">
+                  {s.level}
+                </span>
+              </div>
             </div>
             <div className="mt-4 flex items-center justify-between gap-2">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -281,7 +291,8 @@ export function AdminServicesPage() {
               </button>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {filtered.length === 0 && (
