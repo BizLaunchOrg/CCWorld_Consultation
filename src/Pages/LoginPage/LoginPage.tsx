@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -10,6 +11,7 @@ export function LoginPage() {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [authError, setAuthError] = useState('');
 
   function validate(): boolean {
     const next: { email?: string; password?: string } = {};
@@ -21,15 +23,32 @@ export function LoginPage() {
     return Object.keys(next).length === 0;
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setAuthError('');
     if (!validate() || submitting) return;
     setSubmitting(true);
-    setTimeout(() => {
-      setSuccess(true);
-      setSubmitting(false);
-      setTimeout(() => navigate('/', { replace: true }), 1500);
-    }, 600);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+    setSubmitting(false);
+    if (error) {
+      setAuthError(error.message);
+      return;
+    }
+    setSuccess(true);
+    setTimeout(() => navigate('/', { replace: true }), 800);
+  }
+
+  async function handleGoogleSignIn() {
+    setAuthError('');
+    const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin;
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${siteUrl}/` },
+    });
+    if (error) setAuthError(error.message);
   }
 
   return (
@@ -89,6 +108,9 @@ export function LoginPage() {
                 Forgot password?
               </Link>
             </div>
+            {authError && (
+              <p className="text-sm text-red-500 dark:text-red-400">{authError}</p>
+            )}
             <button
               type="submit"
               disabled={submitting || success}
@@ -103,6 +125,7 @@ export function LoginPage() {
             </div>
             <button
               type="button"
+              onClick={handleGoogleSignIn}
               className="w-full py-3.5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 font-bold text-sm hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined text-lg">mail</span>

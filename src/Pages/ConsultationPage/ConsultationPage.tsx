@@ -1,6 +1,8 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { EngagementType, LicensingStage } from '../../types/admin';
+import { useAuth } from '../../contexts/AuthContext';
+import { createConsultation } from '../../lib/consultations';
 
 const ENGAGEMENT_OPTIONS: { value: EngagementType; label: string }[] = [
   { value: 'licensing_pssp', label: 'Licensing Advisory: PSSP' },
@@ -27,6 +29,17 @@ const ORG_TYPES = [
 const TEAM_SIZES = ['1-10 employees', '11-50 employees', '51-200 employees', '200+ employees'];
 const REGIONS = ['Lagos', 'Abuja', 'Port Harcourt', 'Other (Nigeria)'];
 const TIME_SLOTS = ['09:00 AM', '11:30 AM', '02:00 PM', '04:45 PM'];
+
+/** Parse "09:00 AM" -> { hours: 9, minutes: 0 }, "02:00 PM" -> { hours: 14, minutes: 0 } */
+function parseTimeSlot(slot: string): { hours: number; minutes: number } {
+  const match = slot.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return { hours: 9, minutes: 0 };
+  let h = parseInt(match[1], 10);
+  const m = parseInt(match[2], 10);
+  if (match[3].toUpperCase() === 'PM' && h !== 12) h += 12;
+  if (match[3].toUpperCase() === 'AM' && h === 12) h = 0;
+  return { hours: h, minutes: m };
+}
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -63,6 +76,8 @@ const isLicensingEngagement = (e: EngagementType) =>
   e === 'licensing_pssp' || e === 'licensing_ptsp' || e === 'licensing_sandbox';
 
 export function ConsultationPage() {
+  const navigate = useNavigate();
+  const { user, isEmailConfirmed } = useAuth();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -130,10 +145,43 @@ export function ConsultationPage() {
     region: string;
     gap?: string;
   }) {
-    if (import.meta.env.DEV) {
-      console.log('Consultation request payload:', payload);
+    if (!user) {
+      navigate('/login', { state: { from: '/consultation', message: 'Please sign in to book a consultation.' } });
+      return { success: false };
     }
-    return Promise.resolve({ success: true });
+    if (!isEmailConfirmed) {
+      return { success: false };
+    }
+    if (!payload.consultationDate || !payload.consultationTime) {
+      return { success: false };
+    }
+    const { hours, minutes } = parseTimeSlot(payload.consultationTime);
+    const [monthName, dayStr, yearStr] = payload.consultationDate.replace(/,/g, '').split(/\s+/);
+    const month = MONTH_NAMES.indexOf(monthName) + 1;
+    const day = parseInt(dayStr, 10);
+    const year = parseInt(yearStr, 10);
+    const scheduledAt = new Date(year, month - 1, day, hours, minutes).toISOString();
+
+    const { data, error } = await createConsultation({
+      topic: payload.service,
+      scheduled_at: scheduledAt,
+      details: {
+        fullName: payload.fullName,
+        email: payload.email,
+        phone: payload.phone,
+        companyName: payload.companyName,
+        jobTitle: payload.jobTitle,
+        engagement_type: payload.engagement_type,
+        license_type: payload.license_type,
+        stage: payload.stage,
+        note: payload.note,
+        teamSize: payload.teamSize,
+        region: payload.region,
+        gap: payload.gap,
+      },
+    });
+    if (error) throw error;
+    return { success: !!data };
   }
 
   function resetForm() {
@@ -163,6 +211,14 @@ export function ConsultationPage() {
     e.preventDefault();
     if (!fullName?.trim() || !email?.trim() || !phone?.trim()) return;
     if (isLicensingEngagement(engagementType) && !licensingNote?.trim()) return;
+    if (!user) {
+      navigate('/login', { state: { from: '/consultation' } });
+      return;
+    }
+    if (!isEmailConfirmed) return;
+    if (!consultationDate || !consultationTimeSlot) {
+      return;
+    }
     setSubmitting(true);
     const note = isLicensingEngagement(engagementType) ? licensingNote.trim() : (gap?.trim() || '');
     const licenseType = engagementType === 'licensing_pssp' ? 'pssp' : engagementType === 'licensing_ptsp' ? 'ptsp' : engagementType === 'licensing_sandbox' ? 'sandbox' : undefined;
@@ -185,6 +241,9 @@ export function ConsultationPage() {
         gap: gap.trim() || undefined,
       });
       setSuccessModalOpen(true);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Booking failed. Try again.';
+      alert(message);
     } finally {
       setSubmitting(false);
     }
@@ -225,6 +284,16 @@ export function ConsultationPage() {
         <span className="material-symbols-outlined text-xs">chevron_right</span>
         <span className="text-primary">Consultation</span>
       </div>
+
+      {!user && (
+        <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-200 text-sm">
+          <Link to="/login" state={{ from: '/consultation' }} className="font-semibold underline">
+            Sign in
+          </Link>
+          {' '}to book a consultation. If you don&apos;t have an account,{' '}
+          <Link to="/signup" className="font-semibold underline">create one</Link>.
+        </div>
+      )}
 
       {/* Step 1: Org details + Schedule */}
       {step === 1 && (

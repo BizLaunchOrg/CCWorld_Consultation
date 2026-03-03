@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getTrainingBySlug } from '../../data/trainings';
-import { createTransaction } from '../../lib/transactions';
+import { getTrainingProductBySlug } from '../../lib/trainingProducts';
+import { initTrainingPayment } from '../../lib/trainingOrders';
+import { useAuth } from '../../contexts/AuthContext';
 
 function formatPriceNGN(n: number): string {
   return `NGN ${n.toLocaleString('en-NG')}`;
@@ -9,14 +10,55 @@ function formatPriceNGN(n: number): string {
 
 export function TrainingCheckoutPage() {
   const { slug } = useParams<{ slug: string }>();
-  const training = slug ? getTrainingBySlug(slug) : null;
+  const { user, isEmailConfirmed } = useAuth();
+  const [training, setTraining] = useState<Awaited<ReturnType<typeof getTrainingProductBySlug>>>(null);
+  const [loading, setLoading] = useState(true);
+  const [payLoading, setPayLoading] = useState(false);
+  const [payError, setPayError] = useState('');
 
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [company, setCompany] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [successOpen, setSuccessOpen] = useState(false);
+  useEffect(() => {
+    if (!slug) {
+      setTraining(null);
+      setLoading(false);
+      return;
+    }
+    getTrainingProductBySlug(slug).then((t) => {
+      setTraining(t);
+      setLoading(false);
+    });
+  }, [slug]);
+
+  async function payNow() {
+    if (!training || !user) return;
+    if (!isEmailConfirmed) {
+      setPayError('Please confirm your email before paying.');
+      return;
+    }
+    setPayError('');
+    setPayLoading(true);
+    try {
+      const result = await initTrainingPayment(training.id);
+      if (result.error) {
+        setPayError(result.error);
+        return;
+      }
+      if (result.checkout_url) {
+        window.location.href = result.checkout_url;
+        return;
+      }
+      setPayError('Could not start payment. Try again.');
+    } finally {
+      setPayLoading(false);
+    }
+  }
+
+  if (loading) {
+    return (
+      <main className="max-w-7xl mx-auto px-6 py-24 pt-32 text-center">
+        <p className="text-slate-500 dark:text-slate-400">Loading…</p>
+      </main>
+    );
+  }
 
   if (!training) {
     return (
@@ -29,26 +71,6 @@ export function TrainingCheckoutPage() {
     );
   }
 
-  async function payNow() {
-    if (!training) return;
-    setLoading(true);
-    try {
-      const txn = await createTransaction({
-        training_id: training.id,
-        amount: training.priceNGN,
-        currency: 'NGN',
-        status: 'paid', // demo: mark as paid; later Paystack verification will set this
-      });
-      console.log('Transaction created:', txn);
-      setSuccessOpen(true);
-    } catch (e) {
-      console.error(e);
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
     <main className="max-w-7xl mx-auto px-6 py-12 pt-24">
       <nav className="flex items-center gap-2 text-sm font-medium text-slate-400 mb-8">
@@ -56,83 +78,44 @@ export function TrainingCheckoutPage() {
         <span className="material-symbols-outlined text-xs">chevron_right</span>
         <Link to="/training" className="hover:text-teal-accent">Training</Link>
         <span className="material-symbols-outlined text-xs">chevron_right</span>
-        <Link to={`/training/${training.slug}`} className="hover:text-teal-accent">{training.title}</Link>
+        <Link to={`/training/${training.slug}`} className="hover:text-teal-accent">{training.name}</Link>
         <span className="material-symbols-outlined text-xs">chevron_right</span>
         <span className="text-white">Checkout</span>
       </nav>
 
       <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-10">Checkout</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* Buyer details + Payment */}
-        <div className="lg:col-span-2 space-y-8">
-          <section className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-6 sm:p-8">
-            <h2 className="text-xl font-black text-slate-900 dark:text-white mb-6">Your details</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="sm:col-span-2">
-                <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-2">
-                  Full name
-                </label>
-                <input
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Full name"
-                  className="w-full rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 px-4 py-3 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
-                  className="w-full rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 px-4 py-3 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-2">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Phone"
-                  className="w-full rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 px-4 py-3 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label className="block text-sm font-bold text-slate-500 dark:text-slate-400 mb-2">
-                  Company <span className="text-slate-400 font-normal">(optional)</span>
-                </label>
-                <input
-                  type="text"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  placeholder="Company"
-                  className="w-full rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 px-4 py-3 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none"
-                />
-              </div>
-            </div>
-          </section>
+      {!user && (
+        <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-200 text-sm">
+          <Link to="/login" state={{ from: `/checkout/training/${slug}` }} className="font-semibold underline">
+            Sign in
+          </Link>
+          {' '}to pay. Create an account if you don’t have one.
+        </div>
+      )}
 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="lg:col-span-2 space-y-8">
           <section className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-6 sm:p-8">
             <h2 className="text-xl font-black text-slate-900 dark:text-white mb-6">Payment</h2>
             <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">
-              Click Pay Now to complete your booking. You will receive a confirmation email with next steps.
+              Click Pay Now to be redirected to our secure payment page (Seerbit). After payment, you can view the status in your account.
             </p>
+            {payError && (
+              <p className="text-red-500 dark:text-red-400 text-sm mb-4">{payError}</p>
+            )}
             <button
               type="button"
               onClick={payNow}
-              disabled={loading}
+              disabled={payLoading || !user || !isEmailConfirmed}
               className="w-full py-4 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all disabled:opacity-70 disabled:pointer-events-none flex items-center justify-center gap-2"
             >
-              {loading ? (
-                <>Processing…</>
+              {payLoading ? (
+                <>Redirecting…</>
+              ) : !user ? (
+                <>Sign in to pay</>
+              ) : !isEmailConfirmed ? (
+                <>Confirm your email to pay</>
               ) : (
                 <>
                   Pay Now <span className="material-symbols-outlined">payments</span>
@@ -142,7 +125,6 @@ export function TrainingCheckoutPage() {
           </section>
         </div>
 
-        {/* Order summary */}
         <div className="lg:col-span-1">
           <div className="sticky top-32 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-6">
             <h3 className="text-sm font-black text-slate-500 uppercase tracking-widest mb-4">
@@ -150,55 +132,21 @@ export function TrainingCheckoutPage() {
             </h3>
             <div className="space-y-4">
               <div>
-                <p className="font-bold text-slate-900 dark:text-white">{training.title}</p>
-                <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{training.summary}</p>
+                <p className="font-bold text-slate-900 dark:text-white">{training.name}</p>
+                {training.summary && (
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{training.summary}</p>
+                )}
               </div>
               <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex justify-between items-center">
                 <span className="text-slate-500 text-sm">Total</span>
                 <span className="text-primary font-black text-xl">
-                  {formatPriceNGN(training.priceNGN)}
+                  {formatPriceNGN(training.amount)}
                 </span>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Success modal overlay */}
-      {successOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="success-title"
-        >
-          <div className="w-full max-w-md rounded-3xl border border-white/10 bg-background-dark p-8 shadow-2xl">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-teal-accent/20 text-teal-accent mb-6">
-              <span className="material-symbols-outlined text-4xl">check_circle</span>
-            </div>
-            <h2 id="success-title" className="text-2xl font-black text-white mb-2">
-              Payment received
-            </h2>
-            <p className="text-slate-400 mb-8">
-              Your training booking has been received. We’ll email you next steps.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                to="/training"
-                className="flex-1 text-center py-3 rounded-2xl border border-teal-accent/50 text-teal-accent font-black hover:bg-teal-accent/10 transition-all"
-              >
-                Back to Training
-              </Link>
-              <Link
-                to="/"
-                className="flex-1 text-center py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
-              >
-                Go Home
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </main>
   );
 }

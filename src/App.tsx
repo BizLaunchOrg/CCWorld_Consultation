@@ -17,6 +17,7 @@ import { LicensingDetailPage } from './Pages/LicensingDetailPage/LicensingDetail
 import { LoginPage } from './Pages/LoginPage/LoginPage';
 import { SignupPage } from './Pages/SignupPage/SignupPage';
 import { AdminLoginPage } from './Pages/Admin/AdminLoginPage';
+import { AdminUsersPage } from './Pages/Admin/AdminUsersPage';
 import { AdminDashboardPage } from './Pages/Admin/AdminDashboardPage';
 import { AdminServicesPage } from './Pages/Admin/AdminServicesPage';
 import { AdminTrainingsPage } from './Pages/Admin/AdminTrainingsPage';
@@ -42,6 +43,7 @@ function App() {
           }
         >
           <Route index element={<AdminDashboardPage />} />
+          <Route path="users" element={<AdminUsersPage />} />
           <Route path="services" element={<AdminServicesPage />} />
           <Route path="trainings" element={<AdminTrainingsPage />} />
           <Route path="transactions" element={<AdminTransactionsPage />} />

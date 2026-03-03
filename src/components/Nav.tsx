@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { EngageUsDropdown } from './EngageUsDropdown';
+import { useAuth } from '../contexts/AuthContext';
 
 const navLinks: { to: string; label: string }[] = [
   { to: '/', label: 'Home' },
@@ -16,6 +17,7 @@ const NAV_BG = '#0f172a';
 
 export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user, profile, signOut } = useAuth();
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
@@ -58,18 +60,43 @@ export function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <Link
-            to="/signup"
-            className="hidden md:inline-flex px-5 py-2.5 bg-teal-accent text-background-dark text-sm font-bold rounded-2xl hover:shadow-[0_0_20px_rgba(45,212,191,0.35)] transition-all"
-          >
-            Create account
-          </Link>
-          <Link
-            to="/login"
-            className="hidden md:inline-flex px-5 py-2.5 border border-slate-300 dark:border-white/20 text-slate-200 dark:text-white text-sm font-bold rounded-2xl hover:bg-white/10 transition-all"
-          >
-            Login
-          </Link>
+          {user ? (
+            <>
+              {profile?.role === 'admin' && (
+                <Link
+                  to="/admin"
+                  className="hidden md:inline-flex px-5 py-2.5 border border-slate-300 dark:border-white/20 text-slate-200 dark:text-white text-sm font-bold rounded-2xl hover:bg-white/10 transition-all"
+                >
+                  Admin
+                </Link>
+              )}
+              <span className="hidden md:inline text-slate-300 text-sm">
+                {profile?.name || user.email}
+              </span>
+              <button
+                type="button"
+                onClick={() => signOut()}
+                className="hidden md:inline-flex px-5 py-2.5 border border-slate-300 dark:border-white/20 text-slate-200 dark:text-white text-sm font-bold rounded-2xl hover:bg-white/10 transition-all"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/signup"
+                className="hidden md:inline-flex px-5 py-2.5 bg-teal-accent text-background-dark text-sm font-bold rounded-2xl hover:shadow-[0_0_20px_rgba(45,212,191,0.35)] transition-all"
+              >
+                Create account
+              </Link>
+              <Link
+                to="/login"
+                className="hidden md:inline-flex px-5 py-2.5 border border-slate-300 dark:border-white/20 text-slate-200 dark:text-white text-sm font-bold rounded-2xl hover:bg-white/10 transition-all"
+              >
+                Login
+              </Link>
+            </>
+          )}
           <EngageUsDropdown variant="desktop" />
           <button
             type="button"
@@ -141,20 +168,35 @@ export function Nav() {
                 <ThemeToggle />
               </div>
               <div className="flex flex-col gap-3">
-                <Link
-                  to="/signup"
-                  onClick={closeMobile}
-                  className="block w-full py-4 px-4 rounded-2xl bg-teal-accent text-background-dark text-center font-bold text-base hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all touch-manipulation"
-                >
-                  Create account
-                </Link>
-                <Link
-                  to="/login"
-                  onClick={closeMobile}
-                  className="block w-full py-4 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-base hover:bg-white/10 transition-colors touch-manipulation"
-                >
-                  Login
-                </Link>
+                {user ? (
+                  <>
+                    <span className="text-sm text-slate-400 py-2">{profile?.name || user.email}</span>
+                    <button
+                      type="button"
+                      onClick={() => { signOut(); closeMobile(); }}
+                      className="block w-full py-4 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-base hover:bg-white/10 transition-colors touch-manipulation"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/signup"
+                      onClick={closeMobile}
+                      className="block w-full py-4 px-4 rounded-2xl bg-teal-accent text-background-dark text-center font-bold text-base hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all touch-manipulation"
+                    >
+                      Create account
+                    </Link>
+                    <Link
+                      to="/login"
+                      onClick={closeMobile}
+                      className="block w-full py-4 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-base hover:bg-white/10 transition-colors touch-manipulation"
+                    >
+                      Login
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

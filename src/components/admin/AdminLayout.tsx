@@ -5,9 +5,10 @@ import { AdminTopbar } from './AdminTopbar';
 
 const routeTitles: Record<string, string> = {
   '/admin': 'Dashboard',
+  '/admin/users': 'Users',
   '/admin/services': 'Services',
   '/admin/trainings': 'Trainings',
-  '/admin/transactions': 'Transactions',
+  '/admin/transactions': 'Orders',
   '/admin/consultations': 'Consultations',
   '/admin/messages': 'Messages',
   '/admin/settings': 'Settings',

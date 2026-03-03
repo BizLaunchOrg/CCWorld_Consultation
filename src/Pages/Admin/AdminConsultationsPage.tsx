@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import type { AdminConsultation, ConsultationStatus, EngagementType } from '../../types/admin';
-import { seedConsultations } from '../../data/adminSeed';
+import { fetchAdminConsultations, updateConsultationStatus } from '../../lib/adminConsultations';
 import { ListCard } from '../../components/admin/ListCard';
 import { Drawer } from '../../components/admin/Drawer';
 
@@ -37,6 +37,7 @@ const STATUS_OPTIONS: { value: ConsultationStatus | 'all'; label: string }[] = [
   { value: 'in_review', label: 'In review' },
   { value: 'scheduled', label: 'Scheduled' },
   { value: 'completed', label: 'Completed' },
+  { value: 'cancelled', label: 'Cancelled' },
 ];
 
 const ENGAGEMENT_OPTIONS: { value: EngagementType | 'all'; label: string }[] = [
@@ -49,13 +50,21 @@ const ENGAGEMENT_OPTIONS: { value: EngagementType | 'all'; label: string }[] = [
 ];
 
 export function AdminConsultationsPage() {
-  const [consultations, setConsultations] = useState<AdminConsultation[]>(() => [...seedConsultations]);
+  const [consultations, setConsultations] = useState<AdminConsultation[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<AdminConsultation | null>(null);
   const [status, setStatus] = useState<ConsultationStatus>(selected?.status ?? 'new');
   const [internalNotes, setInternalNotes] = useState(selected?.internal_notes ?? '');
   const [statusFilter, setStatusFilter] = useState<ConsultationStatus | 'all'>('all');
   const [engagementFilter, setEngagementFilter] = useState<EngagementType | 'all'>('all');
   const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchAdminConsultations().then((list) => {
+      setConsultations(list);
+      setLoading(false);
+    });
+  }, []);
 
   const newCount = useMemo(() => consultations.filter((c) => c.status === 'new').length, [consultations]);
 
@@ -87,8 +96,13 @@ export function AdminConsultationsPage() {
     setInternalNotes(c.internal_notes ?? '');
   }
 
-  function handleSaveDetail() {
+  async function handleSaveDetail() {
     if (!selected) return;
+    const { error } = await updateConsultationStatus(selected.id, status, internalNotes);
+    if (error) {
+      setToast('Failed to save');
+      return;
+    }
     setConsultations((prev) =>
       prev.map((c) =>
         c.id === selected.id ? { ...c, status, internal_notes: internalNotes } : c
@@ -153,6 +167,10 @@ export function AdminConsultationsPage() {
       </div>
 
       <div className="space-y-3">
+        {loading ? (
+          <p className="text-slate-500 dark:text-slate-400">Loading consultations…</p>
+        ) : (
+        <>
         {filtered.map((c) => (
           <ListCard
             key={c.id}
@@ -174,9 +192,11 @@ export function AdminConsultationsPage() {
             onClick={() => openDetail(c)}
           />
         ))}
+        </>
+        )}
       </div>
 
-      {filtered.length === 0 && (
+      {!loading && filtered.length === 0 && (
         <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
           {consultations.length === 0 ? 'No consultation requests yet.' : 'No requests match the selected filters.'}
         </div>
@@ -230,11 +250,12 @@ export function AdminConsultationsPage() {
                 onChange={(e) => setStatus(e.target.value as ConsultationStatus)}
                 className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
               >
-                <option value="new">New</option>
-                <option value="in_review">In review</option>
-                <option value="scheduled">Scheduled</option>
-                <option value="completed">Completed</option>
-              </select>
+              <option value="new">New</option>
+              <option value="in_review">In review</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
             </div>
             <div>
               <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Internal notes</label>

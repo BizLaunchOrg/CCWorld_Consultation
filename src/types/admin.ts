@@ -25,7 +25,7 @@ export interface AdminTransaction {
   item_title?: string;
 }
 
-export type ConsultationStatus = 'new' | 'in_review' | 'scheduled' | 'completed';
+export type ConsultationStatus = 'new' | 'in_review' | 'scheduled' | 'completed' | 'cancelled';
 
 /** Engagement type from request form. */
 export type EngagementType = 'licensing_pssp' | 'licensing_ptsp' | 'licensing_sandbox' | 'training' | 'advisory';

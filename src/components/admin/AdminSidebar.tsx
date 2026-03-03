@@ -2,9 +2,10 @@ import { Link, useLocation } from 'react-router-dom';
 
 const navItems: { to: string; label: string; icon: string }[] = [
   { to: '/admin', label: 'Dashboard', icon: 'dashboard' },
+  { to: '/admin/users', label: 'Users', icon: 'people' },
   { to: '/admin/services', label: 'Services', icon: 'design_services' },
   { to: '/admin/trainings', label: 'Trainings', icon: 'school' },
-  { to: '/admin/transactions', label: 'Transactions', icon: 'payments' },
+  { to: '/admin/transactions', label: 'Orders', icon: 'payments' },
   { to: '/admin/consultations', label: 'Consultations', icon: 'event_note' },
   { to: '/admin/messages', label: 'Messages', icon: 'chat' },
   { to: '/admin/settings', label: 'Settings', icon: 'settings' },

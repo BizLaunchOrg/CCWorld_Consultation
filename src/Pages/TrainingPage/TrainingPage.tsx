@@ -1,42 +1,37 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { DEMO_TRAININGS, fetchTrainings } from '../../data/trainings';
-import type { Training } from '../../types/training';
+import { fetchTrainingProducts } from '../../lib/trainingProducts';
+import type { TrainingProduct } from '../../lib/trainingProducts';
 import { useChat } from '../../contexts/ChatContext';
 
 const cx = (...a: Array<string | false | null | undefined>) => a.filter(Boolean).join(' ');
-
-const FILTER_CHIPS = ['All', 'Training', 'Advisory'] as const;
 
 function formatPriceNGN(n: number): string {
   return `NGN ${n.toLocaleString('en-NG')}`;
 }
 
 export function TrainingPage() {
-  const [trainings, setTrainings] = useState<Training[]>(DEMO_TRAININGS);
+  const [trainings, setTrainings] = useState<TrainingProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
-  const [filter, setFilter] = useState<string>('All');
   const { openChat } = useChat();
 
   useEffect(() => {
-    fetchTrainings().then(setTrainings);
+    fetchTrainingProducts().then((list) => {
+      setTrainings(list);
+      setLoading(false);
+    });
   }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return trainings.filter((t) => {
-      const matchFilter =
-        filter === 'All' ||
-        (filter === 'Training' && t.category === 'training') ||
-        (filter === 'Advisory' && t.category === 'advisory');
-      const matchQuery =
-        !q ||
-        t.title.toLowerCase().includes(q) ||
-        t.summary.toLowerCase().includes(q) ||
-        t.tagline.toLowerCase().includes(q);
-      return matchFilter && matchQuery;
-    });
-  }, [trainings, filter, query]);
+    if (!q) return trainings;
+    return trainings.filter(
+      (t) =>
+        t.name.toLowerCase().includes(q) ||
+        (t.summary?.toLowerCase().includes(q) ?? false)
+    );
+  }, [trainings, query]);
 
   const prefersReduced =
     typeof window !== 'undefined' &&
@@ -98,51 +93,45 @@ export function TrainingPage() {
                   />
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setFilter('All');
-                  setQuery('');
-                }}
-                className="py-3 px-4 rounded-2xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white hover:border-teal-accent/25 transition-all font-black"
-              >
-                Reset
-              </button>
+            <button
+              type="button"
+              onClick={() => setQuery('')}
+              className="py-3 px-4 rounded-2xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white hover:border-teal-accent/25 transition-all font-black"
+            >
+              Reset
+            </button>
             </div>
           </div>
           <div className="mt-5 flex flex-wrap gap-2">
-            {FILTER_CHIPS.map((chip) => {
-              const on = filter === chip;
-              return (
-                <button
-                  key={chip}
-                  type="button"
-                  onClick={() => setFilter(on ? 'All' : chip)}
-                  className={cx(
-                    'px-3 py-1.5 rounded-full text-xs font-black border transition-all',
-                    on
-                      ? 'bg-teal-accent/15 border-teal-accent/25 text-teal-accent'
-                      : 'bg-primary/10 border-primary/20 text-primary hover:border-teal-accent/25'
-                  )}
-                >
-                  {chip}
-                </button>
-              );
-            })}
+            <button
+              type="button"
+              onClick={() => setQuery('')}
+              className={cx(
+                'px-3 py-1.5 rounded-full text-xs font-black border transition-all',
+                !query
+                  ? 'bg-teal-accent/15 border-teal-accent/25 text-teal-accent'
+                  : 'bg-primary/10 border-primary/20 text-primary hover:border-teal-accent/25'
+              )}
+            >
+              All
+            </button>
           </div>
         </div>
       </section>
 
       {/* Training cards */}
       <section className="max-w-7xl mx-auto px-6 py-14">
+        {loading ? (
+          <p className="text-slate-500 dark:text-slate-400">Loading offerings…</p>
+        ) : (
+        <>
         <div className="flex items-end justify-between gap-6 mb-8">
           <div>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
               Training & Advisory
             </h2>
             <p className="text-slate-600 dark:text-slate-400 mt-2">
-              {filtered.length} offering{filtered.length === 1 ? '' : 's'} shown
-              {filter !== 'All' ? ` • ${filter}` : ''}.
+              {filtered.length} offering{filtered.length === 1 ? '' : 's'} shown.
             </p>
           </div>
         </div>
@@ -155,38 +144,23 @@ export function TrainingPage() {
             >
               <div className="flex items-start gap-4">
                 <span className="size-12 rounded-2xl bg-teal-accent/10 border border-teal-accent/20 flex items-center justify-center text-teal-accent shrink-0">
-                  <span className="material-symbols-outlined">
-                    {t.category === 'advisory' ? 'recommend' : 'school'}
-                  </span>
+                  <span className="material-symbols-outlined">school</span>
                 </span>
                 <div className="min-w-0">
-                  {t.category === 'advisory' && (
-                    <span className="text-[10px] font-black uppercase tracking-widest text-primary">
-                      Advisory
-                    </span>
-                  )}
                   <h3 className="text-slate-900 dark:text-white font-black text-lg leading-tight">
-                    {t.title}
+                    {t.name}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-500 text-xs mt-1">{t.tagline}</p>
+                  {t.summary && (
+                    <p className="text-slate-600 dark:text-slate-500 text-xs mt-1 line-clamp-2">{t.summary}</p>
+                  )}
                 </div>
               </div>
               <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5">
-                {t.summary}
+                {t.summary || 'Structured training and evidence of completion.'}
               </p>
-              <ul className="mt-5 space-y-2">
-                {t.benefits.slice(0, 5).map((b) => (
-                  <li key={b} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-xs">
-                    <span className="material-symbols-outlined text-teal-accent text-sm mt-0.5 shrink-0">
-                      check
-                    </span>
-                    {b}
-                  </li>
-                ))}
-              </ul>
               <div className="mt-6 flex items-center justify-between gap-4">
                 <span className="text-primary font-black text-lg">
-                  {formatPriceNGN(t.priceNGN)}
+                  {formatPriceNGN(t.amount)}
                 </span>
               </div>
               <div className="mt-6 flex gap-3">
@@ -194,7 +168,7 @@ export function TrainingPage() {
                   to={`/training/${t.slug}`}
                   className="flex-1 text-center px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
                 >
-                  {t.category === 'advisory' ? 'View Advisory' : 'View Training'}
+                  View & Pay
                 </Link>
                 <Link
                   to="/consultation"
@@ -220,19 +194,18 @@ export function TrainingPage() {
               No offerings found
             </div>
             <div className="text-slate-600 dark:text-slate-400 mt-2">
-              Try a different keyword or filter.
+              Try a different keyword or check back later.
             </div>
             <button
               type="button"
-              onClick={() => {
-                setFilter('All');
-                setQuery('');
-              }}
+              onClick={() => setQuery('')}
               className="mt-6 px-6 py-3 rounded-2xl bg-teal-accent text-background-dark font-black"
             >
               Reset
             </button>
           </div>
+        )}
+        </>
         )}
       </section>
 
