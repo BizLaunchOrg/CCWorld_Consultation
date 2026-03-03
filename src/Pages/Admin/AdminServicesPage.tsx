@@ -25,6 +25,7 @@ const emptyForm: Omit<Service, 'id' | 'updated_at'> & { id?: string; updated_at?
   icon: 'design_services',
   published: false,
   sort_order: 0,
+  content_sections: [],
 };
 
 function ListEditor({
@@ -124,6 +125,7 @@ export function AdminServicesPage() {
       icon: s.icon,
       published: s.published,
       sort_order: s.sort_order ?? 0,
+      content_sections: s.content_sections ? [...s.content_sections.map((sec) => ({ ...sec, bullets: sec.bullets ? [...sec.bullets] : undefined }))] : [],
       updated_at: s.updated_at,
     });
     setErrors({});
@@ -165,6 +167,11 @@ export function AdminServicesPage() {
                 slug,
                 categories: form.categories.filter(Boolean),
                 outcomes: form.outcomes.filter(Boolean),
+                content_sections: form.content_sections?.filter((sec) => sec.heading.trim()).map((sec) => ({
+                  heading: sec.heading.trim(),
+                  text: sec.text?.trim() || undefined,
+                  bullets: sec.bullets?.filter(Boolean).length ? sec.bullets?.filter(Boolean) : undefined,
+                })),
                 updated_at: now,
               }
         : s
@@ -187,6 +194,11 @@ export function AdminServicesPage() {
           icon: form.icon.trim() || 'design_services',
           published: form.published,
           sort_order: form.sort_order ?? 0,
+          content_sections: form.content_sections?.filter((sec) => sec.heading.trim()).map((sec) => ({
+            heading: sec.heading.trim(),
+            text: sec.text?.trim() || undefined,
+            bullets: sec.bullets?.filter(Boolean).length ? sec.bullets?.filter(Boolean) : undefined,
+          })),
           updated_at: now,
         },
       ]);
@@ -345,6 +357,70 @@ export function AdminServicesPage() {
                 onChange={(outcomes) => setForm((f) => ({ ...f, outcomes }))}
                 placeholder="e.g. Board-approved charter"
               />
+            </div>
+          </section>
+
+          <section>
+            <h3 className="text-sm font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">Content Sections (detail page)</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">Optional. Used for licensing and other detail pages. Each section has a heading and either paragraph text or bullet list.</p>
+            <div className="space-y-4">
+              {(form.content_sections ?? []).map((sec, idx) => (
+                <div key={idx} className="rounded-2xl border border-slate-200 dark:border-white/10 p-4 space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <input
+                      type="text"
+                      value={sec.heading}
+                      onChange={(e) => {
+                        const sections = [...(form.content_sections ?? [])];
+                        sections[idx] = { ...sections[idx], heading: e.target.value };
+                        setForm((f) => ({ ...f, content_sections: sections }));
+                      }}
+                      placeholder="Section heading"
+                      className="flex-1 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-3 py-2 text-sm font-bold text-slate-900 dark:text-slate-100"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setForm((f) => ({ ...f, content_sections: (f.content_sections ?? []).filter((_, i) => i !== idx) }))}
+                      className="p-2 text-red-500 hover:bg-red-500/10 rounded-xl"
+                    >
+                      <span className="material-symbols-outlined text-lg">remove</span>
+                    </button>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Paragraph (optional)</label>
+                    <textarea
+                      value={sec.text ?? ''}
+                      onChange={(e) => {
+                        const sections = [...(form.content_sections ?? [])];
+                        sections[idx] = { ...sections[idx], text: e.target.value || undefined };
+                        setForm((f) => ({ ...f, content_sections: sections }));
+                      }}
+                      rows={2}
+                      placeholder="Paragraph text"
+                      className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-3 py-2 text-sm text-slate-900 dark:text-slate-100 resize-none"
+                    />
+                  </div>
+                  <div>
+                    <ListEditor
+                      label="Bullets (optional)"
+                      items={sec.bullets ?? []}
+                      onChange={(bullets) => {
+                        const sections = [...(form.content_sections ?? [])];
+                        sections[idx] = { ...sections[idx], bullets: bullets.length ? bullets : undefined };
+                        setForm((f) => ({ ...f, content_sections: sections }));
+                      }}
+                      placeholder="Bullet item"
+                    />
+                  </div>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setForm((f) => ({ ...f, content_sections: [...(f.content_sections ?? []), { heading: '' }] }))}
+                className="text-sm font-semibold text-teal-accent hover:underline"
+              >
+                + Add section
+              </button>
             </div>
           </section>
 

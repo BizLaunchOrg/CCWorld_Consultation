@@ -1,5 +1,21 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import type { EngagementType, LicensingStage } from '../../types/admin';
+
+const ENGAGEMENT_OPTIONS: { value: EngagementType; label: string }[] = [
+  { value: 'licensing_pssp', label: 'Licensing Advisory: PSSP' },
+  { value: 'licensing_ptsp', label: 'Licensing Advisory: PTSP' },
+  { value: 'licensing_sandbox', label: 'Licensing Advisory: Regulatory Sandbox' },
+  { value: 'training', label: 'Training' },
+  { value: 'advisory', label: 'Advisory (Risk review & recommendation)' },
+];
+
+const LICENSING_STAGES: { value: LicensingStage; label: string }[] = [
+  { value: 'pre_application', label: 'Pre-application' },
+  { value: 'aip', label: 'AIP' },
+  { value: 'existing_ops', label: 'Existing Ops' },
+  { value: 'not_sure', label: 'Not sure' },
+];
 
 const ORG_TYPES = [
   { value: 'bank', label: 'Bank', desc: 'Established commercial banking', icon: 'account_balance' },
@@ -31,12 +47,20 @@ function isPastDate(year: number, month: number, day: number): boolean {
   return d < today;
 }
 
-function getServiceLabel(orgType: string, customOrg?: string): string {
+function getServiceLabel(engagementType: EngagementType, orgType: string, customOrg?: string): string {
+  if (engagementType === 'licensing_pssp') return 'Licensing Advisory: PSSP';
+  if (engagementType === 'licensing_ptsp') return 'Licensing Advisory: PTSP';
+  if (engagementType === 'licensing_sandbox') return 'Licensing Advisory: Regulatory Sandbox';
+  if (engagementType === 'training') return 'Training';
+  if (engagementType === 'advisory') return 'Advisory (Risk review & recommendation)';
   if (orgType === 'bank') return 'Regulatory Advisory for Banks';
   if (orgType === 'fintech') return 'Regulatory Advisory for Fintechs';
   if (orgType === 'imto') return 'Regulatory Advisory for IMTOs';
   return customOrg ? `Regulatory Advisory for ${customOrg}` : 'Regulatory Advisory';
 }
+
+const isLicensingEngagement = (e: EngagementType) =>
+  e === 'licensing_pssp' || e === 'licensing_ptsp' || e === 'licensing_sandbox';
 
 export function ConsultationPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -49,6 +73,9 @@ export function ConsultationPage() {
   }, []);
 
   // Step 1
+  const [engagementType, setEngagementType] = useState<EngagementType>('advisory');
+  const [licensingStage, setLicensingStage] = useState<LicensingStage>('not_sure');
+  const [licensingNote, setLicensingNote] = useState('');
   const [orgType, setOrgType] = useState<string>('bank');
   const [customOrgName, setCustomOrgName] = useState('');
   const [teamSize, setTeamSize] = useState<string>(TEAM_SIZES[0]);
@@ -71,6 +98,7 @@ export function ConsultationPage() {
 
   const handleStep1 = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLicensingEngagement(engagementType) && !licensingNote?.trim()) return;
     setStep(2);
   };
 
@@ -92,6 +120,10 @@ export function ConsultationPage() {
     companyName?: string;
     jobTitle?: string;
     service: string;
+    engagement_type?: EngagementType;
+    license_type?: 'pssp' | 'ptsp' | 'sandbox';
+    stage?: LicensingStage;
+    note: string;
     consultationDate?: string;
     consultationTime?: string;
     teamSize: string;
@@ -111,6 +143,9 @@ export function ConsultationPage() {
     setPhone('');
     setCompanyName('');
     setJobTitle('');
+    setEngagementType('advisory');
+    setLicensingStage('not_sure');
+    setLicensingNote('');
     setCustomOrgName('');
     setOrgType('bank');
     setTeamSize(TEAM_SIZES[0]);
@@ -127,7 +162,10 @@ export function ConsultationPage() {
   const handleSubmitRequest = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fullName?.trim() || !email?.trim() || !phone?.trim()) return;
+    if (isLicensingEngagement(engagementType) && !licensingNote?.trim()) return;
     setSubmitting(true);
+    const note = isLicensingEngagement(engagementType) ? licensingNote.trim() : (gap?.trim() || '');
+    const licenseType = engagementType === 'licensing_pssp' ? 'pssp' : engagementType === 'licensing_ptsp' ? 'ptsp' : engagementType === 'licensing_sandbox' ? 'sandbox' : undefined;
     try {
       await submitConsultationRequest({
         fullName: fullName.trim(),
@@ -135,7 +173,11 @@ export function ConsultationPage() {
         phone: phone.trim(),
         companyName: companyName.trim() || undefined,
         jobTitle: jobTitle.trim() || undefined,
-        service: getServiceLabel(orgType, customOrgName),
+        service: getServiceLabel(engagementType, orgType, customOrgName),
+        engagement_type: engagementType,
+        license_type: licenseType,
+        stage: isLicensingEngagement(engagementType) ? licensingStage : undefined,
+        note,
         consultationDate: consultationDate || undefined,
         consultationTime: consultationTimeSlot || undefined,
         teamSize,
@@ -203,6 +245,56 @@ export function ConsultationPage() {
                 <h2 className="text-xl font-bold">Organization Details</h2>
               </div>
               <form onSubmit={handleStep1} className="space-y-6">
+                <div>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-4">What do you want to engage us for?</p>
+                  <select
+                    value={engagementType}
+                    onChange={(e) => setEngagementType(e.target.value as EngagementType)}
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary px-4 py-3 text-slate-900 dark:text-white"
+                  >
+                    {ENGAGEMENT_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                </div>
+                {isLicensingEngagement(engagementType) && (
+                  <div className="rounded-xl border-2 border-teal-accent/20 bg-teal-accent/5 dark:bg-teal-accent/10 p-4 space-y-4">
+                    <p className="text-sm font-bold text-slate-700 dark:text-slate-300">Licensing details</p>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Company name (optional)</label>
+                      <input
+                        type="text"
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
+                        placeholder="Your company name"
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Stage</label>
+                      <select
+                        value={licensingStage}
+                        onChange={(e) => setLicensingStage(e.target.value as LicensingStage)}
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary px-4 py-3 text-slate-900 dark:text-white"
+                      >
+                        {LICENSING_STAGES.map((opt) => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Note / message (required)</label>
+                      <textarea
+                        value={licensingNote}
+                        onChange={(e) => setLicensingNote(e.target.value)}
+                        placeholder="Tell us about your licensing needs, timeline, or questions..."
+                        rows={4}
+                        required={isLicensingEngagement(engagementType)}
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary placeholder:text-slate-400 px-4 py-3 text-slate-900 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-4">What type of organization do you represent?</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -541,8 +633,28 @@ export function ConsultationPage() {
                     )}
                     <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
                       <span className="text-slate-500 dark:text-slate-400 text-sm">Service</span>
-                      <span className="text-slate-900 dark:text-white font-medium text-right">{getServiceLabel(orgType, customOrgName)}</span>
+                      <span className="text-slate-900 dark:text-white font-medium text-right">{getServiceLabel(engagementType, orgType, customOrgName)}</span>
                     </div>
+                    {isLicensingEngagement(engagementType) && (
+                      <>
+                        <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
+                          <span className="text-slate-500 dark:text-slate-400 text-sm">License type</span>
+                          <span className="text-slate-900 dark:text-white font-medium text-right">
+                            {engagementType === 'licensing_pssp' ? 'PSSP' : engagementType === 'licensing_ptsp' ? 'PTSP' : 'Regulatory Sandbox'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
+                          <span className="text-slate-500 dark:text-slate-400 text-sm">Stage</span>
+                          <span className="text-slate-900 dark:text-white font-medium text-right">
+                            {LICENSING_STAGES.find((s) => s.value === licensingStage)?.label ?? licensingStage}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
+                          <span className="text-slate-500 dark:text-slate-400 text-sm">Note / message</span>
+                          <span className="text-slate-900 dark:text-white font-medium text-right text-sm whitespace-pre-wrap">{licensingNote || '—'}</span>
+                        </div>
+                      </>
+                    )}
                     {consultationDate && (
                       <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
                         <span className="text-slate-500 dark:text-slate-400 text-sm">Preferred date</span>

@@ -27,14 +27,27 @@ export interface AdminTransaction {
 
 export type ConsultationStatus = 'new' | 'in_review' | 'scheduled' | 'completed';
 
+/** Engagement type from request form. */
+export type EngagementType = 'licensing_pssp' | 'licensing_ptsp' | 'licensing_sandbox' | 'training' | 'advisory';
+
+/** Stage when licensing is selected. */
+export type LicensingStage = 'pre_application' | 'aip' | 'existing_ops' | 'not_sure';
+
 /** Consultation requests only (no payment). */
 export interface AdminConsultation {
   id: string;
+  /** Engagement type from form. */
+  engagement_type?: EngagementType;
+  /** When engagement is licensing: pssp | ptsp | sandbox */
+  license_type?: 'pssp' | 'ptsp' | 'sandbox';
+  /** When licensing: stage in process */
+  stage?: LicensingStage;
   customer_name: string;
   email: string;
   phone: string;
   company: string;
   job_title: string;
+  /** Human-readable service/inquiry label (kept for backward compat). */
   service_selected: string;
   note: string;
   preferred_date?: string;

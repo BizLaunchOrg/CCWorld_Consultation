@@ -58,7 +58,7 @@ export function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-slate-500">
-        <p>© 2024 CC World Consulting. All rights reserved.</p>
+        <p>© 2026 CCworld Consulting. All rights reserved.</p>
         <div className="flex gap-8">
           <Link to="#" className="text-slate-400 hover:text-teal-accent transition-colors">Privacy Policy</Link>
           <Link to="#" className="text-slate-400 hover:text-teal-accent transition-colors">Terms of Service</Link>

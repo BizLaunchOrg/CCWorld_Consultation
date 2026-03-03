@@ -75,6 +75,9 @@ export function AdminConsultationsPage() {
         {selected && (
           <div className="space-y-5">
             <div className="rounded-2xl border border-slate-200 dark:border-white/10 p-4 space-y-3 text-sm">
+              <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Engagement type</span>{selected.engagement_type ?? '—'}</p>
+              {selected.license_type && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">License type</span>{selected.license_type}</p>}
+              {selected.stage && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Stage</span>{selected.stage}</p>}
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Full name</span>{selected.customer_name}</p>
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Email</span>{selected.email}</p>
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Phone</span>{selected.phone}</p>
@@ -90,7 +93,7 @@ export function AdminConsultationsPage() {
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Submitted at</span>{formatDate(selected.created_at)}</p>
             </div>
             <div className="rounded-2xl border border-slate-200 dark:border-white/10 p-4">
-              <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Note / message / extra details</p>
+              <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Note / message</p>
               <p className="text-slate-900 dark:text-white whitespace-pre-wrap">{selected.note || '—'}</p>
             </div>
             <div>

@@ -102,6 +102,9 @@ export function AdminSettingsPage() {
             Save (stub)
           </button>
         </div>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+          <strong>How to create other emails:</strong> Use your email provider (e.g. Google Workspace, Microsoft 365, or your domain host) to add aliases or mailboxes for your domain (e.g. info@, support@, opeyemioluwa@). Forward or use the same inbox as needed. Provider-agnostic.
+        </p>
       </div>
     </div>
   );

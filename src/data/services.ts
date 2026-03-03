@@ -172,6 +172,104 @@ export const SERVICES_LIST: Service[] = [
     sort_order: 10,
     updated_at: '2025-02-19T14:00:00Z',
   },
+  // --- Licensing Advisory (CBN) ---
+  {
+    id: 'svc-lic-pssp',
+    slug: 'pssp',
+    icon: 'payments',
+    title: 'PSSP License Advisory',
+    tagline: 'Payment Solution Service Provider licensing support.',
+    summary:
+      'End-to-end advisory for CBN Payment Solution Service Provider (PSSP) licensing: corporate and capital requirements, documentation, compliance framework, and regulator engagement.',
+    categories: ['Licensing', 'Regulatory', 'Governance', 'Policies'],
+    outcomes: [
+      'Document pack aligned to CBN PSSP framework',
+      'Gap review and readiness roadmap',
+      'Testing and compliance framework',
+      'Regulator engagement support',
+    ],
+    duration_label: 'Advisory',
+    level: 'Build',
+    amount: 'Engagement-based',
+    published: true,
+    sort_order: 50,
+    updated_at: '2025-03-03T10:00:00Z',
+    content_sections: [
+      { heading: 'Overview', text: 'A Payment Solution Service Provider (PSSP) is licensed by the CBN to provide payment solution services. The license allows the holder to offer specified payment services but does not permit holding customer funds, issuing e-wallets, or performing settlement — those activities require other licenses.' },
+      { heading: 'Corporate & Registration Requirements', bullets: ['CAC incorporation documents (MEMART, form CAC 2, etc.)', 'Board and management structure', 'Registered office address in Nigeria'] },
+      { heading: 'Capital & Financial Requirements', bullets: ['Minimum shareholders\' fund: ₦100,000,000', 'Escrow/designated account: ₦100,000,000', 'Application and licensing fees as prescribed by CBN'] },
+      { heading: 'Documentation & Operational Evidence', bullets: ['Business plan and 3-year financial projections', 'Governance: CVs of board/senior management', 'IT infrastructure and security overview', 'Partnership agreements (if applicable)'] },
+      { heading: 'Regulatory & Compliance', bullets: ['AML/CFT policy and procedures', 'Cybersecurity and data protection framework', 'Reporting and monitoring procedures', 'Dispute management and consumer protection'] },
+      { heading: 'Important note', text: 'PSSP does NOT permit holding customer funds, issuing e-wallets, or performing settlement. Those activities require other CBN licenses (e.g. MMO, PSP).' },
+      { heading: 'Typical Application Process', bullets: ['Pre-consultation and readiness assessment', 'Submission of application and supporting documents', 'CBN due diligence and review', 'Approval-in-principle (AIP)', 'Final license issuance'] },
+      { heading: 'How we help', bullets: ['Document pack aligned to CBN PSSP requirements', 'Gap review and readiness roadmap', 'Testing plan and compliance framework', 'Regulator engagement support'] },
+    ],
+  },
+  {
+    id: 'svc-lic-ptsp',
+    slug: 'ptsp',
+    icon: 'point_of_sale',
+    title: 'PTSP License Advisory',
+    tagline: 'Payment Terminal Service Provider licensing support.',
+    summary:
+      'Advisory for CBN Payment Terminal Service Provider (PTSP) licensing: corporate and legal eligibility, capital and escrow, documentary requirements, fees, and compliance preparedness.',
+    categories: ['Licensing', 'Regulatory', 'Governance', 'Technology'],
+    outcomes: [
+      'Eligibility and documentary checklist',
+      'Capital and escrow structuring',
+      'Compliance and operational readiness pack',
+      'Approval process and renewal support',
+    ],
+    duration_label: 'Advisory',
+    level: 'Build',
+    amount: 'Engagement-based',
+    published: true,
+    sort_order: 51,
+    updated_at: '2025-03-03T10:00:00Z',
+    content_sections: [
+      { heading: 'Corporate & Legal Eligibility', bullets: ['Duly incorporated in Nigeria (CAC)', 'Fit and proper directors and key officers', 'Clear ownership structure'] },
+      { heading: 'Capital + Escrow', bullets: ['Minimum shareholders\' fund: ₦100,000,000', 'Escrow: ₦100,000,000 in designated account'] },
+      { heading: 'Documentary Requirements', bullets: ['CAC documents (MEMART, CAC 2, etc.)', 'Business plan and financial projections', 'Partner/acquirer agreements (if applicable)', 'Relevant certifications (e.g. PCI DSS where applicable)'] },
+      { heading: 'Fees', bullets: ['Application fee: ₦100,000', 'License fee: ₦1,000,000'] },
+      { heading: 'Compliance & Operational Preparedness', bullets: ['Fit and proper assessment for directors/officers', 'Security and business continuity (PCI DSS, DRP/BCP)', 'AML/CFT and risk framework', 'Reporting and monitoring procedures'] },
+      { heading: 'Approval Process & Renewal', bullets: ['Submission → CBN review → Approval-in-principle (AIP)', 'Final license issuance after meeting conditions', 'Renewal as per CBN guidelines'] },
+      { heading: 'Summary Checklist', bullets: ['CAC documents', 'Business plan and projections', '₦100m shareholders\' fund + ₦100m escrow', 'Application ₦100k + license ₦1m', 'Governance, AML/CFT, security, and reporting evidence'] },
+    ],
+  },
+  {
+    id: 'svc-lic-sandbox',
+    slug: 'sandbox',
+    icon: 'science',
+    title: 'Regulatory Sandbox Support',
+    tagline: 'CBN Regulatory Sandbox participation support.',
+    summary:
+      'End-to-end support for CBN Regulatory Sandbox applications: eligibility, product documentation, risk and compliance framework, testing plan, technology and security, and reporting.',
+    categories: ['Licensing', 'Regulatory', 'Governance', 'Technology'],
+    outcomes: [
+      'Eligibility and application pack',
+      'Product/solution and risk documentation',
+      'Testing plan and KPIs',
+      'Reporting and post-sandbox roadmap',
+    ],
+    duration_label: 'Advisory',
+    level: 'Advanced',
+    amount: 'Engagement-based',
+    published: true,
+    sort_order: 52,
+    updated_at: '2025-03-03T10:00:00Z',
+    content_sections: [
+      { heading: 'Eligibility Criteria', text: 'Innovative product or service in the regulated space; ability to participate within sandbox timelines; readiness to comply with CBN reporting and exit requirements.' },
+      { heading: 'Corporate & Governance Documents', bullets: ['CAC documents', 'Board and management', 'Fit and proper declarations'] },
+      { heading: 'Product/Solution Documentation', bullets: ['Transaction flow and architecture', 'APIs and integration points', 'Description of innovation and use case'] },
+      { heading: 'Risk Management & Compliance Framework', bullets: ['AML/KYC and NDPR alignment', 'Consumer protection and complaint handling', 'Exit and contingency plan'] },
+      { heading: 'Testing Plan', bullets: ['Objectives and success criteria', 'Duration and number of test customers', 'Transaction/volume limits', 'KPIs and reporting to CBN', 'Exit strategy from sandbox'] },
+      { heading: 'Technology & Security', bullets: ['IT governance', 'DRP/BCP', 'Security controls'] },
+      { heading: 'Financial info', bullets: ['Projections for test period', 'Source of funds'] },
+      { heading: 'Timelines and reporting to CBN', text: 'Application timeline, in-sandbox reporting frequency, and final report requirements as per CBN sandbox framework.' },
+      { heading: 'Post-sandbox outcomes', text: 'Path to full licensing or exit; CBN may allow graduation to full license or require wind-down based on outcomes.' },
+      { heading: 'Sandbox Application Checklist', bullets: ['1. Eligibility confirmation', '2. Corporate and governance documents', '3. Product/solution documentation', '4. Transaction flow and architecture', '5. Risk and compliance framework (AML/KYC/NDPR/consumer protection)', '6. Testing plan (objectives, duration, customers, limits, KPIs, exit)', '7. Technology and security (IT governance, DRP/BCP)', '8. Financial projections and source of funds', '9. Timelines and reporting commitment', '10. Management and key personnel', '11. Legal and regulatory disclosures', '12. Declaration and signatures'] },
+    ],
+  },
 ];
 
 export function getServiceBySlug(slug: string): Service | undefined {
@@ -180,4 +278,14 @@ export function getServiceBySlug(slug: string): Service | undefined {
 
 export function getPublishedServices(): Service[] {
   return SERVICES_LIST.filter((s) => s.published).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+}
+
+/** Services for main grid (excludes Licensing Advisory). */
+export function getPublishedNonLicensingServices(): Service[] {
+  return getPublishedServices().filter((s) => !s.categories.includes('Licensing'));
+}
+
+/** Licensing Advisory (CBN) services only. */
+export function getLicensingServices(): Service[] {
+  return SERVICES_LIST.filter((s) => s.categories.includes('Licensing') && s.published).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
 }

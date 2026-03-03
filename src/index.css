@@ -25,6 +25,15 @@
   }
 }
 
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 .ticker-scroll {
   display: flex;
   animation: marquee 40s linear infinite;

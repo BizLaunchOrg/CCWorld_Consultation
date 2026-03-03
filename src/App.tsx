@@ -12,6 +12,10 @@ import { InsightsPage } from './Pages/InsightsPage/InsightsPage';
 import { TrainingPage } from './Pages/TrainingPage/TrainingPage';
 import { TrainingDetailsPage } from './Pages/TrainingDetailsPage/TrainingDetailsPage';
 import { TrainingCheckoutPage } from './Pages/TrainingCheckoutPage/TrainingCheckoutPage';
+import { LicensingPage } from './Pages/LicensingPage/LicensingPage';
+import { LicensingDetailPage } from './Pages/LicensingDetailPage/LicensingDetailPage';
+import { LoginPage } from './Pages/LoginPage/LoginPage';
+import { SignupPage } from './Pages/SignupPage/SignupPage';
 import { AdminLoginPage } from './Pages/Admin/AdminLoginPage';
 import { AdminDashboardPage } from './Pages/Admin/AdminDashboardPage';
 import { AdminServicesPage } from './Pages/Admin/AdminServicesPage';
@@ -54,9 +58,13 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/insights" element={<InsightsPage />} />
           <Route path="/consultation" element={<ConsultationPage />} />
+          <Route path="/licensing" element={<LicensingPage />} />
+          <Route path="/licensing/:slug" element={<LicensingDetailPage />} />
           <Route path="/training" element={<TrainingPage />} />
           <Route path="/training/:slug" element={<TrainingDetailsPage />} />
           <Route path="/checkout/training/:slug" element={<TrainingCheckoutPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Route>
       </Routes>
     </ThemeProvider>
