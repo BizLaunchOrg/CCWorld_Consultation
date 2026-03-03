@@ -7,11 +7,15 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Max-Age': '86400',
 };
 
 Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { status: 200, headers: corsHeaders });
+  }
 
   try {
     const authHeader = req.headers.get('Authorization');
@@ -96,8 +100,8 @@ Deno.serve(async (req) => {
       body: JSON.stringify({ key: `${secretKey}.${publicKey}` }),
     });
     const encryptData = await encryptRes.json();
-    const token = encryptData?.data?.EncryptedSecKey?.encryptedKey;
-    if (!token) {
+    const bearerToken = encryptData?.data?.EncryptedSecKey?.encryptedKey;
+    if (!bearerToken) {
       return new Response(
         JSON.stringify({ error: 'Payment provider error' }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -108,7 +112,7 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${bearerToken}`,
       },
       body: JSON.stringify({
         publicKey,
