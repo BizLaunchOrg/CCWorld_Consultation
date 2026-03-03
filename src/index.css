@@ -65,6 +65,12 @@
   body {
     @apply bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 selection:bg-primary/30;
   }
+  /* Prevent iOS from zooming on input focus (needs font-size >= 16px). Use 16px minimum on touch devices. */
+  @media (pointer: coarse) {
+    input, select, textarea, button {
+      font-size: max(16px, 1em);
+    }
+  }
 }
 
 .mesh-gradient {
