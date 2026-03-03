@@ -5,7 +5,15 @@ export function TrainingPaymentSuccessPage() {
   const reference = searchParams.get('reference') ?? undefined;
 
   return (
-    <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-16 pt-28">
+    <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 pt-24">
+      <nav className="flex items-center gap-2 text-sm font-medium text-slate-400 mb-8">
+        <Link to="/" className="hover:text-teal-accent">Home</Link>
+        <span className="material-symbols-outlined text-xs">chevron_right</span>
+        <Link to="/training" className="hover:text-teal-accent">Training</Link>
+        <span className="material-symbols-outlined text-xs">chevron_right</span>
+        <span className="text-white">Payment successful</span>
+      </nav>
+
       <div className="max-w-xl mx-auto text-center">
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-teal-500/20 text-teal-accent mb-8">
           <span className="material-symbols-outlined text-5xl">check_circle</span>
@@ -21,9 +29,10 @@ export function TrainingPaymentSuccessPage() {
         </p>
 
         {reference && (
-          <p className="text-slate-400 dark:text-slate-600 text-sm mb-8 font-mono">
-            Reference: {reference}
-          </p>
+          <div className="bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-white/10 rounded-2xl p-4 mb-8 text-left">
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Reference</p>
+            <p className="text-slate-700 dark:text-slate-200 font-mono text-sm break-all">{reference}</p>
+          </div>
         )}
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

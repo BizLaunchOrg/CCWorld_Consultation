@@ -15,12 +15,13 @@ export interface TrainingOrderRow {
 
 export interface TrainingOrderWithProduct extends TrainingOrderRow {
   training_products?: { name: string; slug: string } | null;
+  profiles?: { name: string | null; email: string | null } | null;
 }
 
 export async function fetchAdminTrainingOrders(): Promise<TrainingOrderWithProduct[]> {
   const { data, error } = await supabase
     .from('training_orders')
-    .select('*, training_products(name, slug)')
+    .select('*, training_products(name, slug), profiles(name, email)')
     .order('created_at', { ascending: false });
   if (error) return [];
   return (data ?? []) as TrainingOrderWithProduct[];

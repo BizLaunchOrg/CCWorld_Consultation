@@ -26,6 +26,24 @@ Replace the default template body with the HTML below. You can keep the default 
 </div>
 ```
 
+### Use your company name as the sender (not "Supabase")
+
+So that confirmation emails show **CCworld Consultation** (or your company name) instead of "Supabase" in the From field:
+
+1. **Supabase Dashboard** → **Project Settings** (gear icon) → **Authentication**.
+2. Under **SMTP Settings**, enable **Custom SMTP**.
+3. Configure your SMTP (e.g. **Resend** – same account you use for payment emails):
+   - **Sender email:** e.g. `noreply@ccworldconsultation.com` (must be a verified domain in Resend).
+   - **Sender name:** `CCworld Consultation` (this is the name recipients see in their inbox).
+   - **Host:** `smtp.resend.com`
+   - **Port:** `465` (SSL) or `587` (TLS)
+   - **Username:** `resend`
+   - **Password:** your Resend API key (same as `RESEND_API_KEY`).
+
+4. Save. All Auth emails (confirm signup, magic link, reset password) will then come from **CCworld Consultation &lt;noreply@ccworldconsultation.com&gt;** (or whatever you set).
+
+If you don’t use Custom SMTP, Supabase sends from its own server and the From name will be something like "Supabase" or "Supabase Auth". There is no way to change that without enabling Custom SMTP.
+
 ---
 
 ## 2. Payment successful (automatic)

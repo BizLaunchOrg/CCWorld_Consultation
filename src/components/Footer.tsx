@@ -10,7 +10,7 @@ const solutionsLinks = [
 const connectLinks = [
   { to: '/consultation', label: 'Request Consultation' },
   { to: 'mailto:info@ccworldconsulting.com', label: 'Email' },
-  { to: '#', label: 'Lagos Office' },
+  { to: '#', label: 'Lagos Office'},
 ] as const;
 
 export function Footer() {

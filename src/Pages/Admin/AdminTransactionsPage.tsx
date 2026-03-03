@@ -86,6 +86,11 @@ export function AdminTransactionsPage() {
             onClick={() => setSelected(tx)}
           >
             <p className="text-primary font-bold mt-2">{formatNGN(tx.amount)}</p>
+            {(tx.profiles?.email || tx.profiles?.name) && (
+              <p className="text-slate-500 dark:text-slate-400 text-xs mt-1 truncate" title={tx.profiles?.email ?? undefined}>
+                {tx.profiles?.name || tx.profiles?.email}
+              </p>
+            )}
           </ListCard>
         ))}
       </div>
@@ -112,6 +117,12 @@ export function AdminTransactionsPage() {
                   {selected.status}
                 </span>
               </p>
+              {(selected.profiles?.name || selected.profiles?.email) && (
+                <>
+                  <p><span className="text-slate-500 dark:text-slate-400 text-sm">Customer</span><br />{selected.profiles?.name || '—'}</p>
+                  <p><span className="text-slate-500 dark:text-slate-400 text-sm">Email</span><br /><a href={`mailto:${selected.profiles?.email}`} className="text-teal-accent hover:underline">{selected.profiles?.email ?? '—'}</a></p>
+                </>
+              )}
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400">Created: {formatDate(selected.created_at)}</p>
             <p className="text-xs text-slate-500 dark:text-slate-400">User ID: {selected.user_id}</p>
