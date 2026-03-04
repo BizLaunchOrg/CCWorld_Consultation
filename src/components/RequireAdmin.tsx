@@ -38,7 +38,8 @@ export function RequireAdmin({ children }: { children: React.ReactNode }) {
 
   const isAdmin = profile?.role === 'admin';
   if (!isAdmin) {
-    return <Navigate to="/admin/login" state={{ from: location }} replace />;
+    // Bounce to home so /admin never shows the login page; allowed admins use /admin/login to sign in.
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
   return <>{children}</>;

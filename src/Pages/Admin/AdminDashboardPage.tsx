@@ -97,9 +97,9 @@ export function AdminDashboardPage() {
           accent="teal"
         />
         <StatCard
-          title="Active trainings / services"
-          value={`${stats.activeTrainingsCount} / ${publishedServices}`}
-          subtitle="Trainings / Services"
+          title="Trainings & services"
+          value={`${stats.activeTrainingsCount} · ${publishedServices}`}
+          subtitle="Active trainings (database) · Published services (website)"
           icon="inventory_2"
           accent="gold"
         />
