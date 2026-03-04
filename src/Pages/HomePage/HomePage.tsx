@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export function HomePage() {
+  const location = useLocation();
+  const adminDenied = (location.state as { adminDenied?: boolean })?.adminDenied;
   const tickerItems = [
     { icon: 'warning', text: 'AML THRESHOLD BREACH DETECTED', color: 'text-teal-accent' },
     { icon: 'monitoring', text: 'KYC LATENCY: 1.2s', color: 'text-slate-400' },
@@ -38,6 +40,11 @@ export function HomePage() {
 
   return (
     <main className="flex-1">
+      {adminDenied && (
+        <div className="bg-amber-500/10 border-b border-amber-500/20 text-amber-800 dark:text-amber-200 text-center py-2 px-4 text-sm font-medium">
+          Admin access is restricted to authorized emails only.
+        </div>
+      )}
       {/* Hero Section */}
       <section className="relative mesh-gradient overflow-hidden px-6 py-24 lg:py-40">
         <div className="grid-overlay absolute inset-0 pointer-events-none" />

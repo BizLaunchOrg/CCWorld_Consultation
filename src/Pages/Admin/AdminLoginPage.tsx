@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { getAdminAllowedEmails, isEmailAllowedForAdmin } from '../../lib/adminGuard';
 
 /**
  * Admin sign-in uses same Supabase auth. After sign-in, RequireAdmin checks profiles.role === 'admin'.
+ * If VITE_ADMIN_ALLOWED_EMAILS is set, only those emails can access this page; others are bounced to home and signed out.
  * Supports both email/password and Google sign-in.
  */
 export function AdminLoginPage() {
@@ -18,6 +20,18 @@ export function AdminLoginPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
 
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/admin';
+
+  const allowedEmails = getAdminAllowedEmails();
+  const isAllowedEmail = session?.user?.email ? isEmailAllowedForAdmin(session.user.email) : true;
+  const bounceNonAllowed = allowedEmails.length > 0 && !!session && !isAllowedEmail;
+
+  useEffect(() => {
+    if (bounceNonAllowed) signOut();
+  }, [bounceNonAllowed, signOut]);
+
+  if (bounceNonAllowed) {
+    return <Navigate to="/" state={{ adminDenied: true }} replace />;
+  }
 
   const isLoggedInNotAdmin = !!session && profile !== null && profile?.role !== 'admin';
 
@@ -46,6 +60,11 @@ export function AdminLoginPage() {
     }
     if (!data.user) {
       setError('Login failed.');
+      return;
+    }
+    if (getAdminAllowedEmails().length > 0 && !isEmailAllowedForAdmin(data.user.email)) {
+      setError('This email is not authorized to access admin.');
+      await supabase.auth.signOut();
       return;
     }
     const { data: profile } = await supabase
