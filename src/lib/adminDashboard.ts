@@ -6,13 +6,15 @@ export interface DashboardStats {
   activeTrainingsCount: number;
   recentOrders: { id: string; reference: string; amount: number; productName: string; status: string; created_at: string }[];
   recentConsultations: { id: string; customerName: string; topic: string; status: string; created_at: string }[];
+  /** Set when one or more Supabase queries failed (e.g. RLS or network). */
+  error?: string;
 }
 
 export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
   const [ordersRes, consultationsRes, productsRes] = await Promise.all([
     supabase
       .from('training_orders')
-      .select('id, amount, status, provider_reference, created_at, training_products(name)')
+      .select('id, amount, status, provider_reference, created_at, training_products!training_id(name)')
       .order('created_at', { ascending: false })
       .limit(50),
     supabase
@@ -22,6 +24,12 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
       .limit(20),
     supabase.from('training_products').select('id').eq('active', true),
   ]);
+
+  const errors: string[] = [];
+  if (ordersRes.error) errors.push(`Orders: ${ordersRes.error.message}`);
+  if (consultationsRes.error) errors.push(`Consultations: ${consultationsRes.error.message}`);
+  if (productsRes.error) errors.push(`Products: ${productsRes.error.message}`);
+  const error = errors.length > 0 ? errors.join('; ') : undefined;
 
   const orders = (ordersRes.data ?? []) as Array<{
     id: string;
@@ -69,5 +77,6 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
     activeTrainingsCount,
     recentOrders,
     recentConsultations,
+    error,
   };
 }

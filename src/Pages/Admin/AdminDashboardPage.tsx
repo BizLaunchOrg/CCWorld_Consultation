@@ -39,6 +39,18 @@ export function AdminDashboardPage() {
     );
   }
 
+  if (stats.error) {
+    return (
+      <div className="space-y-8">
+        <div className="rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 p-6">
+          <h2 className="text-lg font-bold text-amber-800 dark:text-amber-200 mb-2">Could not load dashboard data</h2>
+          <p className="text-sm text-amber-700 dark:text-amber-300 mb-2">This often means your admin user’s profile role is not set to <code className="bg-amber-100 dark:bg-amber-900/50 px-1 rounded">admin</code>, or Row Level Security is blocking reads.</p>
+          <p className="text-xs font-mono text-slate-600 dark:text-slate-400 break-all">{stats.error}</p>
+        </div>
+      </div>
+    );
+  }
+
   const recentActivity = [
     ...stats.recentOrders.slice(0, 5).map((o) => ({
       id: o.id,
