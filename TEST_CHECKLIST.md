@@ -54,7 +54,8 @@ Use this to verify the full flow after deployment and Supabase/Seerbit setup.
 ## 6. Security checks
 
 - [ ] Seerbit **secret** key is only in Edge Function secrets / server env, never in frontend or `.env` committed to git.
-- [ ] Admin routes: logged-out or client-role user is redirected to `/admin/login`.
+- [ ] Admin routes: visiting `/admin` when not an admin redirects to **home** (not the login page). Allowed admins use **`/admin/login`** to sign in (or **`/admin/login?t=YourSecret`** if `VITE_ADMIN_LOGIN_SECRET` is set).
+- [ ] If **VITE_ADMIN_LOGIN_SECRET** is set in env, `/admin/login` without `?t=SECRET` redirects to home; only the secret URL shows the login form. Use a long, random value and keep the full URL private (e.g. bookmark).
 - [ ] RLS: client cannot read other users’ consultations or orders; cannot insert into `training_orders` (only Edge Function can).
 
 ---

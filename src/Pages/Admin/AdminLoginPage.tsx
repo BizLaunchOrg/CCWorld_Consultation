@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
-import { getAdminAllowedEmails, isEmailAllowedForAdmin } from '../../lib/adminGuard';
+import { getAdminAllowedEmails, isEmailAllowedForAdmin, isAdminLoginSecretRequired, isAdminLoginSecretValid } from '../../lib/adminGuard';
 
 /**
  * Admin sign-in uses same Supabase auth. After sign-in, RequireAdmin checks profiles.role === 'admin'.
  * If VITE_ADMIN_ALLOWED_EMAILS is set, only those emails can access this page; others are bounced to home and signed out.
+ * If VITE_ADMIN_LOGIN_SECRET is set, this page only renders when URL has ?t=SECRET; otherwise redirect to home.
  * Supports both email/password and Google sign-in.
  */
 export function AdminLoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { profile, session, signOut } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,6 +22,11 @@ export function AdminLoginPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
 
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/admin';
+
+  // If login secret is required, only show page when ?t=SECRET is present and correct
+  if (isAdminLoginSecretRequired() && !isAdminLoginSecretValid(searchParams.get('t'))) {
+    return <Navigate to="/" replace />;
+  }
 
   const allowedEmails = getAdminAllowedEmails();
   const isAllowedEmail = session?.user?.email ? isEmailAllowedForAdmin(session.user.email) : true;
@@ -107,7 +114,10 @@ export function AdminLoginPage() {
             <p className="mt-1 text-amber-700 dark:text-amber-300">Sign out and use an admin account, or ask an admin to promote your account.</p>
             <button
               type="button"
-              onClick={() => signOut().then(() => navigate('/admin/login', { replace: true }))}
+              onClick={() => {
+                const t = searchParams.get('t');
+                signOut().then(() => navigate(t ? `/admin/login?t=${t}` : '/admin/login', { replace: true }));
+              }}
               className="mt-3 w-full py-2 rounded-xl border border-amber-500/30 font-bold hover:bg-amber-500/10"
             >
               Sign out
