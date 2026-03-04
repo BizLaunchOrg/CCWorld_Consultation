@@ -4,6 +4,7 @@ export interface DashboardStats {
   paidTrainingCount: number;
   newConsultationsCount: number;
   activeTrainingsCount: number;
+  unreadMessagesCount: number;
   recentOrders: { id: string; reference: string; amount: number; productName: string; status: string; created_at: string }[];
   recentConsultations: { id: string; customerName: string; topic: string; status: string; created_at: string }[];
   /** Set when one or more Supabase queries failed (e.g. RLS or network). */
@@ -11,7 +12,7 @@ export interface DashboardStats {
 }
 
 export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
-  const [ordersRes, consultationsRes, productsRes] = await Promise.all([
+  const [ordersRes, consultationsRes, productsRes, unreadRes] = await Promise.all([
     supabase
       .from('training_orders')
       .select('id, amount, status, provider_reference, created_at, training_products!training_id(name)')
@@ -23,12 +24,18 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
       .order('created_at', { ascending: false })
       .limit(20),
     supabase.from('training_products').select('id').eq('active', true),
+    supabase
+      .from('chat_messages')
+      .select('*', { count: 'exact', head: true })
+      .eq('sender_role', 'user')
+      .is('read_at', null),
   ]);
 
   const errors: string[] = [];
   if (ordersRes.error) errors.push(`Orders: ${ordersRes.error.message}`);
   if (consultationsRes.error) errors.push(`Consultations: ${consultationsRes.error.message}`);
   if (productsRes.error) errors.push(`Products: ${productsRes.error.message}`);
+  if (unreadRes.error) errors.push(`Unread: ${unreadRes.error.message}`);
   const error = errors.length > 0 ? errors.join('; ') : undefined;
 
   const orders = (ordersRes.data ?? []) as Array<{
@@ -50,6 +57,7 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
   const paidTrainingCount = orders.filter((o) => o.status === 'paid').length;
   const newConsultationsCount = consultations.filter((c) => c.status === 'new').length;
   const activeTrainingsCount = (productsRes.data ?? []).length;
+  const unreadMessagesCount = unreadRes.count ?? 0;
 
   const recentOrders = orders.slice(0, 10).map((o) => {
     const product = Array.isArray(o.training_products) ? o.training_products[0] : o.training_products;
@@ -75,6 +83,7 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
     paidTrainingCount,
     newConsultationsCount,
     activeTrainingsCount,
+    unreadMessagesCount,
     recentOrders,
     recentConsultations,
     error,

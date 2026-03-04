@@ -222,3 +222,16 @@ export async function adminMarkRead(conversationId: string): Promise<void> {
     .eq('conversation_id', conversationId)
     .is('read_at', null);
 }
+
+/**
+ * Total count of unread messages (from users) for admin dashboard.
+ */
+export async function getUnreadMessagesCountForAdmin(): Promise<number> {
+  const { count, error } = await supabase
+    .from(MESSAGES)
+    .select('*', { count: 'exact', head: true })
+    .eq('sender_role', 'user')
+    .is('read_at', null);
+  if (error) return 0;
+  return count ?? 0;
+}

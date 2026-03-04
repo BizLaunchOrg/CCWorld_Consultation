@@ -92,7 +92,7 @@ export function AdminDashboardPage() {
         />
         <StatCard
           title="Unread messages"
-          value={0}
+          value={stats.unreadMessagesCount}
           icon="chat"
           accent="teal"
         />

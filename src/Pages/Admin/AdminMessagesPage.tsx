@@ -99,12 +99,17 @@ export function AdminMessagesPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)] md:h-[calc(100vh-6rem)] rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 overflow-hidden">
-      <div className="flex flex-1 min-h-0">
-        <div className="w-full md:w-80 border-r border-slate-200 dark:border-white/10 flex flex-col shrink-0">
+      <div className="flex flex-1 min-h-0 flex-col md:flex-row">
+        {/* Conversation list: on mobile hide when a conversation is open */}
+        <div
+          className={`flex flex-col shrink-0 w-full md:w-80 border-r border-slate-200 dark:border-white/10 ${
+            selectedId ? 'hidden md:flex' : 'flex'
+          }`}
+        >
           <div className="p-3 border-b border-slate-200 dark:border-white/10">
             <h2 className="font-bold text-slate-900 dark:text-white">Conversations</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Live chat with site visitors. New messages appear automatically.
+              Live chat with site visitors. Tap a conversation to open it.
             </p>
             <button
               type="button"
@@ -127,7 +132,7 @@ export function AdminMessagesPage() {
                   key={c.id}
                   type="button"
                   onClick={() => setSelectedId(c.id)}
-                  className={`w-full text-left px-4 py-3 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 flex items-start gap-3 ${
+                  className={`w-full text-left px-4 py-3 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 active:bg-teal-accent/10 flex items-start gap-3 touch-manipulation ${
                     selectedId === c.id ? 'bg-teal-accent/10 border-l-4 border-l-teal-accent' : ''
                   }`}
                 >
@@ -155,14 +160,27 @@ export function AdminMessagesPage() {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col min-w-0">
+        {/* Chat panel: on mobile show only when a conversation is selected; full area for chat */}
+        <div
+          className={`flex-1 flex flex-col min-w-0 min-h-0 ${
+            selectedId ? 'flex' : 'hidden md:flex'
+          }`}
+        >
           {selected ? (
             <>
-              <div className="p-4 border-b border-slate-200 dark:border-white/10 flex items-center gap-2">
-                <span className="material-symbols-outlined text-teal-accent">person</span>
-                <div>
-                  <p className="font-bold text-slate-900 dark:text-white">{selected.customer_name ?? 'Guest'}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{selected.customer_email ?? '—'}</p>
+              <div className="p-3 md:p-4 border-b border-slate-200 dark:border-white/10 flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setSelectedId(null)}
+                  className="md:hidden p-2 -ml-1 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10 touch-manipulation"
+                  aria-label="Back to conversations"
+                >
+                  <span className="material-symbols-outlined">arrow_back</span>
+                </button>
+                <span className="material-symbols-outlined text-teal-accent shrink-0">person</span>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-slate-900 dark:text-white truncate">{selected.customer_name ?? 'Guest'}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{selected.customer_email ?? '—'}</p>
                 </div>
               </div>
               <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
@@ -180,35 +198,35 @@ export function AdminMessagesPage() {
                             : 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white rounded-bl-md'
                       }`}
                     >
-                      <p className="text-sm whitespace-pre-wrap">{m.body}</p>
+                      <p className="text-sm whitespace-pre-wrap break-words">{m.body}</p>
                       <p className="text-[10px] mt-1 opacity-80">{formatTime(m.created_at)}</p>
                     </div>
                   </div>
                 ))}
                 <div ref={messagesEndRef} />
               </div>
-              <div className="p-3 border-t border-slate-200 dark:border-white/10 flex gap-2">
+              <div className="p-3 border-t border-slate-200 dark:border-white/10 flex gap-2 shrink-0">
                 <input
                   type="text"
                   value={reply}
                   onChange={(e) => setReply(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
                   placeholder="Type a reply…"
-                  className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none text-sm"
+                  className="flex-1 min-w-0 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none text-sm"
                 />
                 <button
                   type="button"
                   onClick={handleSend}
                   disabled={!reply.trim()}
-                  className="rounded-2xl bg-teal-accent text-background-dark px-4 py-3 disabled:opacity-50 font-bold"
+                  className="rounded-2xl bg-teal-accent text-background-dark px-4 py-3 disabled:opacity-50 font-bold shrink-0 touch-manipulation"
                 >
                   Send
                 </button>
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-slate-500 dark:text-slate-400 text-sm">
-              Select a conversation
+            <div className="flex-1 flex items-center justify-center text-slate-500 dark:text-slate-400 text-sm px-4">
+              Select a conversation from the list to start chatting.
             </div>
           )}
         </div>
