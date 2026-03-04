@@ -17,6 +17,7 @@ import { LicensingPage } from './Pages/LicensingPage/LicensingPage';
 import { LicensingDetailPage } from './Pages/LicensingDetailPage/LicensingDetailPage';
 import { LoginPage } from './Pages/LoginPage/LoginPage';
 import { SignupPage } from './Pages/SignupPage/SignupPage';
+import { SignupSuccessPage } from './Pages/SignupSuccessPage/SignupSuccessPage';
 import { AdminLoginPage } from './Pages/Admin/AdminLoginPage';
 import { AdminUsersPage } from './Pages/Admin/AdminUsersPage';
 import { AdminDashboardPage } from './Pages/Admin/AdminDashboardPage';
@@ -69,6 +70,7 @@ function App() {
           <Route path="/checkout/training/:slug" element={<TrainingCheckoutPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/signup/success" element={<SignupSuccessPage />} />
         </Route>
       </Routes>
     </ThemeProvider>

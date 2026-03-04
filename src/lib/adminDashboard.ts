@@ -29,7 +29,7 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
     status: string;
     provider_reference: string | null;
     created_at: string;
-    training_products: { name: string } | null;
+    training_products: { name: string } | { name: string }[] | null;
   }>;
   const consultations = (consultationsRes.data ?? []) as Array<{
     id: string;
@@ -43,14 +43,17 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
   const newConsultationsCount = consultations.filter((c) => c.status === 'new').length;
   const activeTrainingsCount = (productsRes.data ?? []).length;
 
-  const recentOrders = orders.slice(0, 10).map((o) => ({
-    id: o.id,
-    reference: o.provider_reference || o.id,
-    amount: o.amount,
-    productName: o.training_products?.name ?? 'Training',
-    status: o.status,
-    created_at: o.created_at,
-  }));
+  const recentOrders = orders.slice(0, 10).map((o) => {
+    const product = Array.isArray(o.training_products) ? o.training_products[0] : o.training_products;
+    return {
+      id: o.id,
+      reference: o.provider_reference || o.id,
+      amount: o.amount,
+      productName: product?.name ?? 'Training',
+      status: o.status,
+      created_at: o.created_at,
+    };
+  });
 
   const recentConsultations = consultations.slice(0, 10).map((c) => ({
     id: c.id,

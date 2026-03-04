@@ -5,7 +5,7 @@ Use this to verify the full flow after deployment and Supabase/Seerbit setup.
 ## Prerequisites
 
 - Supabase project created; migrations applied (`supabase/migrations/20250303000001_initial_schema.sql`).
-- Auth: Email confirmation enabled; Site URL / Redirect URLs set to `https://www.ccworldconsultation.com` (or your dev URL). For **admin Google sign-in**, add `https://www.ccworldconsultation.com/admin` (and e.g. `http://localhost:5173/admin` for local dev) to **Redirect URLs** so OAuth can redirect back to the admin panel.
+- Auth: Email confirmation enabled; Site URL / Redirect URLs set to `https://www.ccworldconsultation.com` (or your dev URL). For **admin Google sign-in**, add `https://www.ccworldconsultation.com/admin` (and e.g. `http://localhost:5173/admin` for local dev) to **Redirect URLs** so OAuth can redirect back to the admin panel. Add **`/signup/success`** too (e.g. `https://www.ccworldconsultation.com/signup/success`) so after email confirmation and after Google signup users can land on the success page.
 - Payment success URL (`/training/payment/success`) is where **Seerbit** redirects after payment; you do **not** need to add it to Supabase Redirect URLs (that list is for Auth/OAuth only).
 - Edge Functions deployed: `seerbit-init`, `seerbit-webhook`. Deploy **seerbit-init** with `--no-verify-jwt` to avoid gateway 401 Invalid JWT (e.g. with ES256 tokens). Secrets: `SEERBIT_PUBLIC_KEY`, `SEERBIT_SECRET_KEY`, `SITE_URL`, `SUPABASE_ANON_KEY`.
 - Seerbit webhook URL configured to your `seerbit-webhook` function URL (deploy webhook with `--no-verify-jwt`).

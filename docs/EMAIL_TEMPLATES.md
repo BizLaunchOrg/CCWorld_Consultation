@@ -99,7 +99,7 @@ The **payment received** email is sent by the `seerbit-webhook` Edge Function wh
 1. Create an account at [resend.com](https://resend.com) and get an API key.
 2. In **Supabase Dashboard → Edge Functions → seerbit-webhook → Secrets**, add:
    - `RESEND_API_KEY` – your Resend API key (required for payment emails).
-   - `RESEND_FROM` (optional) – sender address, e.g. `notifications@ccworldconsultation.com`. If omitted, Resend uses `onboarding@resend.dev` (you can only send to your own verified email until you add a domain).
+   - `RESEND_FROM` (optional) – **this is the “from” address** for the payment email, e.g. `notifications@ccworldconsultation.com`. To change the address customers see, set or update `RESEND_FROM` here (use a verified domain in Resend). If omitted, Resend uses `onboarding@resend.dev`.
    - `SITE_NAME` (optional) – e.g. `CCworld Consulting` (used in subject and footer).
 
 3. In Resend, add and verify your domain so you can send from your own address (e.g. `notifications@ccworldconsulting.com`).

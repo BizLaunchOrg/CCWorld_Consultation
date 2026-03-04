@@ -50,7 +50,7 @@ export function SignupPage() {
           phone: phone.trim() || undefined,
         },
         emailRedirectTo: import.meta.env.VITE_SITE_URL
-          ? `${import.meta.env.VITE_SITE_URL}/`
+          ? `${import.meta.env.VITE_SITE_URL}/signup/success`
           : undefined,
       },
     });
@@ -72,7 +72,7 @@ export function SignupPage() {
     const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin;
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${siteUrl}/` },
+      options: { redirectTo: `${siteUrl}/signup/success` },
     });
     if (error) setAuthError(error.message);
   }
