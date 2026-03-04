@@ -109,7 +109,8 @@ Deno.serve(async (req) => {
     }
 
     const paymentReference = `CCW-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-    const callbackUrl = Deno.env.get('SITE_URL') || 'https://www.ccworldconsultation.com';
+    const baseUrl = (Deno.env.get('SITE_URL') || 'https://www.ccworldconsultation.com').replace(/\/$/, '');
+    const successUrl = `${baseUrl}/training/payment/success`;
     const fullName = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'Customer';
 
     const encryptRes = await fetch('https://seerbitapi.com/api/v2/encrypt/keys', {
@@ -141,7 +142,8 @@ Deno.serve(async (req) => {
         email: user.email,
         fullName,
         tokenize: 'false',
-        callbackUrl: `${callbackUrl}/training/payment/success`,
+        callbackUrl: successUrl,
+        callback_url: successUrl,
       }),
     });
     const paymentData = await paymentRes.json();
