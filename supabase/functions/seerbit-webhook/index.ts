@@ -122,7 +122,7 @@ Deno.serve(async (req) => {
       const data = reqItem.data;
       if (eventType !== 'transaction' || !data) continue;
 
-      const reference = data.reference;
+      const reference = data.reference ?? data.paymentReference ?? data.paymentReferenceId ?? data.referenceId;
       const gatewayCode = data.gatewayCode ?? data.code;
       const status = gatewayCode === '00' ? 'paid' : 'failed';
 

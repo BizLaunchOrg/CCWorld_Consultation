@@ -1,23 +1,62 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { StatCard } from '../../components/admin/StatCard';
-import { seedTransactions, seedConsultations, seedConversations } from '../../data/adminSeed';
+import { fetchAdminDashboardStats } from '../../lib/adminDashboard';
 import { getPublishedServices } from '../../data/services';
-import { DEMO_TRAININGS } from '../../data/trainings';
 
-const paidTrainingCount = seedTransactions.filter((t) => t.status === 'paid').length;
-const newConsultations = seedConsultations.filter((c) => c.status === 'new').length;
-const unreadMessages = seedConversations.reduce((acc, c) => acc + c.unread_count, 0);
-const publishedTrainings = DEMO_TRAININGS.filter((t) => t.published !== false).length;
-const publishedServices = getPublishedServices().length;
+function formatNGN(n: number): string {
+  return `NGN ${n.toLocaleString('en-NG')}`;
+}
 
-const recentActivity = [
-  { id: '1', type: 'payment', text: 'Payment received: NGN 250,000 — Compliance Culture Training', time: '2 hours ago' },
-  { id: '2', type: 'consultation', text: 'New consultation request from Amina Bello', time: '3 hours ago' },
-  { id: '3', type: 'message', text: 'New message in conversation with Chioma Eze', time: '5 hours ago' },
-  { id: '4', type: 'payment', text: 'Payment received: NGN 320,000 — Compliance Landscape Training', time: 'Yesterday' },
-];
+function formatTimeAgo(iso: string): string {
+  const d = new Date(iso);
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+  if (diffMins < 60) return diffMins <= 1 ? 'Just now' : `${diffMins} minutes ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? '' : 's'} ago`;
+  if (diffDays < 7) return `${diffDays} day${diffDays === 1 ? '' : 's'} ago`;
+  return d.toLocaleDateString();
+}
 
 export function AdminDashboardPage() {
+  const [stats, setStats] = useState<Awaited<ReturnType<typeof fetchAdminDashboardStats>> | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAdminDashboardStats().then(setStats).finally(() => setLoading(false));
+  }, []);
+
+  const publishedServices = getPublishedServices().length;
+
+  if (loading || !stats) {
+    return (
+      <div className="space-y-8">
+        <p className="text-slate-500 dark:text-slate-400">Loading dashboard…</p>
+      </div>
+    );
+  }
+
+  const recentActivity = [
+    ...stats.recentOrders.slice(0, 5).map((o) => ({
+      id: o.id,
+      type: 'payment' as const,
+      text: `${o.status === 'paid' ? 'Payment received' : o.status}: ${formatNGN(o.amount)} — ${o.productName}`,
+      time: formatTimeAgo(o.created_at),
+      created_at: o.created_at,
+    })),
+    ...stats.recentConsultations.slice(0, 5).map((c) => ({
+      id: c.id,
+      type: 'consultation' as const,
+      text: `Consultation request from ${c.customerName} — ${c.topic}`,
+      time: formatTimeAgo(c.created_at),
+      created_at: c.created_at,
+    })),
+  ]
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .slice(0, 8);
   return (
     <div className="space-y-8">
       <div>
@@ -29,25 +68,25 @@ export function AdminDashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total paid (trainings)"
-          value={paidTrainingCount}
+          value={stats.paidTrainingCount}
           icon="payments"
           accent="teal"
         />
         <StatCard
           title="New consultation requests"
-          value={newConsultations}
+          value={stats.newConsultationsCount}
           icon="event_note"
           accent="primary"
         />
         <StatCard
           title="Unread messages"
-          value={unreadMessages}
+          value={0}
           icon="chat"
           accent="teal"
         />
         <StatCard
-          title="Published trainings / services"
-          value={`${publishedTrainings} / ${publishedServices}`}
+          title="Active trainings / services"
+          value={`${stats.activeTrainingsCount} / ${publishedServices}`}
           subtitle="Trainings / Services"
           icon="inventory_2"
           accent="gold"
@@ -92,6 +131,9 @@ export function AdminDashboardPage() {
       {/* Recent activity */}
       <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 shadow-sm dark:shadow-none">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Recent activity</h2>
+        {recentActivity.length === 0 ? (
+          <p className="text-slate-500 dark:text-slate-400 text-sm">No recent activity yet.</p>
+        ) : (
         <ul className="space-y-3">
           {recentActivity.map((item) => (
             <li
@@ -108,6 +150,7 @@ export function AdminDashboardPage() {
             </li>
           ))}
         </ul>
+        )}
       </div>
 
       {/* Chart placeholder */}

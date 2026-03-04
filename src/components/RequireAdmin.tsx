@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getAdminAllowedEmails, isEmailAllowedForAdmin } from '../lib/adminGuard';
@@ -5,13 +6,23 @@ import { getAdminAllowedEmails, isEmailAllowedForAdmin } from '../lib/adminGuard
 /**
  * Route guard: only users with profiles.role === 'admin' can access.
  * If VITE_ADMIN_ALLOWED_EMAILS is set, only those emails can access admin at all; others are bounced to home and signed out.
- * RLS enforces admin-only access at the database level; this is UX only.
+ * Refetches profile once when role is not admin so that newly promoted admins get in without re-login.
  */
 export function RequireAdmin({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const { profile, user, loading, signOut } = useAuth();
+  const { profile, user, loading, signOut, refreshProfile } = useAuth();
+  const [refetching, setRefetching] = useState(false);
+  const hasRefetched = useRef(false);
 
-  if (loading) {
+  useEffect(() => {
+    if (!loading && user?.id && profile !== null && profile?.role !== 'admin' && !hasRefetched.current) {
+      hasRefetched.current = true;
+      setRefetching(true);
+      refreshProfile().finally(() => setRefetching(false));
+    }
+  }, [loading, user?.id, profile?.role, refreshProfile]);
+
+  if (loading || refetching) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-100 dark:bg-background-dark">
         <p className="text-slate-600 dark:text-slate-400">Loading…</p>

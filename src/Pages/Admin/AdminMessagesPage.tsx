@@ -1,14 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import type { AdminConversation, AdminMessage } from '../../types/admin';
-import { seedConversations, seedMessages } from '../../data/adminSeed';
 
 function formatTime(iso: string): string {
   return new Date(iso).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 }
 
 export function AdminMessagesPage() {
-  const [conversations, setConversations] = useState<AdminConversation[]>(() => [...seedConversations]);
-  const [messages, setMessages] = useState<AdminMessage[]>(() => [...seedMessages]);
+  const [conversations, setConversations] = useState<AdminConversation[]>([]);
+  const [messages, setMessages] = useState<AdminMessage[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [reply, setReply] = useState('');
   const [typing, setTyping] = useState(false);
@@ -60,12 +59,16 @@ export function AdminMessagesPage() {
           <div className="p-3 border-b border-slate-200 dark:border-white/10">
             <h2 className="font-bold text-slate-900 dark:text-white">Conversations</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              {/* TODO: Supabase realtime — subscribe to new conversations */}
-              Demo data. Connect Supabase realtime for live updates.
+              No conversations yet. When you add a chat backend, they will appear here.
             </p>
           </div>
           <div className="flex-1 overflow-y-auto">
-            {conversations.map((c) => (
+            {conversations.length === 0 ? (
+              <div className="p-4 text-center text-slate-500 dark:text-slate-400 text-sm">
+                No conversations yet
+              </div>
+            ) : (
+              conversations.map((c) => (
               <button
                 key={c.id}
                 type="button"
@@ -93,7 +96,8 @@ export function AdminMessagesPage() {
                   </p>
                 </div>
               </button>
-            ))}
+              ))
+            )}
           </div>
         </div>
 
