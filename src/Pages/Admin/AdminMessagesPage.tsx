@@ -5,6 +5,7 @@ import {
   getMessages,
   sendMessage,
   subscribeToMessages,
+  subscribeToAllMessages,
   adminMarkRead,
   type AdminConversationRow,
 } from '../../lib/chatApi';
@@ -39,6 +40,12 @@ export function AdminMessagesPage() {
 
   useEffect(() => {
     loadConversations();
+  }, [loadConversations]);
+
+  // When ANY new message is sent (client or admin), refresh conversation list so new conversations appear in real time
+  useEffect(() => {
+    const unsub = subscribeToAllMessages(() => loadConversations());
+    return unsub;
   }, [loadConversations]);
 
   // When selecting a conversation, load messages and subscribe to new ones
@@ -99,6 +106,13 @@ export function AdminMessagesPage() {
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Live chat with site visitors. New messages appear automatically.
             </p>
+            <button
+              type="button"
+              onClick={() => { setLoading(true); loadConversations(); }}
+              className="mt-2 text-xs font-semibold text-teal-accent hover:underline"
+            >
+              Refresh list
+            </button>
           </div>
           <div className="flex-1 overflow-y-auto min-h-0">
             {loading ? (

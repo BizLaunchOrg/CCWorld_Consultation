@@ -194,6 +194,25 @@ export async function listAdminConversations(): Promise<AdminConversationRow[]> 
 }
 
 /**
+ * Subscribe to ALL new messages (any conversation). Use on admin to refresh conversation list when a client sends a message.
+ */
+export function subscribeToAllMessages(onNewMessage: () => void): () => void {
+  const channel = supabase
+    .channel('chat:all-messages')
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: MESSAGES,
+      },
+      () => onNewMessage()
+    )
+    .subscribe();
+  return () => supabase.removeChannel(channel);
+}
+
+/**
  * Mark messages in a conversation as read (admin). Updates read_at.
  */
 export async function adminMarkRead(conversationId: string): Promise<void> {
