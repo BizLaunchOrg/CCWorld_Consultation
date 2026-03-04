@@ -1,11 +1,18 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useChat } from '../contexts/ChatContext';
-import { openOrCreateConversation, sendMessage as sendMessageApi, subscribeToMessages, markRead } from '../lib/chatApi';
+import { useAuth } from '../contexts/AuthContext';
+import {
+  openOrCreateConversation,
+  sendMessage as sendMessageApi,
+  subscribeToMessages,
+  getMessages,
+  markRead,
+} from '../lib/chatApi';
 import type { Message } from '../types/chat';
 
 const DEFAULT_GREETING: Message = {
   id: 'system-greeting',
-  conversation_id: 'demo',
+  conversation_id: '',
   sender_role: 'system',
   body: 'Hey, how can we help you today?',
   created_at: new Date().toISOString(),
@@ -17,10 +24,12 @@ function formatTime(iso: string): string {
 }
 
 export function ChatWidget() {
+  const { user } = useAuth();
   const { isOpen, unreadCount, openChat, closeChat, addUnread, clearUnread } = useChat();
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([DEFAULT_GREETING]);
   const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
   const [status] = useState<'Online'>('Online');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,25 +40,35 @@ export function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
+  // When opening chat: get or create conversation, load messages, subscribe to new ones
   useEffect(() => {
-    if (isOpen) {
-      clearUnread();
-      inputRef.current?.focus();
-      openOrCreateConversation(null).then((conv) => {
+    if (!isOpen) return;
+    clearUnread();
+    inputRef.current?.focus();
+    setLoading(true);
+    openOrCreateConversation(user?.id ?? null)
+      .then(async (conv) => {
         setConversationId(conv.id);
-      });
-      markRead(conversationId ?? '').catch(() => {});
-    }
-  }, [isOpen, clearUnread, conversationId]);
+        const list = await getMessages(conv.id);
+        setMessages(list.length ? list : [DEFAULT_GREETING]);
+        markRead(conv.id).catch(() => {});
+      })
+      .catch(() => setMessages([DEFAULT_GREETING]))
+      .finally(() => setLoading(false));
+  }, [isOpen, clearUnread, user?.id]);
 
+  // Realtime: new messages (including admin replies) appear without refresh
   useEffect(() => {
     if (!conversationId) return;
     const unsub = subscribeToMessages(conversationId, (msg) => {
-      setMessages((prev) => [...prev, msg]);
-      if (!isOpen) addUnread();
+      setMessages((prev) => {
+        if (prev.some((m) => m.id === msg.id)) return prev;
+        return [...prev, msg];
+      });
+      if (!isOpenRef.current) addUnread();
     });
     return unsub;
-  }, [conversationId, isOpen, addUnread]);
+  }, [conversationId, addUnread]);
 
   useEffect(() => {
     scrollToBottom();
@@ -62,19 +81,6 @@ export function ChatWidget() {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isOpen, closeChat]);
-
-  // Demo: simulate support message arriving when panel is closed (increment unread)
-  const closedRef = useRef(false);
-  useEffect(() => {
-    if (!isOpen) {
-      closedRef.current = true;
-      const t = setTimeout(() => {
-        if (closedRef.current) addUnread();
-      }, 4000);
-      return () => clearTimeout(t);
-    }
-    closedRef.current = false;
-  }, [isOpen, addUnread]);
 
   const sendMessage = useCallback(async () => {
     const body = input.trim();
@@ -89,27 +95,17 @@ export function ChatWidget() {
     };
     setMessages((prev) => [...prev, userMsg]);
     try {
-      await sendMessageApi(conversationId, body);
+      const created = await sendMessageApi(conversationId, body);
+      setMessages((prev) =>
+        prev.map((m) => (m.id === userMsg.id ? { ...created } : m))
+      );
     } catch {
       // keep optimistic message
     }
-    // Demo: simulate support reply after 2s; if panel is closed, increment unread
-    setTimeout(() => {
-      const supportMsg: Message = {
-        id: `demo-${Date.now()}`,
-        conversation_id: conversationId,
-        sender_role: 'admin',
-        body: 'Thanks for your message. A team member will get back to you shortly.',
-        created_at: new Date().toISOString(),
-      };
-      setMessages((prev) => [...prev, supportMsg]);
-      if (!isOpenRef.current) addUnread();
-    }, 2000);
-  }, [input, conversationId, addUnread]);
+  }, [input, conversationId]);
 
   return (
     <>
-      {/* Floating button */}
       <button
         type="button"
         onClick={() => (isOpen ? closeChat() : openChat())}
@@ -124,7 +120,6 @@ export function ChatWidget() {
         )}
       </button>
 
-      {/* Panel overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 z-50 flex items-end justify-end p-4 pb-24 sm:p-6 sm:pb-28 pointer-events-none"
@@ -135,7 +130,6 @@ export function ChatWidget() {
             role="dialog"
             aria-label="Live Chat"
           >
-            {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
               <div className="flex items-center gap-2">
                 <span className="text-white font-bold">Live Chat</span>
@@ -154,29 +148,33 @@ export function ChatWidget() {
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`flex ${msg.sender_role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
-                      msg.sender_role === 'user'
-                        ? 'bg-teal-accent text-background-dark rounded-br-md'
-                        : 'bg-white/10 text-slate-200 border border-white/10 rounded-bl-md'
-                    }`}
-                  >
-                    <p className="text-sm whitespace-pre-wrap">{msg.body}</p>
-                    <p className="text-[10px] mt-1 opacity-80">{formatTime(msg.created_at)}</p>
-                  </div>
-                </div>
-              ))}
-              <div ref={messagesEndRef} />
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
+              {loading ? (
+                <p className="text-slate-400 text-sm">Loading…</p>
+              ) : (
+                <>
+                  {messages.map((msg) => (
+                    <div
+                      key={msg.id}
+                      className={`flex ${msg.sender_role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                          msg.sender_role === 'user'
+                            ? 'bg-teal-accent text-background-dark rounded-br-md'
+                            : 'bg-white/10 text-slate-200 border border-white/10 rounded-bl-md'
+                        }`}
+                      >
+                        <p className="text-sm whitespace-pre-wrap">{msg.body}</p>
+                        <p className="text-[10px] mt-1 opacity-80">{formatTime(msg.created_at)}</p>
+                      </div>
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </>
+              )}
             </div>
 
-            {/* Composer */}
             <div className="p-3 border-t border-white/10 flex gap-2">
               <input
                 ref={inputRef}
@@ -190,7 +188,7 @@ export function ChatWidget() {
               <button
                 type="button"
                 onClick={sendMessage}
-                disabled={!input.trim()}
+                disabled={!input.trim() || loading}
                 className="rounded-xl bg-teal-accent text-background-dark px-4 py-3 disabled:opacity-50 disabled:pointer-events-none hover:shadow-[0_0_16px_rgba(45,212,191,0.3)] transition-all"
                 aria-label="Send"
               >

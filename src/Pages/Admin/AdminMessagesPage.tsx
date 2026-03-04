@@ -1,16 +1,24 @@
-import { useState, useEffect, useRef } from 'react';
-import type { AdminConversation, AdminMessage } from '../../types/admin';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import type { AdminMessage } from '../../types/admin';
+import {
+  listAdminConversations,
+  getMessages,
+  sendMessage,
+  subscribeToMessages,
+  adminMarkRead,
+  type AdminConversationRow,
+} from '../../lib/chatApi';
 
 function formatTime(iso: string): string {
   return new Date(iso).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 }
 
 export function AdminMessagesPage() {
-  const [conversations, setConversations] = useState<AdminConversation[]>([]);
+  const [conversations, setConversations] = useState<AdminConversationRow[]>([]);
   const [messages, setMessages] = useState<AdminMessage[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [reply, setReply] = useState('');
-  const [typing, setTyping] = useState(false);
+  const [loading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const selected = conversations.find((c) => c.id === selectedId);
@@ -18,101 +26,132 @@ export function AdminMessagesPage() {
     ? messages.filter((m) => m.conversation_id === selectedId)
     : [];
 
+  const loadConversations = useCallback(async () => {
+    try {
+      const list = await listAdminConversations();
+      setConversations(list);
+    } catch {
+      setConversations([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadConversations();
+  }, [loadConversations]);
+
+  // When selecting a conversation, load messages and subscribe to new ones
+  useEffect(() => {
+    if (!selectedId) {
+      setMessages([]);
+      return;
+    }
+    adminMarkRead(selectedId).catch(() => {});
+    getMessages(selectedId)
+      .then((list) => setMessages(list))
+      .catch(() => setMessages([]));
+
+    const unsub = subscribeToMessages(selectedId, (msg) => {
+      setMessages((prev) => {
+        if (prev.some((m) => m.id === msg.id)) return prev;
+        return [...prev, msg];
+      });
+    });
+    return unsub;
+  }, [selectedId]);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [conversationMessages, typing]);
+  }, [conversationMessages]);
 
-  function handleSend() {
+  async function handleSend() {
     const body = reply.trim();
     if (!body || !selectedId) return;
-    const newMsg: AdminMessage = {
-      id: `msg-${Date.now()}`,
-      conversation_id: selectedId,
-      sender_role: 'admin',
-      body,
-      created_at: new Date().toISOString(),
-    };
-    setMessages((prev) => [...prev, newMsg]);
     setReply('');
-    setTyping(true);
-    setTimeout(() => setTyping(false), 1200);
-    setConversations((prev) =>
-      prev.map((c) =>
-        c.id === selectedId
-          ? {
-              ...c,
-              last_message: body,
-              last_message_at: newMsg.created_at,
-              updated_at: newMsg.created_at,
-              unread_count: 0,
-            }
-          : c
-      )
-    );
+    try {
+      const created = await sendMessage(selectedId, body, 'admin');
+      setMessages((prev) => [...prev, created]);
+      setConversations((prev) =>
+        prev.map((c) =>
+          c.id === selectedId
+            ? {
+                ...c,
+                last_message: body,
+                last_message_at: created.created_at,
+                updated_at: created.created_at,
+                unread_count: 0,
+              }
+            : c
+        )
+      );
+    } catch {
+      // leave reply in input
+    }
   }
 
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)] md:h-[calc(100vh-6rem)] rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 overflow-hidden">
       <div className="flex flex-1 min-h-0">
-        {/* Conversation list */}
         <div className="w-full md:w-80 border-r border-slate-200 dark:border-white/10 flex flex-col shrink-0">
           <div className="p-3 border-b border-slate-200 dark:border-white/10">
             <h2 className="font-bold text-slate-900 dark:text-white">Conversations</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              No conversations yet. When you add a chat backend, they will appear here.
+              Live chat with site visitors. New messages appear automatically.
             </p>
           </div>
-          <div className="flex-1 overflow-y-auto">
-            {conversations.length === 0 ? (
+          <div className="flex-1 overflow-y-auto min-h-0">
+            {loading ? (
+              <div className="p-4 text-center text-slate-500 dark:text-slate-400 text-sm">Loading…</div>
+            ) : conversations.length === 0 ? (
               <div className="p-4 text-center text-slate-500 dark:text-slate-400 text-sm">
-                No conversations yet
+                No conversations yet. When someone uses Live Chat on the site, they will appear here.
               </div>
             ) : (
               conversations.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                onClick={() => setSelectedId(c.id)}
-                className={`w-full text-left px-4 py-3 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 flex items-start gap-3 ${
-                  selectedId === c.id ? 'bg-teal-accent/10 border-l-4 border-l-teal-accent' : ''
-                }`}
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-semibold text-slate-900 dark:text-white truncate">
-                      {c.customer_name}
-                    </span>
-                    {c.unread_count > 0 && (
-                      <span className="shrink-0 flex items-center justify-center min-w-5 h-5 rounded-full bg-primary text-white text-xs font-bold">
-                        {c.unread_count}
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setSelectedId(c.id)}
+                  className={`w-full text-left px-4 py-3 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 flex items-start gap-3 ${
+                    selectedId === c.id ? 'bg-teal-accent/10 border-l-4 border-l-teal-accent' : ''
+                  }`}
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-semibold text-slate-900 dark:text-white truncate">
+                        {c.customer_name ?? 'Guest'}
                       </span>
-                    )}
+                      {(c.unread_count ?? 0) > 0 && (
+                        <span className="shrink-0 flex items-center justify-center min-w-5 h-5 rounded-full bg-primary text-white text-xs font-bold">
+                          {c.unread_count}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                      {c.last_message ?? 'No messages yet'}
+                    </p>
+                    <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                      {formatTime(c.last_message_at ?? c.created_at)}
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
-                    {c.last_message}
-                  </p>
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
-                    {formatTime(c.last_message_at)}
-                  </p>
-                </div>
-              </button>
+                </button>
               ))
             )}
           </div>
         </div>
 
-        {/* Chat panel */}
         <div className="flex-1 flex flex-col min-w-0">
           {selected ? (
             <>
               <div className="p-4 border-b border-slate-200 dark:border-white/10 flex items-center gap-2">
                 <span className="material-symbols-outlined text-teal-accent">person</span>
                 <div>
-                  <p className="font-bold text-slate-900 dark:text-white">{selected.customer_name}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{selected.customer_email}</p>
+                  <p className="font-bold text-slate-900 dark:text-white">{selected.customer_name ?? 'Guest'}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{selected.customer_email ?? '—'}</p>
                 </div>
               </div>
-              <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
                 {conversationMessages.map((m) => (
                   <div
                     key={m.id}
@@ -132,13 +171,6 @@ export function AdminMessagesPage() {
                     </div>
                   </div>
                 ))}
-                {typing && (
-                  <div className="flex justify-start">
-                    <div className="rounded-2xl rounded-bl-md px-4 py-2.5 bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 text-sm">
-                      Typing…
-                    </div>
-                  </div>
-                )}
                 <div ref={messagesEndRef} />
               </div>
               <div className="p-3 border-t border-slate-200 dark:border-white/10 flex gap-2">

@@ -4,7 +4,7 @@ Use this to verify the full flow after deployment and Supabase/Seerbit setup.
 
 ## Prerequisites
 
-- Supabase project created; migrations applied (`supabase/migrations/20250303000001_initial_schema.sql`).
+- Supabase project created; migrations applied (including `20250303000006_chat_conversations_messages.sql` for live chat).
 - Auth: Email confirmation enabled; Site URL / Redirect URLs set to `https://www.ccworldconsultation.com` (or your dev URL). For **admin Google sign-in**, add `https://www.ccworldconsultation.com/admin` (and e.g. `http://localhost:5173/admin` for local dev) to **Redirect URLs** so OAuth can redirect back to the admin panel. Add **`/signup/success`** too (e.g. `https://www.ccworldconsultation.com/signup/success`) so after email confirmation and after Google signup users can land on the success page.
 - **Google signup:** With “Sign in with Google”, users do **not** receive a separate confirmation email — Google has already verified the email, so Supabase signs them in immediately. This is normal. Using the same Gmail for SMTP (e.g. Resend/your app’s “from” address) is unrelated; that’s for sending emails from your app. To **make a Google-signed-up user an admin**: Supabase Dashboard → **Table Editor** → **profiles** → find the row for that user (match by email) → set **role** to `admin`. Also add that email to `VITE_ADMIN_ALLOWED_EMAILS` in your env if you use the allow list.
 - Payment success URL (`/training/payment/success`) is where **Seerbit** redirects after payment; you do **not** need to add it to Supabase Redirect URLs (that list is for Auth/OAuth only).
@@ -59,9 +59,17 @@ Use this to verify the full flow after deployment and Supabase/Seerbit setup.
 - [ ] If **VITE_ADMIN_LOGIN_SECRET** is set in env, `/admin/login` without `?t=SECRET` redirects to home; only the secret URL shows the login form. Use a long, random value and keep the full URL private (e.g. bookmark).
 - [ ] RLS: client cannot read other users’ consultations or orders; cannot insert into `training_orders` (only Edge Function can).
 
+## 7. Live chat (client ↔ admin, no refresh)
+
+- [ ] Apply migration `20250303000006_chat_conversations_messages.sql` so `chat_conversations` and `chat_messages` exist. Realtime is enabled for `chat_messages` in the migration.
+- [ ] On the **website**, open **Live Chat** (floating button), send a message. No fake “team member will get back to you” reply; messages are stored in Supabase.
+- [ ] In **Admin** → **Messages**, open the conversation; you should see the client’s message. Reply from admin; the **client’s chat** should show the reply **without refreshing** (Supabase Realtime).
+- [ ] Client sends another message; **admin** sees it **without refreshing**. Both sides get new messages in real time.
+
 ---
 
 **Quick reference**
 
 - Signup → confirm → book consultation → admin changes status → user sees update.
 - Add training product in admin → user pays via “Pay now” → redirect to Seerbit → webhook updates order → admin and user see paid status.
+- Live chat: client uses widget, admin uses Admin → Messages; messages sync in real time via Supabase Realtime.

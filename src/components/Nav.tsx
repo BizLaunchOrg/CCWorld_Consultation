@@ -112,14 +112,14 @@ export function Nav() {
       </div>
     </header>
 
-      {/* Mobile menu: full viewport overlay, single scrollable column so all items are reachable */}
+      {/* Mobile menu: full-height drawer with one scrollable body so all items are reachable */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-[100] md:hidden"
+          className="fixed inset-0 z-[100] md:hidden flex flex-col"
           role="dialog"
           aria-modal="true"
           aria-label="Main menu"
-          style={{ isolation: 'isolate' }}
+          style={{ isolation: 'isolate', height: '100vh' }}
         >
           <div
             className="absolute inset-0"
@@ -132,7 +132,7 @@ export function Nav() {
             style={{
               backgroundColor: NAV_BG,
               animation: 'slideInRight 0.25s ease-out',
-              minHeight: '100vh',
+              height: '100vh',
             }}
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 shrink-0">
@@ -146,8 +146,14 @@ export function Nav() {
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
-            {/* Single scrollable area: nav + Engage Us + theme + auth */}
-            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 flex flex-col gap-1">
+            {/* Single scrollable area with explicit max-height so scroll works on all devices */}
+            <div
+              className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain px-4 py-4 flex flex-col gap-1"
+              style={{
+                minHeight: 0,
+                WebkitOverflowScrolling: 'touch',
+              }}
+            >
               {navLinks.map(({ to, label }) => (
                 <NavLink
                   key={to}
