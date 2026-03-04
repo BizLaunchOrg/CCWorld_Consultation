@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { StatCard } from '../../components/admin/StatCard';
 import { fetchAdminDashboardStats } from '../../lib/adminDashboard';
+import { subscribeToAllMessages } from '../../lib/chatApi';
 import { getPublishedServices } from '../../data/services';
 
 function formatNGN(n: number): string {
@@ -27,6 +28,14 @@ export function AdminDashboardPage() {
 
   useEffect(() => {
     fetchAdminDashboardStats().then(setStats).finally(() => setLoading(false));
+  }, []);
+
+  // Realtime: refetch stats when any new message arrives so unread count updates without refresh
+  useEffect(() => {
+    const unsub = subscribeToAllMessages(() => {
+      fetchAdminDashboardStats().then((next) => setStats((prev) => (prev ? { ...next, error: prev.error } : next)));
+    });
+    return unsub;
   }, []);
 
   const publishedServices = getPublishedServices().length;

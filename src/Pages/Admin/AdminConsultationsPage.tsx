@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import type { AdminConsultation, ConsultationStatus, EngagementType } from '../../types/admin';
 import { fetchAdminConsultations, updateConsultationStatus } from '../../lib/adminConsultations';
 import { ListCard } from '../../components/admin/ListCard';
@@ -50,6 +51,7 @@ const ENGAGEMENT_OPTIONS: { value: EngagementType | 'all'; label: string }[] = [
 ];
 
 export function AdminConsultationsPage() {
+  const location = useLocation();
   const [consultations, setConsultations] = useState<AdminConsultation[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<AdminConsultation | null>(null);
@@ -65,6 +67,16 @@ export function AdminConsultationsPage() {
       setLoading(false);
     });
   }, []);
+
+  const highlightId = (location.state as { highlightConsultationId?: string })?.highlightConsultationId;
+  useEffect(() => {
+    if (!highlightId || !consultations.length) return;
+    const consultation = consultations.find((c) => c.id === highlightId);
+    if (consultation) {
+      setSelected(consultation);
+      try { window.history.replaceState({}, '', location.pathname); } catch {}
+    }
+  }, [highlightId, consultations, location.pathname]);
 
   const newCount = useMemo(() => consultations.filter((c) => c.status === 'new').length, [consultations]);
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import type { TrainingOrderWithProduct } from '../../lib/adminTrainingOrders';
 import { fetchAdminTrainingOrders } from '../../lib/adminTrainingOrders';
 import { ListCard } from '../../components/admin/ListCard';
@@ -15,6 +16,7 @@ function formatDate(iso: string): string {
 }
 
 export function AdminTransactionsPage() {
+  const location = useLocation();
   const [orders, setOrders] = useState<TrainingOrderWithProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<TxStatus>('all');
@@ -26,6 +28,16 @@ export function AdminTransactionsPage() {
       setLoading(false);
     });
   }, []);
+
+  const highlightId = (location.state as { highlightTransactionId?: string })?.highlightTransactionId;
+  useEffect(() => {
+    if (!highlightId || !orders.length) return;
+    const order = orders.find((o) => o.id === highlightId);
+    if (order) {
+      setSelected(order);
+      try { window.history.replaceState({}, '', location.pathname); } catch {}
+    }
+  }, [highlightId, orders, location.pathname]);
 
   const filtered =
     statusFilter === 'all'

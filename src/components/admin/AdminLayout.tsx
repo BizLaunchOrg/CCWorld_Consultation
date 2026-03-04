@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AdminSidebar } from './AdminSidebar';
 import { AdminTopbar } from './AdminTopbar';
+import { AdminNotificationProvider } from '../../contexts/AdminNotificationContext';
 
 const routeTitles: Record<string, string> = {
   '/admin': 'Dashboard',
@@ -50,10 +51,12 @@ export function AdminLayout() {
 
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
-        <AdminTopbar title={title} onMenuClick={() => setMobileOpen(true)} />
-        <main className="flex-1 p-4 md:p-6">
-          <Outlet />
-        </main>
+        <AdminNotificationProvider>
+          <AdminTopbar title={title} onMenuClick={() => setMobileOpen(true)} />
+          <main className="flex-1 p-4 md:p-6">
+            <Outlet />
+          </main>
+        </AdminNotificationProvider>
       </div>
     </div>
   );

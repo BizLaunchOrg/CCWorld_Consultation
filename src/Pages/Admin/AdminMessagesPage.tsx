@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import type { AdminMessage } from '../../types/admin';
 import {
   listAdminConversations,
@@ -15,12 +16,27 @@ function formatTime(iso: string): string {
 }
 
 export function AdminMessagesPage() {
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [conversations, setConversations] = useState<AdminConversationRow[]>([]);
   const [messages, setMessages] = useState<AdminMessage[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [reply, setReply] = useState('');
   const [loading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const replyInputRef = useRef<HTMLInputElement>(null);
+
+  // Open conversation from notification or deep link
+  const openFromState = (location.state as { openConversationId?: string })?.openConversationId;
+  const openFromQuery = searchParams.get('conversation');
+  const openId = openFromState ?? openFromQuery ?? null;
+  useEffect(() => {
+    if (!openId) return;
+    setSelectedId(openId);
+    if (openFromState) {
+      try { window.history.replaceState({}, '', location.pathname); } catch {}
+    }
+  }, [openId, openFromState, location.pathname]);
 
   const selected = conversations.find((c) => c.id === selectedId);
   const conversationMessages = selectedId
@@ -166,7 +182,7 @@ export function AdminMessagesPage() {
             selectedId ? 'flex' : 'hidden md:flex'
           }`}
         >
-          {selected ? (
+          {selectedId ? (
             <>
               <div className="p-3 md:p-4 border-b border-slate-200 dark:border-white/10 flex items-center gap-2 shrink-0">
                 <button
@@ -179,8 +195,8 @@ export function AdminMessagesPage() {
                 </button>
                 <span className="material-symbols-outlined text-teal-accent shrink-0">person</span>
                 <div className="min-w-0 flex-1">
-                  <p className="font-bold text-slate-900 dark:text-white truncate">{selected.customer_name ?? 'Guest'}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{selected.customer_email ?? '—'}</p>
+                  <p className="font-bold text-slate-900 dark:text-white truncate">{selected?.customer_name ?? 'Guest'}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{selected?.customer_email ?? '—'}</p>
                 </div>
               </div>
               <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
@@ -207,9 +223,13 @@ export function AdminMessagesPage() {
               </div>
               <div className="p-3 border-t border-slate-200 dark:border-white/10 flex gap-2 shrink-0">
                 <input
+                  ref={replyInputRef}
                   type="text"
                   value={reply}
                   onChange={(e) => setReply(e.target.value)}
+                  onFocus={() => {
+                    setTimeout(() => replyInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 300);
+                  }}
                   onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
                   placeholder="Type a reply…"
                   className="flex-1 min-w-0 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none text-sm"

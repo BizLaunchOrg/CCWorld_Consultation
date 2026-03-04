@@ -61,7 +61,7 @@ Use this to verify the full flow after deployment and Supabase/Seerbit setup.
 
 ## 7. Live chat (client ↔ admin, no refresh)
 
-- [ ] Apply migration `20250303000006_chat_conversations_messages.sql` so `chat_conversations` and `chat_messages` exist. Realtime is enabled for `chat_messages` in the migration.
+- [ ] Apply migration `20250303000006_chat_conversations_messages.sql` so `chat_conversations` and `chat_messages` exist. Realtime is enabled for `chat_messages` in the migration. For **admin notifications** (new orders, new consultations), also run `20250303000007_realtime_orders_consultations.sql` to add `training_orders` and `consultations` to the Realtime publication.
 - [ ] On the **website**, open **Live Chat** (floating button), send a message. No fake “team member will get back to you” reply; messages are stored in Supabase.
 - [ ] In **Admin** → **Messages**, open the conversation; you should see the client’s message. Reply from admin; the **client’s chat** should show the reply **without refreshing** (Supabase Realtime).
 - [ ] Client sends another message; **admin** sees it **without refreshing**. Both sides get new messages in real time.

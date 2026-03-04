@@ -224,14 +224,12 @@ export async function adminMarkRead(conversationId: string): Promise<void> {
 }
 
 /**
- * Total count of unread messages (from users) for admin dashboard.
+ * Mark ALL unread messages as read (admin). Updates read_at for every user message that is unread.
  */
-export async function getUnreadMessagesCountForAdmin(): Promise<number> {
-  const { count, error } = await supabase
+export async function markAllMessagesAsReadForAdmin(): Promise<void> {
+  await supabase
     .from(MESSAGES)
-    .select('*', { count: 'exact', head: true })
+    .update({ read_at: new Date().toISOString() })
     .eq('sender_role', 'user')
     .is('read_at', null);
-  if (error) return 0;
-  return count ?? 0;
 }
