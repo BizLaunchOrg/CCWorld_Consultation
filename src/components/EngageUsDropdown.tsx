@@ -68,18 +68,18 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
         <Link
           to="/consultation"
           onClick={onClose}
-          className="block py-4 px-4 rounded-2xl bg-primary text-white text-center font-bold text-base hover:bg-primary/90 transition-colors touch-manipulation"
+          className="block py-3 px-4 rounded-2xl bg-primary text-white text-center font-bold text-sm hover:bg-primary/90 transition-colors touch-manipulation"
         >
           Request Consultation
         </Link>
         <button
           type="button"
           onClick={() => { openChat(); onClose?.(); }}
-          className="block w-full py-4 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-base hover:bg-white/10 transition-colors touch-manipulation"
+          className="block w-full py-3 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-sm hover:bg-white/10 transition-colors touch-manipulation"
         >
           Live Chat
         </button>
-        <div className="py-4 px-4 rounded-2xl border border-white/10 bg-[#0f172a]">
+        <div className="py-3 px-4 rounded-2xl border border-white/10 bg-[#0f172a]">
           <div className="text-xs font-bold text-slate-400 mb-2">Email Us</div>
           {OFFICIAL_EMAILS.map(({ email, label }) => (
             <EmailRow key={email} email={email} label={label} onCopy={handleCopy} />

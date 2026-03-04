@@ -112,7 +112,7 @@ export function Nav() {
       </div>
     </header>
 
-      {/* Mobile menu: rendered outside header so it's not affected by header context. Full viewport overlay + solid drawer. */}
+      {/* Mobile menu: full viewport overlay, single scrollable column so all items are reachable */}
       {mobileOpen && (
         <div
           className="fixed inset-0 z-[100] md:hidden"
@@ -135,7 +135,7 @@ export function Nav() {
               minHeight: '100vh',
             }}
           >
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 shrink-0">
               <span className="text-sm font-bold text-slate-300">Menu</span>
               <button
                 type="button"
@@ -146,7 +146,8 @@ export function Nav() {
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
-            <nav className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-1 min-h-0">
+            {/* Single scrollable area: nav + Engage Us + theme + auth */}
+            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 flex flex-col gap-1">
               {navLinks.map(({ to, label }) => (
                 <NavLink
                   key={to}
@@ -154,27 +155,34 @@ export function Nav() {
                   end={to === '/'}
                   onClick={closeMobile}
                   className={({ isActive }) =>
-                    `block py-4 px-4 rounded-2xl text-base font-semibold transition-colors touch-manipulation ${isActive ? 'bg-teal-accent/20 text-teal-accent' : 'text-slate-200 hover:bg-white/10 hover:text-white'}`
+                    `block py-3 px-4 rounded-2xl text-sm font-semibold transition-colors touch-manipulation ${isActive ? 'bg-teal-accent/20 text-teal-accent' : 'text-slate-200 hover:bg-white/10 hover:text-white'}`
                   }
                 >
                   {label}
                 </NavLink>
               ))}
+              {user && profile?.role === 'admin' && (
+                <Link
+                  to="/admin"
+                  onClick={closeMobile}
+                  className="block py-3 px-4 rounded-2xl text-sm font-semibold text-teal-accent hover:bg-teal-accent/10 transition-colors touch-manipulation"
+                >
+                  Admin
+                </Link>
+              )}
               <EngageUsDropdown variant="mobile" onClose={closeMobile} />
-            </nav>
-            <div className="p-6 border-t border-white/10 space-y-4 shrink-0" style={{ backgroundColor: NAV_BG }}>
-              <div className="flex items-center justify-between gap-4">
-                <span className="text-sm font-semibold text-slate-400">Theme</span>
+              <div className="pt-4 mt-2 border-t border-white/10 flex items-center justify-between gap-4">
+                <span className="text-xs font-semibold text-slate-400">Theme</span>
                 <ThemeToggle />
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2 pt-2">
                 {user ? (
                   <>
-                    <span className="text-sm text-slate-400 py-2">{profile?.name || user.email}</span>
+                    <span className="text-xs text-slate-400 px-4 py-1 truncate">{profile?.name || user.email}</span>
                     <button
                       type="button"
                       onClick={() => { signOut(); closeMobile(); }}
-                      className="block w-full py-4 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-base hover:bg-white/10 transition-colors touch-manipulation"
+                      className="block w-full py-3 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-sm hover:bg-white/10 transition-colors touch-manipulation"
                     >
                       Logout
                     </button>
@@ -184,14 +192,14 @@ export function Nav() {
                     <Link
                       to="/signup"
                       onClick={closeMobile}
-                      className="block w-full py-4 px-4 rounded-2xl bg-teal-accent text-background-dark text-center font-bold text-base hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all touch-manipulation"
+                      className="block w-full py-3 px-4 rounded-2xl bg-teal-accent text-background-dark text-center font-bold text-sm hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all touch-manipulation"
                     >
                       Create account
                     </Link>
                     <Link
                       to="/login"
                       onClick={closeMobile}
-                      className="block w-full py-4 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-base hover:bg-white/10 transition-colors touch-manipulation"
+                      className="block w-full py-3 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-sm hover:bg-white/10 transition-colors touch-manipulation"
                     >
                       Login
                     </Link>
