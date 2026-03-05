@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getTrainingProductBySlug } from '../../lib/trainingProducts';
+import { useChat } from '../../contexts/ChatContext';
 
 function formatPriceNGN(n: number): string {
   return `NGN ${n.toLocaleString('en-NG')}`;
@@ -56,9 +57,14 @@ export function TrainingDetailsPage() {
   const faq: { q: string; a: string }[] = (training.faq ?? []).length > 0
     ? (training.faq ?? [])
     : [
-        { q: 'How do I book?', a: 'Get in touch via Request Consultation or Live Chat. We’ll confirm and schedule.' },
-        { q: 'Can we get a custom quote?', a: 'Yes. Use the chat or request a consultation for tailored programs.' },
+        { q: 'How do I book?', a: 'Use “Request a quote” to open Live Chat — we’ll send a short message about this training and our team will get back to you with a quote and next steps.' },
+        { q: 'Can we get a custom quote?', a: 'Yes. Use the chat to tell us your needs and we’ll provide a tailored quote.' },
       ];
+  const { openChat } = useChat();
+
+  const handleRequestQuote = () => {
+    openChat(`Hi, I need a training on ${training.name}. Can you send me a quote?`);
+  };
 
   return (
     <main className="max-w-7xl mx-auto px-6 py-12 pt-24">
@@ -81,12 +87,13 @@ export function TrainingDetailsPage() {
               <span className="text-teal-accent font-black text-2xl">
                 {formatPriceNGN(training.amount)}
               </span>
-              <Link
-                to="/consultation"
+              <button
+                type="button"
+                onClick={handleRequestQuote}
                 className="px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all"
               >
                 Request a quote
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -177,12 +184,13 @@ export function TrainingDetailsPage() {
                 </div>
               </div>
             </div>
-            <Link
-              to="/consultation"
+            <button
+              type="button"
+              onClick={handleRequestQuote}
               className="block w-full py-4 rounded-2xl bg-teal-accent text-background-dark font-black text-center hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
             >
               Request a quote
-            </Link>
+            </button>
           </div>
         </aside>
       </div>
@@ -194,12 +202,13 @@ export function TrainingDetailsPage() {
             {formatPriceNGN(training.amount)}
           </p>
         </div>
-        <Link
-          to="/consultation"
+        <button
+          type="button"
+          onClick={handleRequestQuote}
           className="shrink-0 px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all"
         >
           Request a quote
-        </Link>
+        </button>
       </section>
     </main>
   );

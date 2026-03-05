@@ -1,15 +1,14 @@
 # Email templates
 
-Use these for a consistent, professional look for **email confirmation** (Supabase Auth) and **payment successful** (sent automatically by the webhook via Resend).
+Use these for a consistent, professional look for **auth emails** (Supabase Auth: confirm email, reset password, etc.). There is no payment or signup flow on the website; engagements are handled outside the site.
 
 ---
 
 ## 1. Sender name = company name (Custom SMTP)
 
-**Yes – the form you have open is the right place.**  
 Use it so confirmation emails show **CCworld Consultation** (not "Supabase") in the recipient’s inbox.
 
-### If you use **Gmail** (what you have now)
+### If you use **Gmail**
 
 - **Sender email:** `ccworldconsultation@gmail.com` (or the Gmail you want to send from).
 - **Sender name:** `CCworld Consultation` ✓ (already correct).
@@ -34,11 +33,7 @@ Supabase’s warning appears because Gmail is meant for personal use; deliverabi
 
 ---
 
-## 2. Designing / editing the confirmation emails
-
-There are two different places, depending on which email you mean.
-
-### A) Auth emails (confirm signup, reset password, etc.)
+## 2. Auth email templates (confirm email, reset password, etc.)
 
 These are controlled by **Supabase**, not by your code.
 
@@ -47,22 +42,9 @@ These are controlled by **Supabase**, not by your code.
 3. You’ll see:
    - **Subject** – e.g. `Confirm your email` or `Confirm your email – {{ .SiteURL }}`.
    - **Body (HTML)** – the actual design (layout, colors, text, button).
-4. To use the nice design from this doc: copy the HTML block from the section below (“Confirm signup HTML body”), paste it into **Body (HTML)**, and save.  
-   That’s “designing” the confirmation email: you’re replacing the default plain text with your branded HTML.
+4. To use the nice design from this doc: copy the HTML block from the section below (“Confirm signup HTML body”), paste it into **Body (HTML)**, and save.
 
 You can edit Subject and Body anytime in that screen; no code or deploy needed.
-
-### B) Payment successful email (“We’ve received your payment”)
-
-This one is **not** in Supabase. It’s sent by your Edge Function using Resend.
-
-- **Where it’s defined:** in code: `supabase/functions/seerbit-webhook/index.ts`, inside the function **`paymentReceivedEmailHtml(...)`**.
-- **To change the design:** edit that function (HTML string, text, colors, layout), then redeploy the function:
-  ```bash
-  supabase functions deploy seerbit-webhook --no-verify-jwt
-  ```
-
-So: **Auth emails** → Supabase Dashboard → Email Templates. **Payment email** → edit `seerbit-webhook/index.ts` and redeploy.
 
 ---
 
@@ -87,21 +69,3 @@ Replace the default template body with the HTML below. You can set **Subject** t
   <p style="margin:0;font-size:13px;color:#64748b;">If you didn't create an account, you can ignore this email.</p>
 </div>
 ```
-
----
-
-## 4. Payment successful (automatic)
-
-The **payment received** email is sent by the `seerbit-webhook` Edge Function when a payment is marked as paid. It uses **Resend** and does not use the Supabase email templates.
-
-**Setup**
-
-1. Create an account at [resend.com](https://resend.com) and get an API key.
-2. In **Supabase Dashboard → Edge Functions → seerbit-webhook → Secrets**, add:
-   - `RESEND_API_KEY` – your Resend API key (required for payment emails).
-   - `RESEND_FROM` (optional) – **this is the “from” address** for the payment email, e.g. `notifications@ccworldconsultation.com`. To change the address customers see, set or update `RESEND_FROM` here (use a verified domain in Resend). If omitted, Resend uses `onboarding@resend.dev`.
-   - `SITE_NAME` (optional) – e.g. `CCworld Consulting` (used in subject and footer).
-
-3. In Resend, add and verify your domain so you can send from your own address (e.g. `notifications@ccworldconsulting.com`).
-
-The email content (subject, body, styling) is defined in the webhook code and includes the product name, amount paid, and “We’ll get back to you shortly.”

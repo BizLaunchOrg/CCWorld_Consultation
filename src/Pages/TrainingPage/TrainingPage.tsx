@@ -72,7 +72,7 @@ export function TrainingPage() {
             </span>
           </h1>
           <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl mt-6">
-            Browse our training programs and advisory engagements. Request a quote or consultation to get started.
+            Browse our training programs and advisory engagements. View details or start a chat to get a quote.
           </p>
         </div>
       </section>
@@ -199,13 +199,7 @@ export function TrainingPage() {
                   to={`/training/${t.slug}`}
                   className="flex-1 text-center px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
                 >
-                  {t.category === 'advisory' ? 'View Advisory' : 'View Training'}
-                </Link>
-                <Link
-                  to="/consultation"
-                  className="px-5 py-3 rounded-2xl bg-primary text-white font-black hover:bg-primary/90 transition-all"
-                >
-                  Request a Consultation
+                  {t.category === 'advisory' ? 'View Advisory' : 'View Details'}
                 </Link>
                 <button
                   type="button"
@@ -258,10 +252,10 @@ export function TrainingPage() {
               </div>
             </div>
             <Link
-              to="/consultation"
+              to="/training"
               className="shrink-0 px-6 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all text-center"
             >
-              Request Advisory
+              View offerings
             </Link>
           </div>
         </div>
@@ -277,16 +271,10 @@ export function TrainingPage() {
             Get in touch and we’ll scope training or advisory to your needs.
           </p>
           <div className="flex flex-wrap justify-center gap-6">
-            <Link
-              to="/consultation"
-              className="px-10 py-5 bg-white text-primary text-lg font-black rounded-xl hover:scale-105 transition-transform"
-            >
-              Request a Consultation
-            </Link>
             <button
               type="button"
               onClick={() => openChat()}
-              className="px-10 py-5 border-2 border-white text-white text-lg font-black rounded-xl hover:bg-white/10 transition-all"
+              className="px-10 py-5 bg-white text-primary text-lg font-black rounded-xl hover:scale-105 transition-transform"
             >
               Live Chat
             </button>

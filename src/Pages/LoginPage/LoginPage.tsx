@@ -131,12 +131,6 @@ export function LoginPage() {
               <span className="material-symbols-outlined text-lg">mail</span>
               Continue with Google
             </button>
-            <p className="text-center text-sm text-slate-600 dark:text-slate-400">
-              Do not have an account?{' '}
-              <Link to="/signup" className="font-bold text-teal-accent hover:underline">
-                Create account
-              </Link>
-            </p>
           </form>
         </div>
       </div>

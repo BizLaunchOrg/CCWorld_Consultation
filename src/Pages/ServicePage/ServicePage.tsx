@@ -120,12 +120,6 @@ export default function ServicePage() {
               >
                 Live Chat <span className="material-symbols-outlined">chat</span>
               </button>
-              <button
-                type="button"
-                className="px-8 py-4 border-2 border-slate-200 dark:border-white/20 text-slate-600 dark:text-slate-300 text-sm sm:text-base font-black rounded-xl hover:bg-white/10 transition-all"
-              >
-                Download Blueprint
-              </button>
             </div>
 
             {/* Quick stats */}

@@ -25,7 +25,7 @@ function formatTime(iso: string): string {
 
 export function ChatWidget() {
   const { user } = useAuth();
-  const { isOpen, unreadCount, openChat, closeChat, addUnread, clearUnread } = useChat();
+  const { isOpen, unreadCount, openChat, closeChat, addUnread, clearUnread, consumePendingMessage } = useChat();
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([DEFAULT_GREETING]);
   const [input, setInput] = useState('');
@@ -40,7 +40,7 @@ export function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  // When opening chat: get or create conversation, load messages, subscribe to new ones
+  // When opening chat: get or create conversation, load messages, subscribe to new ones. Send pending initial message if set.
   useEffect(() => {
     if (!isOpen) return;
     clearUnread();
@@ -52,10 +52,20 @@ export function ChatWidget() {
         const list = await getMessages(conv.id);
         setMessages(list.length ? list : [DEFAULT_GREETING]);
         markRead(conv.id).catch(() => {});
+
+        const pending = consumePendingMessage();
+        if (pending) {
+          try {
+            const created = await sendMessageApi(conv.id, pending);
+            setMessages((prev) => [...prev, created]);
+          } catch {
+            // keep current messages
+          }
+        }
       })
       .catch(() => setMessages([DEFAULT_GREETING]))
       .finally(() => setLoading(false));
-  }, [isOpen, clearUnread, user?.id]);
+  }, [isOpen, clearUnread, user?.id, consumePendingMessage]);
 
   // Realtime: new messages (including admin replies) appear without refresh
   useEffect(() => {
