@@ -1,18 +1,18 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
-import { ThemeToggle } from './ThemeToggle';
-import { EngageUsDropdown } from './EngageUsDropdown';
+import { Link, NavLink } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { ThemeToggle } from "./ThemeToggle";
+import { EngageUsDropdown } from "./EngageUsDropdown";
 
 const navLinks: { to: string; label: string }[] = [
-  { to: '/', label: 'Home' },
-  { to: '/services', label: 'Services' },
-  { to: '/training', label: 'Training' },
-  { to: '/about', label: 'About' },
-  { to: '/insights', label: 'Insights' },
+  { to: "/", label: "Home" },
+  { to: "/services", label: "Services" },
+  { to: "/training", label: "Training" },
+  { to: "/about", label: "About" },
+  { to: "/insights", label: "Insights" },
 ];
 
 /** Solid dark background for nav/mobile menu - matches theme background-dark */
-const NAV_BG = '#0f172a';
+const NAV_BG = "#0f172a";
 
 export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -22,56 +22,63 @@ export function Nav() {
   useEffect(() => {
     if (!mobileOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeMobile();
+      if (e.key === "Escape") closeMobile();
     };
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [mobileOpen, closeMobile]);
 
   useEffect(() => {
-    if (mobileOpen) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
+    if (mobileOpen) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [mobileOpen]);
 
   return (
     <>
-    <header className="fixed top-0 z-50 w-full border-b border-white/10 backdrop-blur-md" style={{ backgroundColor: NAV_BG }}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <Link to="/" className="flex items-center gap-3 shrink-0">
-          <img src="/logo.png" alt="CC World Consulting" className="h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 lg:h-36 lg:w-36 xl:h-40 xl:w-40 object-contain max-w-full" />
-        </Link>
-        <nav className="hidden md:flex items-center gap-10">
-          {navLinks.map(({ to, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={to === '/'}
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors hover:text-white ${isActive ? 'text-teal-accent' : 'text-slate-200'}`
-              }
+      <header
+        className="fixed top-0 z-50 w-full border-b border-white/10 backdrop-blur-md"
+        style={{ backgroundColor: NAV_BG }}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 h-28">
+          <Link to="/" className="flex items-center shrink-0">
+            <img
+              src="/logo.png"
+              alt="CC World Consulting"
+              className="h-24 w-24 sm:h-28 sm:w-28 object-contain"
+            />
+          </Link>
+          <nav className="hidden md:flex items-center gap-10">
+            {navLinks.map(({ to, label }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={to === "/"}
+                className={({ isActive }) =>
+                  `text-sm font-semibold transition-colors hover:text-white ${isActive ? "text-teal-accent" : "text-slate-200"}`
+                }
+              >
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="flex items-center gap-3">
+            <EngageUsDropdown variant="desktop" />
+            <button
+              type="button"
+              onClick={() => setMobileOpen((o) => !o)}
+              className="md:hidden text-white p-3 rounded-2xl hover:bg-white/10 transition-colors touch-manipulation"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-        <div className="flex items-center gap-3">
-          <EngageUsDropdown variant="desktop" />
-          <button
-            type="button"
-            onClick={() => setMobileOpen((o) => !o)}
-            className="md:hidden text-white p-3 rounded-2xl hover:bg-white/10 transition-colors touch-manipulation"
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          >
-            <span className="material-symbols-outlined text-2xl">
-              {mobileOpen ? 'close' : 'menu'}
-            </span>
-          </button>
+              <span className="material-symbols-outlined text-2xl">
+                {mobileOpen ? "close" : "menu"}
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
       {/* Mobile menu */}
       {mobileOpen && (
@@ -80,11 +87,14 @@ export function Nav() {
           role="dialog"
           aria-modal="true"
           aria-label="Main menu"
-          style={{ isolation: 'isolate', height: '100vh' }}
+          style={{ isolation: "isolate", height: "100vh" }}
         >
           <div
             className="absolute inset-0"
-            style={{ backgroundColor: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)' }}
+            style={{
+              backgroundColor: "rgba(0,0,0,0.75)",
+              backdropFilter: "blur(8px)",
+            }}
             aria-hidden="true"
             onClick={closeMobile}
           />
@@ -92,8 +102,8 @@ export function Nav() {
             className="absolute top-0 right-0 bottom-0 w-full max-w-sm flex flex-col border-l border-white/10 shadow-2xl"
             style={{
               backgroundColor: NAV_BG,
-              animation: 'slideInRight 0.25s ease-out',
-              height: '100vh',
+              animation: "slideInRight 0.25s ease-out",
+              height: "100vh",
             }}
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 shrink-0">
@@ -111,17 +121,17 @@ export function Nav() {
               className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain px-4 py-4 flex flex-col gap-1"
               style={{
                 minHeight: 0,
-                WebkitOverflowScrolling: 'touch',
+                WebkitOverflowScrolling: "touch",
               }}
             >
               {navLinks.map(({ to, label }) => (
                 <NavLink
                   key={to}
                   to={to}
-                  end={to === '/'}
+                  end={to === "/"}
                   onClick={closeMobile}
                   className={({ isActive }) =>
-                    `block py-3 px-4 rounded-2xl text-sm font-semibold transition-colors touch-manipulation ${isActive ? 'bg-teal-accent/20 text-teal-accent' : 'text-slate-200 hover:bg-white/10 hover:text-white'}`
+                    `block py-3 px-4 rounded-2xl text-sm font-semibold transition-colors touch-manipulation ${isActive ? "bg-teal-accent/20 text-teal-accent" : "text-slate-200 hover:bg-white/10 hover:text-white"}`
                   }
                 >
                   {label}
@@ -129,7 +139,9 @@ export function Nav() {
               ))}
               <EngageUsDropdown variant="mobile" onClose={closeMobile} />
               <div className="pt-4 mt-2 border-t border-white/10 flex items-center justify-between gap-4">
-                <span className="text-xs font-semibold text-slate-400">Theme</span>
+                <span className="text-xs font-semibold text-slate-400">
+                  Theme
+                </span>
                 <ThemeToggle />
               </div>
             </div>
