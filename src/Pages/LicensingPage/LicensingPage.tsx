@@ -71,7 +71,7 @@ export function LicensingPage() {
                   </Link>
                   <button
                     type="button"
-                    onClick={openChat}
+                    onClick={() => openChat()}
                     className="px-5 py-3 rounded-2xl border border-gold-accent/40 text-gold-accent font-black hover:bg-gold-accent/10 transition-all flex items-center justify-center gap-1.5"
                     aria-label="Live chat"
                   >
@@ -100,7 +100,7 @@ export function LicensingPage() {
             </Link>
             <button
               type="button"
-              onClick={openChat}
+              onClick={() => openChat()}
               className="px-8 py-4 border-2 border-gold-accent/50 text-gold-accent font-black rounded-xl hover:bg-gold-accent/10 transition-all flex items-center gap-2"
             >
               Live Chat <span className="material-symbols-outlined">chat</span>

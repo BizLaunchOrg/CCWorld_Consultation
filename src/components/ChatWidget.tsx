@@ -23,6 +23,27 @@ function formatTime(iso: string): string {
   return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 }
 
+// Match URLs (http/https) so we can render them as clickable links
+const URL_RE = /(https?:\/\/[^\s]+)/g;
+function renderMessageBody(body: string) {
+  const parts = body.split(URL_RE);
+  return parts.map((part, i) =>
+    part.startsWith('http://') || part.startsWith('https://') ? (
+      <a
+        key={i}
+        href={part}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline break-all text-teal-accent hover:text-teal-accent/90"
+      >
+        {part}
+      </a>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
 export function ChatWidget() {
   const { user } = useAuth();
   const { isOpen, unreadCount, openChat, closeChat, addUnread, clearUnread, consumePendingMessage } = useChat();
@@ -175,7 +196,7 @@ export function ChatWidget() {
                             : 'bg-white/10 text-slate-200 border border-white/10 rounded-bl-md'
                         }`}
                       >
-                        <p className="text-sm whitespace-pre-wrap">{msg.body}</p>
+                        <p className="text-sm whitespace-pre-wrap">{renderMessageBody(msg.body)}</p>
                         <p className="text-[10px] mt-1 opacity-80">{formatTime(msg.created_at)}</p>
                       </div>
                     </div>

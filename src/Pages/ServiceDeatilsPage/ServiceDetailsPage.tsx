@@ -137,7 +137,7 @@ export function ServiceDetailsPage() {
             </Link>
             <button
               type="button"
-              onClick={openChat}
+              onClick={() => openChat()}
               className="block w-full mt-4 py-4 px-6 rounded-2xl border-2 border-gold-accent/50 text-gold-accent font-black hover:bg-gold-accent/10 transition-all text-center"
             >
               Live Chat

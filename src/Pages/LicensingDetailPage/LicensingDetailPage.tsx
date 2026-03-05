@@ -139,7 +139,7 @@ export function LicensingDetailPage() {
               </Link>
               <button
                 type="button"
-                onClick={openChat}
+                onClick={() => openChat()}
                 className="px-6 py-3 rounded-2xl border border-gold-accent/50 text-gold-accent font-black hover:bg-gold-accent/10 transition-all"
               >
                 Live Chat
