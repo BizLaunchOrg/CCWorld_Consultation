@@ -243,29 +243,12 @@ export default function ServicePage() {
               </div>
               <div className="mt-6 flex flex-col gap-3">
                 <Link
-                  to={`/licensing/${s.slug}`}
+                  to="/consultation"
                   className="w-full text-center px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
+                  aria-label="Request a consultation"
                 >
-                  View Details
+                  Request Consultation
                 </Link>
-                <div className="flex gap-3">
-                  <Link
-                    to="/consultation"
-                    className="flex-1 min-w-0 text-center px-5 py-3 rounded-2xl bg-primary text-white font-black hover:bg-primary/90 transition-all"
-                    aria-label="Request a consultation"
-                  >
-                    Request a Consultation
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={openChat}
-                    className="px-5 py-3 rounded-2xl border border-gold-accent/40 text-gold-accent font-black hover:bg-gold-accent/10 transition-all flex items-center justify-center gap-1.5"
-                    aria-label="Live chat"
-                  >
-                    <span className="material-symbols-outlined text-lg">chat</span>
-                    Live Chat
-                  </button>
-                </div>
               </div>
             </div>
           ))}
