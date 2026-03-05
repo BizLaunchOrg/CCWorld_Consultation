@@ -40,8 +40,8 @@ export function Nav() {
     <>
     <header className="fixed top-0 z-50 w-full border-b border-white/10 backdrop-blur-md" style={{ backgroundColor: NAV_BG }}>
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <Link to="/" className="flex items-center gap-3">
-          <img src="/logo.png" alt="CC World Consulting" className="h-20 w-20 object-contain" />
+        <Link to="/" className="flex items-center gap-3 shrink-0">
+          <img src="/logo.png" alt="CC World Consulting" className="h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 lg:h-36 lg:w-36 xl:h-40 xl:w-40 object-contain max-w-full" />
         </Link>
         <nav className="hidden md:flex items-center gap-10">
           {navLinks.map(({ to, label }) => (

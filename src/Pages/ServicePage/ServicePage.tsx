@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { getPublishedNonLicensingServices, getLicensingServices } from "../../data/services";
+import { getPublishedNonLicensingServices } from "../../data/services";
 import type { Service } from "../../types/service";
 import { useChat } from "../../contexts/ChatContext";
 
@@ -8,7 +8,6 @@ const cx = (...a: Array<string | false | null | undefined>) => a.filter(Boolean)
 
 export default function ServicePage() {
   const services = getPublishedNonLicensingServices();
-  const licensingServices = getLicensingServices();
   const { openChat } = useChat();
   const prefersReduced =
     typeof window !== "undefined" &&
@@ -195,55 +194,6 @@ export default function ServicePage() {
             <div key={`${item.text}-${i}`} className={`flex items-center gap-3 font-mono text-sm ${item.color}`}>
               <span className="material-symbols-outlined text-xs">{item.icon}</span>
               {item.text}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Licensing & Compliance Advisory */}
-      <section className="max-w-7xl mx-auto px-6 py-14">
-        <div className="mb-8">
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">Licensing & Compliance Advisory</h2>
-          <p className="text-slate-600 dark:text-slate-400 mt-2">
-            Dedicated support for payment licensing and regulatory sandbox participation.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {licensingServices.map((s) => (
-            <div
-              key={s.slug}
-              className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-6 hover:border-teal-accent/25 transition-all group shadow-sm dark:shadow-none flex flex-col"
-            >
-              <div className="flex items-start gap-4">
-                <span className="size-12 rounded-2xl bg-teal-accent/10 border border-teal-accent/20 flex items-center justify-center text-teal-accent shrink-0">
-                  <span className="material-symbols-outlined">{s.icon}</span>
-                </span>
-                <div className="min-w-0">
-                  <h3 className="text-slate-900 dark:text-white font-black text-lg leading-tight">{s.title}</h3>
-                  <p className="text-slate-600 dark:text-slate-500 text-xs mt-1">{s.tagline}</p>
-                </div>
-              </div>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-4 flex-1">{s.summary}</p>
-              <div className="mt-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark p-4">
-                <div className="text-slate-600 dark:text-slate-500 text-xs font-black uppercase tracking-widest mb-2">Outcomes</div>
-                <ul className="space-y-2">
-                  {s.outcomes.slice(0, 5).map((o) => (
-                    <li key={o} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-xs">
-                      <span className="material-symbols-outlined text-teal-accent text-sm mt-0.5 shrink-0">check</span>
-                      {o}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-6 flex flex-col gap-3">
-                <Link
-                  to="/consultation"
-                  className="w-full text-center px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
-                  aria-label="Request a consultation"
-                >
-                  Request Consultation
-                </Link>
-              </div>
             </div>
           ))}
         </div>
