@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 
 const solutionsLinks = [
   { to: '#', label: 'Fintech Banking' },
-  { to: '#', label: 'IMTO Operations' },
   { to: '#', label: 'Audit Readiness' },
   { to: '#', label: 'AML Automation' },
 ] as const;
@@ -24,8 +23,8 @@ export function Footer() {
               CC World <span className="text-primary">Consulting</span>
             </h2>
           </div>
-          <p className="text-slate-400 max-w-sm">t
-            Strategic compliance advisory for the Nigerian financial landscape. Lagos-based, serving banks, fintechs, and IMTOs.
+          <p className="text-slate-400 max-w-sm">
+            Strategic compliance advisory for the Nigerian financial landscape. Lagos-based, serving banks and fintechs.
           </p>
         </div>
         <div>

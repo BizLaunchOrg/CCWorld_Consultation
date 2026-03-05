@@ -2,7 +2,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { EngageUsDropdown } from './EngageUsDropdown';
-import { useAuth } from '../contexts/AuthContext';
 
 const navLinks: { to: string; label: string }[] = [
   { to: '/', label: 'Home' },
@@ -17,7 +16,6 @@ const NAV_BG = '#0f172a';
 
 export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { user, profile, signOut } = useAuth();
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
@@ -60,43 +58,6 @@ export function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          {user ? (
-            <>
-              {profile?.role === 'admin' && (
-                <Link
-                  to="/admin"
-                  className="hidden md:inline-flex px-5 py-2.5 border border-slate-300 dark:border-white/20 text-slate-200 dark:text-white text-sm font-bold rounded-2xl hover:bg-white/10 transition-all"
-                >
-                  Admin
-                </Link>
-              )}
-              <span className="hidden md:inline text-slate-300 text-sm">
-                {profile?.name || user.email}
-              </span>
-              <button
-                type="button"
-                onClick={() => signOut()}
-                className="hidden md:inline-flex px-5 py-2.5 border border-slate-300 dark:border-white/20 text-slate-200 dark:text-white text-sm font-bold rounded-2xl hover:bg-white/10 transition-all"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/signup"
-                className="hidden md:inline-flex px-5 py-2.5 bg-teal-accent text-background-dark text-sm font-bold rounded-2xl hover:shadow-[0_0_20px_rgba(45,212,191,0.35)] transition-all"
-              >
-                Create account
-              </Link>
-              <Link
-                to="/login"
-                className="hidden md:inline-flex px-5 py-2.5 border border-slate-300 dark:border-white/20 text-slate-200 dark:text-white text-sm font-bold rounded-2xl hover:bg-white/10 transition-all"
-              >
-                Login
-              </Link>
-            </>
-          )}
           <EngageUsDropdown variant="desktop" />
           <button
             type="button"
@@ -112,7 +73,7 @@ export function Nav() {
       </div>
     </header>
 
-      {/* Mobile menu: full-height drawer with one scrollable body so all items are reachable */}
+      {/* Mobile menu */}
       {mobileOpen && (
         <div
           className="fixed inset-0 z-[100] md:hidden flex flex-col"
@@ -146,7 +107,6 @@ export function Nav() {
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
-            {/* Single scrollable area with explicit max-height so scroll works on all devices */}
             <div
               className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain px-4 py-4 flex flex-col gap-1"
               style={{
@@ -167,50 +127,10 @@ export function Nav() {
                   {label}
                 </NavLink>
               ))}
-              {user && profile?.role === 'admin' && (
-                <Link
-                  to="/admin"
-                  onClick={closeMobile}
-                  className="block py-3 px-4 rounded-2xl text-sm font-semibold text-teal-accent hover:bg-teal-accent/10 transition-colors touch-manipulation"
-                >
-                  Admin
-                </Link>
-              )}
               <EngageUsDropdown variant="mobile" onClose={closeMobile} />
               <div className="pt-4 mt-2 border-t border-white/10 flex items-center justify-between gap-4">
                 <span className="text-xs font-semibold text-slate-400">Theme</span>
                 <ThemeToggle />
-              </div>
-              <div className="flex flex-col gap-2 pt-2">
-                {user ? (
-                  <>
-                    <span className="text-xs text-slate-400 px-4 py-1 truncate">{profile?.name || user.email}</span>
-                    <button
-                      type="button"
-                      onClick={() => { signOut(); closeMobile(); }}
-                      className="block w-full py-3 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-sm hover:bg-white/10 transition-colors touch-manipulation"
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      to="/signup"
-                      onClick={closeMobile}
-                      className="block w-full py-3 px-4 rounded-2xl bg-teal-accent text-background-dark text-center font-bold text-sm hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all touch-manipulation"
-                    >
-                      Create account
-                    </Link>
-                    <Link
-                      to="/login"
-                      onClick={closeMobile}
-                      className="block w-full py-3 px-4 rounded-2xl border border-white/20 text-white text-center font-bold text-sm hover:bg-white/10 transition-colors touch-manipulation"
-                    >
-                      Login
-                    </Link>
-                  </>
-                )}
               </div>
             </div>
           </div>

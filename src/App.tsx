@@ -11,19 +11,13 @@ import { AboutPage } from './Pages/AboutPage/AboutPage';
 import { InsightsPage } from './Pages/InsightsPage/InsightsPage';
 import { TrainingPage } from './Pages/TrainingPage/TrainingPage';
 import { TrainingDetailsPage } from './Pages/TrainingDetailsPage/TrainingDetailsPage';
-import { TrainingCheckoutPage } from './Pages/TrainingCheckoutPage/TrainingCheckoutPage';
-import { TrainingPaymentSuccessPage } from './Pages/TrainingPaymentSuccessPage/TrainingPaymentSuccessPage';
 import { LicensingPage } from './Pages/LicensingPage/LicensingPage';
 import { LicensingDetailPage } from './Pages/LicensingDetailPage/LicensingDetailPage';
-import { LoginPage } from './Pages/LoginPage/LoginPage';
-import { SignupPage } from './Pages/SignupPage/SignupPage';
-import { SignupSuccessPage } from './Pages/SignupSuccessPage/SignupSuccessPage';
 import { AdminLoginPage } from './Pages/Admin/AdminLoginPage';
 import { AdminUsersPage } from './Pages/Admin/AdminUsersPage';
 import { AdminDashboardPage } from './Pages/Admin/AdminDashboardPage';
 import { AdminServicesPage } from './Pages/Admin/AdminServicesPage';
 import { AdminTrainingsPage } from './Pages/Admin/AdminTrainingsPage';
-import { AdminTransactionsPage } from './Pages/Admin/AdminTransactionsPage';
 import { AdminConsultationsPage } from './Pages/Admin/AdminConsultationsPage';
 import { AdminMessagesPage } from './Pages/Admin/AdminMessagesPage';
 import { AdminSettingsPage } from './Pages/Admin/AdminSettingsPage';
@@ -48,7 +42,6 @@ function App() {
           <Route path="users" element={<AdminUsersPage />} />
           <Route path="services" element={<AdminServicesPage />} />
           <Route path="trainings" element={<AdminTrainingsPage />} />
-          <Route path="transactions" element={<AdminTransactionsPage />} />
           <Route path="consultations" element={<AdminConsultationsPage />} />
           <Route path="messages" element={<AdminMessagesPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
@@ -65,12 +58,7 @@ function App() {
           <Route path="/licensing" element={<LicensingPage />} />
           <Route path="/licensing/:slug" element={<LicensingDetailPage />} />
           <Route path="/training" element={<TrainingPage />} />
-          <Route path="/training/payment/success" element={<TrainingPaymentSuccessPage />} />
           <Route path="/training/:slug" element={<TrainingDetailsPage />} />
-          <Route path="/checkout/training/:slug" element={<TrainingCheckoutPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/signup/success" element={<SignupSuccessPage />} />
         </Route>
       </Routes>
     </ThemeProvider>

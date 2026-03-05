@@ -56,7 +56,7 @@ export function TrainingDetailsPage() {
   const faq: { q: string; a: string }[] = (training.faq ?? []).length > 0
     ? (training.faq ?? [])
     : [
-        { q: 'How do I book?', a: 'Proceed to checkout and pay. We’ll email you to confirm and schedule.' },
+        { q: 'How do I book?', a: 'Get in touch via Request Consultation or Live Chat. We’ll confirm and schedule.' },
         { q: 'Can we get a custom quote?', a: 'Yes. Use the chat or request a consultation for tailored programs.' },
       ];
 
@@ -82,10 +82,10 @@ export function TrainingDetailsPage() {
                 {formatPriceNGN(training.amount)}
               </span>
               <Link
-                to={`/checkout/training/${training.slug}`}
+                to="/consultation"
                 className="px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all"
               >
-                {training.category === 'advisory' ? 'Pay for Advisory' : 'Pay for Training'}
+                Request a quote
               </Link>
             </div>
           </div>
@@ -178,10 +178,10 @@ export function TrainingDetailsPage() {
               </div>
             </div>
             <Link
-              to={`/checkout/training/${training.slug}`}
+              to="/consultation"
               className="block w-full py-4 rounded-2xl bg-teal-accent text-background-dark font-black text-center hover:shadow-[0_0_24px_rgba(45,212,191,0.25)] transition-all"
             >
-              Proceed to Checkout
+              Request a quote
             </Link>
           </div>
         </aside>
@@ -195,10 +195,10 @@ export function TrainingDetailsPage() {
           </p>
         </div>
         <Link
-          to={`/checkout/training/${training.slug}`}
+          to="/consultation"
           className="shrink-0 px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all"
         >
-          Proceed to Checkout
+          Request a quote
         </Link>
       </section>
     </main>

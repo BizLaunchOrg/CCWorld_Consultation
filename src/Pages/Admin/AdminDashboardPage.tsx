@@ -5,10 +5,6 @@ import { fetchAdminDashboardStats } from '../../lib/adminDashboard';
 import { subscribeToAllMessages } from '../../lib/chatApi';
 import { getPublishedServices } from '../../data/services';
 
-function formatNGN(n: number): string {
-  return `NGN ${n.toLocaleString('en-NG')}`;
-}
-
 function formatTimeAgo(iso: string): string {
   const d = new Date(iso);
   const now = new Date();
@@ -61,13 +57,6 @@ export function AdminDashboardPage() {
   }
 
   const recentActivity = [
-    ...stats.recentOrders.slice(0, 5).map((o) => ({
-      id: o.id,
-      type: 'payment' as const,
-      text: `${o.status === 'paid' ? 'Payment received' : o.status}: ${formatNGN(o.amount)} — ${o.productName}`,
-      time: formatTimeAgo(o.created_at),
-      created_at: o.created_at,
-    })),
     ...stats.recentConsultations.slice(0, 5).map((c) => ({
       id: c.id,
       type: 'consultation' as const,
@@ -85,14 +74,8 @@ export function AdminDashboardPage() {
         <p className="text-slate-600 dark:text-slate-400 mt-1">Overview of your compliance platform.</p>
       </div>
 
-      {/* KPI cards — no Pending Transactions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          title="Total paid (trainings)"
-          value={stats.paidTrainingCount}
-          icon="payments"
-          accent="teal"
-        />
+      {/* KPI cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <StatCard
           title="New consultation requests"
           value={stats.newConsultationsCount}
@@ -133,13 +116,6 @@ export function AdminDashboardPage() {
             Add Service
           </Link>
           <Link
-            to="/admin/transactions"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border-2 border-gold-accent/50 text-gold-accent font-bold hover:bg-gold-accent/10 transition-all"
-          >
-            <span className="material-symbols-outlined">list</span>
-            View Transactions
-          </Link>
-          <Link
             to="/admin/messages"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border-2 border-primary/50 text-primary font-bold hover:bg-primary/10 transition-all"
           >
@@ -162,7 +138,7 @@ export function AdminDashboardPage() {
               className="flex items-start gap-3 py-3 border-b border-slate-100 dark:border-white/5 last:border-0"
             >
               <span className="material-symbols-outlined text-teal-accent shrink-0 mt-0.5">
-                {item.type === 'payment' ? 'payments' : item.type === 'consultation' ? 'event_note' : 'chat'}
+                {item.type === 'consultation' ? 'event_note' : 'chat'}
               </span>
               <div className="min-w-0">
                 <p className="text-sm text-slate-900 dark:text-white">{item.text}</p>
@@ -176,7 +152,7 @@ export function AdminDashboardPage() {
 
       {/* Chart placeholder */}
       <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 shadow-sm dark:shadow-none">
-        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Revenue overview</h2>
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Overview</h2>
         <div className="h-40 flex items-center justify-center rounded-2xl bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 text-sm">
           Chart placeholder — connect Supabase + chart library later
         </div>

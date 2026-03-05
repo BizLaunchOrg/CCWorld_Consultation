@@ -11,13 +11,13 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { markAllMessagesAsReadForAdmin } from '../lib/chatApi';
 
-export type AdminNotificationType = 'message' | 'transaction' | 'consultation';
+export type AdminNotificationType = 'message' | 'consultation';
 
 export interface AdminNotification {
   id: string;
   type: AdminNotificationType;
   title: string;
-  /** For message: conversation id to open. For transaction/consultation: row id. */
+  /** For message: conversation id to open. For consultation: row id. */
   targetId: string;
   link: string;
   createdAt: string;
@@ -68,8 +68,6 @@ export function AdminNotificationProvider({ children }: { children: ReactNode })
       removeNotification(n.id);
       if (n.type === 'message') {
         navigate('/admin/messages', { state: { openConversationId: n.targetId } });
-      } else if (n.type === 'transaction') {
-        navigate('/admin/transactions', { state: { highlightTransactionId: n.targetId } });
       } else if (n.type === 'consultation') {
         navigate('/admin/consultations', { state: { highlightConsultationId: n.targetId } });
       }
@@ -91,19 +89,6 @@ export function AdminNotificationProvider({ children }: { children: ReactNode })
             title: 'New chat message',
             targetId: row.conversation_id,
             link: '/admin/messages',
-          });
-        }
-      )
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'training_orders' },
-        (payload) => {
-          const row = payload.new as { id: string; amount: number; status: string };
-          addNotification({
-            type: 'transaction',
-            title: `New order ${row.status === 'paid' ? ' (paid)' : ''} — NGN ${Number(row.amount).toLocaleString()}`,
-            targetId: row.id,
-            link: '/admin/transactions',
           });
         }
       )

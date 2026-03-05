@@ -4,22 +4,32 @@ const values = [
   {
     icon: 'gavel',
     title: 'Integrity',
-    desc: 'Unwavering commitment to ethical standards and transparent practices in every engagement.',
+    desc: 'We uphold the highest ethical standards in all our dealings, ensuring trust and transparency with clients, regulators, and partners.',
   },
   {
-    icon: 'visibility',
-    title: 'Clarity',
-    desc: 'Simplifying complex regulations into actionable, clear strategies for your entire organization.',
+    icon: 'star',
+    title: 'Excellence',
+    desc: 'We strive for outstanding quality in every solution, service, and advisory we deliver.',
   },
   {
-    icon: 'description',
-    title: 'Evidence',
-    desc: 'Data-driven frameworks backed by robust documentation and verifiable compliance proof.',
+    icon: 'verified_user',
+    title: 'Accountability',
+    desc: 'We take full responsibility for our work, providing reliable and dependable compliance and risk solutions.',
   },
   {
-    icon: 'speed',
-    title: 'Readiness',
-    desc: 'Ensuring your systems are always prepared for immediate scrutiny and future-proofed growth.',
+    icon: 'lightbulb',
+    title: 'Innovation',
+    desc: 'We embrace new ideas, technologies, and methodologies to provide forward-thinking compliance solutions.',
+  },
+  {
+    icon: 'groups',
+    title: 'Collaboration',
+    desc: 'We work closely with clients, regulators, and internal teams to achieve practical, results-driven outcomes.',
+  },
+  {
+    icon: 'school',
+    title: 'Continuous Learning',
+    desc: 'We remain committed to learning and adapting to the evolving regulatory and financial landscape.',
   },
 ];
 
@@ -51,8 +61,7 @@ export function AboutPage() {
               The Gold Standard in Financial Compliance
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
-              Empowering banks, fintechs, and IMTOs with CC World Consulting frameworks built on integrity and evidence.
-              We don&apos;t just meet standards; we set them.
+              Delivering effective compliance, risk management, and regulatory solutions that enable organizations to operate securely, mitigate risks, and maintain full regulatory compliance.
             </p>
             <div className="flex gap-4">
               <button
@@ -86,17 +95,32 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Mission & Values */}
+      {/* Mission, Vision, Objective & Values */}
       <section className="bg-slate-100 dark:bg-slate-900/50 py-24">
         <div className="max-w-[1200px] mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Our Mission</h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-              To transform compliance from a hurdle into a competitive advantage by building resilient,
-              compliance-ready departments for the world&apos;s leading financial institutions.
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Objective</h2>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                To deliver effective compliance, risk management, and regulatory solutions that enable organizations to operate securely, mitigate financial and operational risks, and maintain full regulatory compliance. We strive to provide practical tools, expert guidance, and actionable insights that support sustainable growth and strengthen governance frameworks.
+              </p>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Mission</h2>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                To provide practical, innovative, and reliable compliance and risk management solutions that help organizations meet regulatory requirements, strengthen governance, prevent financial crime, and achieve sustainable growth. We aim to empower our clients with knowledge, tools, and advisory support to navigate complex regulatory environments with confidence.
+              </p>
+            </div>
+          </div>
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Vision</h2>
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl">
+              To be a leading compliance and risk advisory firm recognized for delivering innovative, practical, and regulator-ready solutions that empower organizations to operate confidently, mitigate financial crime risks, and achieve sustainable growth.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Our Values</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {values.map(({ icon, title, desc }) => (
               <div
                 key={title}
@@ -109,6 +133,16 @@ export function AboutPage() {
                 <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
+            </div>
+          </div>
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 p-8">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Brand Personality</h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-4">
+              <strong className="text-slate-900 dark:text-white">We are:</strong> Clear, confident, and solutions-driven.
+            </p>
+            <p className="text-slate-600 dark:text-slate-400">
+              <strong className="text-slate-900 dark:text-white">We are not:</strong> Informal, exaggerated, aggressive, or compliance-guaranteeing.
+            </p>
           </div>
         </div>
       </section>

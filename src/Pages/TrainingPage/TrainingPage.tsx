@@ -66,13 +66,13 @@ export function TrainingPage() {
             Training & Advisory
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white mt-6">
-            Payment for{' '}
+            Training &{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-accent to-primary">
-              training and advisory
+              advisory
             </span>
           </h1>
           <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl mt-6">
-            Book paid training programs and advisory engagements. All offerings require payment to confirm your slot.
+            Browse our training programs and advisory engagements. Request a quote or consultation to get started.
           </p>
         </div>
       </section>

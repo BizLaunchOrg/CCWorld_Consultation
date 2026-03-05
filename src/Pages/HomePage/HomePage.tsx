@@ -18,7 +18,6 @@ export function HomePage() {
     { icon: 'fact_check', title: 'Risk Assessment', desc: 'Dynamic institutional risk profiling modules.' },
     { icon: 'receipt_long', title: 'Audit Readiness', desc: 'Permanent "Audit-Ready" state protocols.' },
     { icon: 'school', title: 'Staff Training', desc: 'Custom curriculum for all bank personnel.' },
-    { icon: 'verified', title: 'IMTO Setup', desc: 'Licensing and operationalizing money transfer ops.' },
     { icon: 'security', title: 'Cyber Governance', desc: 'IT risk management and security governance.' },
     { icon: 'analytics', title: 'BI Dashboards', desc: 'Real-time compliance performance visuals.' },
     { icon: 'partner_exchange', title: 'Liaison Support', desc: 'Direct representation with central banks.' },
@@ -63,7 +62,7 @@ export function HomePage() {
               Compliance Department
             </h1>
             <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-              Cinematic compliance consultancy for banks, fintechs, and IMTOs focusing on building and operationalizing excellence through rigorous frameworks and automated intelligence.
+              Cinematic compliance consultancy for banks and fintechs focusing on building and operationalizing excellence through rigorous frameworks and automated intelligence.
             </p>
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <Link
@@ -207,20 +206,6 @@ export function HomePage() {
                     SAR Generation
                   </li>
                 </ul>
-              </div>
-            </div>
-            <div className="border border-slate-200 dark:border-white/10 rounded-2xl bg-white dark:bg-background-dark p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-6">
-                  <span className="size-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
-                    <span className="material-symbols-outlined">verified_user</span>
-                  </span>
-                  <div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">Continuous Assurance</h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">Independent audits and iterative system tuning.</p>
-                  </div>
-                </div>
-                <span className="material-symbols-outlined text-slate-500 dark:text-slate-600">expand_more</span>
               </div>
             </div>
           </div>

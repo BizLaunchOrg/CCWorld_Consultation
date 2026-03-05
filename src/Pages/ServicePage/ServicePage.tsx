@@ -97,7 +97,7 @@ export default function ServicePage() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white">
               Services built for{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-accent to-primary">
-                banks, fintechs & IMTOs
+                setting up a compliance department for start-ups
               </span>
             </h1>
 
@@ -132,7 +132,7 @@ export default function ServicePage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
               {[
                 { k: "10+", v: "Core deliverables packs", icon: "fact_check" },
-                { k: "8–12w", v: "Typical build-out", icon: "schedule" },
+                { k: "Tailored", v: "Timelines to your needs", icon: "schedule" },
                 { k: "Audit-ready", v: "Evidence + reporting", icon: "shield" },
               ].map((x) => (
                 <div key={x.k} className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-4 shadow-sm dark:shadow-none">
@@ -293,7 +293,7 @@ export default function ServicePage() {
                   <input
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search (e.g. AML, IMTO, reporting, dashboards)…"
+                    placeholder="Search (e.g. AML, reporting, dashboards)…"
                     className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white dark:bg-background-dark border border-slate-200 dark:border-white/10 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-600 outline-none focus:border-teal-accent/30"
                   />
                 </div>
@@ -412,11 +412,8 @@ export default function ServicePage() {
                 </div>
 
                 <div className="mt-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="text-slate-600 dark:text-slate-500 text-xs font-black uppercase tracking-widest">Typical outputs</div>
-                    <div className="text-slate-600 dark:text-slate-500 text-xs font-black">{s.duration_label}</div>
-                  </div>
-                  <div className="mt-3 space-y-2">
+                  <div className="text-slate-600 dark:text-slate-500 text-xs font-black uppercase tracking-widest mb-3">Typical outputs</div>
+                  <div className="space-y-2">
                     {s.outcomes.slice(0, 3).map((o) => (
                       <div key={o} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-xs">
                         <span className="material-symbols-outlined text-teal-accent text-sm mt-0.5">check</span>

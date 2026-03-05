@@ -22,19 +22,17 @@ export interface CreateConsultationInput {
 }
 
 /**
- * Submit a consultation booking. Requires authenticated user (RLS).
- * Fails if user already has a booking at the same scheduled_at (unique constraint).
+ * Submit a consultation booking. Works with or without auth (guest: user_id null).
  */
 export async function createConsultation(
   input: CreateConsultationInput
 ): Promise<{ data?: { id: string }; error: Error | null }> {
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: new Error('You must be logged in to book a consultation') };
 
   const { data, error } = await supabase
     .from('consultations')
     .insert({
-      user_id: user.id,
+      user_id: user?.id ?? null,
       topic: input.topic,
       scheduled_at: input.scheduled_at,
       details: input.details,

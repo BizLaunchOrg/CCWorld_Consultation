@@ -1,7 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import type { EngagementType, LicensingStage } from '../../types/admin';
-import { useAuth } from '../../contexts/AuthContext';
 import { createConsultation } from '../../lib/consultations';
 
 const ENGAGEMENT_OPTIONS: { value: EngagementType; label: string }[] = [
@@ -22,7 +21,6 @@ const LICENSING_STAGES: { value: LicensingStage; label: string }[] = [
 const ORG_TYPES = [
   { value: 'bank', label: 'Bank', desc: 'Established commercial banking', icon: 'account_balance' },
   { value: 'fintech', label: 'Fintech', desc: 'Digital-first services', icon: 'payments' },
-  { value: 'imto', label: 'IMTO', desc: 'Money Transfer Ops', icon: 'language' },
   { value: 'other', label: 'Other', desc: 'Type your organization below', icon: 'business' },
 ] as const;
 
@@ -68,7 +66,6 @@ function getServiceLabel(engagementType: EngagementType, orgType: string, custom
   if (engagementType === 'advisory') return 'Advisory (Risk review & recommendation)';
   if (orgType === 'bank') return 'Compliance Advisory for Banks';
   if (orgType === 'fintech') return 'Compliance Advisory for Fintechs';
-  if (orgType === 'imto') return 'Compliance Advisory for IMTOs';
   return customOrg ? `Compliance Advisory for ${customOrg}` : 'Compliance Advisory';
 }
 
@@ -76,8 +73,6 @@ const isLicensingEngagement = (e: EngagementType) =>
   e === 'licensing_pssp' || e === 'licensing_ptsp' || e === 'licensing_sandbox';
 
 export function ConsultationPage() {
-  const navigate = useNavigate();
-  const { user, isEmailConfirmed } = useAuth();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -145,13 +140,6 @@ export function ConsultationPage() {
     region: string;
     gap?: string;
   }) {
-    if (!user) {
-      navigate('/login', { state: { from: '/consultation', message: 'Please sign in to book a consultation.' } });
-      return { success: false };
-    }
-    if (!isEmailConfirmed) {
-      return { success: false };
-    }
     if (!payload.consultationDate || !payload.consultationTime) {
       return { success: false };
     }
@@ -211,12 +199,7 @@ export function ConsultationPage() {
     e.preventDefault();
     if (!fullName?.trim() || !email?.trim() || !phone?.trim()) return;
     if (isLicensingEngagement(engagementType) && !licensingNote?.trim()) return;
-    if (!user) {
-      navigate('/login', { state: { from: '/consultation' } });
-      return;
-    }
-    if (!isEmailConfirmed) return;
-    if (!consultationDate || !consultationTimeSlot) {
+    if (!consultationDate || !selectedTime) {
       return;
     }
     setSubmitting(true);
@@ -235,7 +218,7 @@ export function ConsultationPage() {
         stage: isLicensingEngagement(engagementType) ? licensingStage : undefined,
         note,
         consultationDate: consultationDate || undefined,
-        consultationTime: consultationTimeSlot || undefined,
+        consultationTime: selectedTime || undefined,
         teamSize,
         region,
         gap: gap.trim() || undefined,
@@ -285,16 +268,6 @@ export function ConsultationPage() {
         <span className="text-primary">Consultation</span>
       </div>
 
-      {!user && (
-        <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-200 text-sm">
-          <Link to="/login" state={{ from: '/consultation' }} className="font-semibold underline">
-            Sign in
-          </Link>
-          {' '}to book a consultation. If you don&apos;t have an account,{' '}
-          <Link to="/signup" className="font-semibold underline">create one</Link>.
-        </div>
-      )}
-
       {/* Step 1: Org details + Schedule */}
       {step === 1 && (
         <>
@@ -303,7 +276,7 @@ export function ConsultationPage() {
               Book Your Compliance Consultation
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
-              Tailored compliance guidance for Banks, Fintechs, and IMTOs in Nigeria.
+              Tailored compliance guidance for Banks and Fintechs in Nigeria.
             </p>
           </div>
 

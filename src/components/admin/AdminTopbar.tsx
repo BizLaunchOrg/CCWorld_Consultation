@@ -112,7 +112,7 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
                       className="w-full text-left px-4 py-3 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 flex items-start gap-3"
                     >
                       <span className="material-symbols-outlined text-teal-accent shrink-0 mt-0.5">
-                        {n.type === 'message' ? 'chat' : n.type === 'transaction' ? 'payments' : 'event_note'}
+                        {n.type === 'message' ? 'chat' : 'event_note'}
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-medium text-slate-900 dark:text-white">{n.title}</p>
