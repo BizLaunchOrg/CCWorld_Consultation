@@ -42,7 +42,7 @@ function App() {
           <Route path="users" element={<AdminUsersPage />} />
           <Route path="services" element={<AdminServicesPage />} />
           <Route path="trainings" element={<AdminTrainingsPage />} />
-          <Route path="consultations" element={<AdminConsultationsPage />} />
+          <Route path="consulting" element={<AdminConsultationsPage />} />
           <Route path="messages" element={<AdminMessagesPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
@@ -54,7 +54,7 @@ function App() {
           <Route path="/services/:serviceSlug" element={<ServiceDetailsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/insights" element={<InsightsPage />} />
-          <Route path="/consultation" element={<ConsultatingPage />} />
+          <Route path="/consulting" element={<ConsultatingPage />} />
           <Route path="/licensing" element={<LicensingPage />} />
           <Route path="/licensing/:slug" element={<LicensingDetailPage />} />
           <Route path="/training" element={<TrainingPage />} />

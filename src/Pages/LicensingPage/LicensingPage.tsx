@@ -36,7 +36,7 @@ export function LicensingPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              to="/consultation"
+              to="/consulting"
               className="px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all flex items-center gap-2"
             >
               Request a Consultating <span className="material-symbols-outlined">arrow_forward</span>

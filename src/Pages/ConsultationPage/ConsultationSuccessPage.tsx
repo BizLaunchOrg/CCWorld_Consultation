@@ -67,7 +67,7 @@ export function ConsultatingSuccessPage() {
             Back to Home
           </Link>
           <Link
-            to="/consultation"
+            to="/consulting"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold bg-primary text-white hover:bg-primary/90 transition-colors"
           >
             Book Another Session

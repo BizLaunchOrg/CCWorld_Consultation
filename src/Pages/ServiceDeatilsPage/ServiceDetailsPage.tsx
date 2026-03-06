@@ -121,7 +121,7 @@ export function ServiceDetailsPage() {
             </div>
 
             <Link
-              to="/consultation"
+              to="/consulting"
               className="block bg-primary rounded-3xl p-8 text-white relative overflow-hidden group"
             >
               <div className="absolute -right-8 -bottom-8 opacity-10 group-hover:scale-110 transition-transform duration-700">

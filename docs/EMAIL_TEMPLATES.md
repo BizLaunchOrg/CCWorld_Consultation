@@ -10,11 +10,11 @@ Use it so confirmation emails show **CCworld Consultating** (not "Supabase") in 
 
 ### If you use **Gmail**
 
-- **Sender email:** `ccworldconsultation@gmail.com` (or the Gmail you want to send from).
+- **Sender email:** `ccworldconsulting@gmail.com` (or the Gmail you want to send from).
 - **Sender name:** `CCworld Consultating` ✓ (already correct).
 - **Host:** `smtp.gmail.com` ✓  
 - **Port:** `465` ✓  
-- **Username:** Your **full Gmail address** (e.g. `ccworldconsultation@gmail.com`).
+- **Username:** Your **full Gmail address** (e.g. `ccworldconsulting@gmail.com`).
 - **Password:** A **Gmail App Password**, not your normal Gmail password.  
   1. Turn on 2-Step Verification for that Google account.  
   2. Go to [Google App Passwords](https://myaccount.google.com/apppasswords).  
@@ -24,7 +24,7 @@ Supabase’s warning appears because Gmail is meant for personal use; deliverabi
 
 ### If you use **Resend** (recommended for production)
 
-- **Sender email:** `noreply@ccworldconsultation.com` (after the domain is verified in Resend).
+- **Sender email:** `noreply@ccworldconsulting.com` (after the domain is verified in Resend).
 - **Sender name:** `CCworld Consultating`
 - **Host:** `smtp.resend.com`
 - **Port:** `465` or `587`

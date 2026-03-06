@@ -66,7 +66,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
       <div className="mt-4 space-y-2">
         <div className="text-xs font-bold text-slate-500 uppercase tracking-wider px-4 mb-2">Engage Us</div>
         <Link
-          to="/consultation"
+          to="/consulting"
           onClick={onClose}
           className="block py-3 px-4 rounded-2xl bg-primary text-white text-center font-bold text-sm hover:bg-primary/90 transition-colors touch-manipulation"
         >
@@ -112,7 +112,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
           role="menu"
         >
           <Link
-            to="/consultation"
+            to="/consulting"
             onClick={() => setOpen(false)}
             className="block px-4 py-3 text-sm font-semibold text-slate-200 hover:bg-white/10 hover:text-white transition-colors border-b border-white/10"
             role="menuitem"

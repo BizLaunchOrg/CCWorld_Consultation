@@ -106,7 +106,7 @@ export default function ServicePage() {
 
             <div className="flex flex-wrap gap-4">
               <Link
-                to="/consultation"
+                to="/consulting"
                 className="px-8 py-4 bg-teal-accent text-background-dark text-sm sm:text-base font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all flex items-center gap-2"
               >
                 Request a Consultating <span className="material-symbols-outlined">arrow_forward</span>
@@ -290,7 +290,7 @@ export default function ServicePage() {
             </p>
           </div>
 
-          <Link to="/consultation" className="hidden sm:inline-flex items-center gap-2 text-teal-accent font-black hover:opacity-90">
+          <Link to="/consulting" className="hidden sm:inline-flex items-center gap-2 text-teal-accent font-black hover:opacity-90">
             Need help choosing? <span className="material-symbols-outlined">arrow_forward</span>
           </Link>
         </div>
@@ -359,7 +359,7 @@ export default function ServicePage() {
                     View Service
                   </Link>
                   <Link
-                    to="/consultation"
+                    to="/consulting"
                     className="px-5 py-3 rounded-2xl border border-gold-accent/40 text-gold-accent font-black hover:bg-gold-accent/10 transition-all"
                     aria-label="Request consultating"
                   >
@@ -437,7 +437,7 @@ export default function ServicePage() {
 
           <div className="mt-10 text-center flex flex-wrap justify-center gap-4">
             <Link
-              to="/consultation"
+              to="/consulting"
               className="inline-flex items-center gap-2 px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all"
             >
               Request a Consultating <span className="material-symbols-outlined">arrow_forward</span>
@@ -464,7 +464,7 @@ export default function ServicePage() {
           </p>
           <div className="flex flex-wrap justify-center gap-6">
             <Link
-              to="/consultation"
+              to="/consulting"
               className="px-10 py-5 bg-white text-primary text-lg font-black rounded-xl hover:scale-105 transition-transform"
             >
               Speak to an Expert

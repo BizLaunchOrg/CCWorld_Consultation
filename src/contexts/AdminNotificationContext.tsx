@@ -69,7 +69,7 @@ export function AdminNotificationProvider({ children }: { children: ReactNode })
       if (n.type === 'message') {
         navigate('/admin/messages', { state: { openConversationId: n.targetId } });
       } else if (n.type === 'consultating') {
-        navigate('/admin/consultations', { state: { highlightConsultatingId: n.targetId } });
+        navigate('/admin/consulting', { state: { highlightConsultatingId: n.targetId } });
       }
     },
     [navigate, removeNotification]
@@ -101,7 +101,7 @@ export function AdminNotificationProvider({ children }: { children: ReactNode })
             type: 'consultating',
             title: `New consultating: ${row.topic || 'Request'}`,
             targetId: row.id,
-            link: '/admin/consultations',
+            link: '/admin/consulting',
           });
         }
       )

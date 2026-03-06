@@ -132,7 +132,7 @@ export function LicensingDetailPage() {
             </div>
             <div className="flex flex-wrap gap-3 shrink-0">
               <Link
-                to="/consultation"
+                to="/consulting"
                 className="px-6 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.3)] transition-all"
               >
                 Request a Consultating
@@ -168,7 +168,7 @@ export function LicensingDetailPage() {
               </div>
             </div>
             <Link
-              to="/consultation"
+              to="/consulting"
               className="block rounded-3xl bg-primary p-8 text-white relative overflow-hidden group"
             >
               <div className="absolute -right-8 -bottom-8 opacity-10 group-hover:scale-110 transition-transform duration-700">

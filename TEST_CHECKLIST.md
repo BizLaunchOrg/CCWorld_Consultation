@@ -5,7 +5,7 @@ Use this to verify the full flow after deployment and Supabase setup.
 ## Prerequisites
 
 - Supabase project created; migrations applied (including `20250303000006_chat_conversations_messages.sql` for live chat).
-- Auth: Site URL / Redirect URLs set to `https://www.ccworldconsultation.com` (or your dev URL). For **admin Google sign-in**, add `https://www.ccworldconsultation.com/admin` (and e.g. `http://localhost:5173/admin` for local dev) to **Redirect URLs** so OAuth can redirect back to the admin panel.
+- Auth: Site URL / Redirect URLs set to `https://www.ccworldconsulting.com` (or your dev URL). For **admin Google sign-in**, add `https://www.ccworldconsulting.com/admin` (and e.g. `http://localhost:5173/admin` for local dev) to **Redirect URLs** so OAuth can redirect back to the admin panel.
 - To **make a user an admin**: Supabase Dashboard → **Table Editor** → **profiles** → find the row (match by email) → set **role** to `admin`. Add that email to `VITE_ADMIN_ALLOWED_EMAILS` in your env if you use the allow list.
 
 ---

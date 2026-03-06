@@ -242,7 +242,7 @@ export function AboutPage() {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  to="/consultation"
+                  to="/consulting"
                   className="bg-white text-primary px-8 py-4 rounded-xl font-bold hover:shadow-xl transition-all"
                 >
                   Contact Us Today

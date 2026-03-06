@@ -1,6 +1,6 @@
 /**
  * Admin route guard: only emails in VITE_ADMIN_ALLOWED_EMAILS can access /admin and /admin/login.
- * Set in .env as comma-separated list, e.g. VITE_ADMIN_ALLOWED_EMAILS=admin@ccworldconsultation.com,you@example.com
+ * Set in .env as comma-separated list, e.g. VITE_ADMIN_ALLOWED_EMAILS=admin@ccworldconsulting.com,you@example.com
  * If not set, no allow-list is enforced (anyone can try to log in; role still required).
  *
  * Optional VITE_ADMIN_LOGIN_SECRET: if set, /admin/login only shows when URL has ?t=SECRET.
