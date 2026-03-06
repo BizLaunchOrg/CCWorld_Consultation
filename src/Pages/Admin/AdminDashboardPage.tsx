@@ -57,10 +57,10 @@ export function AdminDashboardPage() {
   }
 
   const recentActivity = [
-    ...stats.recentConsultations.slice(0, 5).map((c) => ({
+    ...stats.recentConsultatings.slice(0, 5).map((c) => ({
       id: c.id,
-      type: 'consultation' as const,
-      text: `Consultation request from ${c.customerName} — ${c.topic}`,
+      type: 'consultating' as const,
+      text: `Consultating request from ${c.customerName} — ${c.topic}`,
       time: formatTimeAgo(c.created_at),
       created_at: c.created_at,
     })),
@@ -77,8 +77,8 @@ export function AdminDashboardPage() {
       {/* KPI cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <StatCard
-          title="New consultation requests"
-          value={stats.newConsultationsCount}
+          title="New consultating requests"
+          value={stats.newConsultatingsCount}
           icon="event_note"
           accent="primary"
         />
@@ -138,7 +138,7 @@ export function AdminDashboardPage() {
               className="flex items-start gap-3 py-3 border-b border-slate-100 dark:border-white/5 last:border-0"
             >
               <span className="material-symbols-outlined text-teal-accent shrink-0 mt-0.5">
-                {item.type === 'consultation' ? 'event_note' : 'chat'}
+                {item.type === 'consultating' ? 'event_note' : 'chat'}
               </span>
               <div className="min-w-0">
                 <p className="text-sm text-slate-900 dark:text-white">{item.text}</p>

@@ -69,7 +69,7 @@ export function HomePage() {
                 to="/consultation"
                 className="px-8 py-4 bg-teal-accent text-background-dark text-base font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.4)] transition-all flex items-center gap-2"
               >
-                Request a Consultation <span className="material-symbols-outlined">arrow_forward</span>
+                Request a Consultating <span className="material-symbols-outlined">arrow_forward</span>
               </Link>
               <Link
                 to="/training"

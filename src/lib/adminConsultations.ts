@@ -1,18 +1,18 @@
 import { supabase } from './supabase';
-import type { AdminConsultation, ConsultationStatus } from '../types/admin';
+import type { AdminConsultating, ConsultatingStatus } from '../types/admin';
 
-interface ConsultationRow {
+interface ConsultatingRow {
   id: string;
   user_id: string;
   topic: string;
   scheduled_at: string;
   details: Record<string, unknown>;
-  status: ConsultationStatus;
+  status: ConsultatingStatus;
   internal_notes: string | null;
   created_at: string;
 }
 
-function rowToAdminConsultation(r: ConsultationRow): AdminConsultation {
+function rowToAdminConsultating(r: ConsultatingRow): AdminConsultating {
   const d = (r.details || {}) as Record<string, unknown>;
   const scheduled = new Date(r.scheduled_at);
   return {
@@ -29,27 +29,27 @@ function rowToAdminConsultation(r: ConsultationRow): AdminConsultation {
     status: r.status,
     created_at: r.created_at,
     internal_notes: r.internal_notes ?? undefined,
-    engagement_type: d.engagement_type as AdminConsultation['engagement_type'],
-    license_type: d.license_type as AdminConsultation['license_type'],
-    stage: d.stage as AdminConsultation['stage'],
+    engagement_type: d.engagement_type as AdminConsultating['engagement_type'],
+    license_type: d.license_type as AdminConsultating['license_type'],
+    stage: d.stage as AdminConsultating['stage'],
     team_size: d.teamSize as string | undefined,
     region: d.region as string | undefined,
     gap: d.gap as string | undefined,
   };
 }
 
-export async function fetchAdminConsultations(): Promise<AdminConsultation[]> {
+export async function fetchAdminConsultatings(): Promise<AdminConsultating[]> {
   const { data, error } = await supabase
     .from('consultations')
     .select('*')
     .order('created_at', { ascending: false });
   if (error) return [];
-  return ((data ?? []) as ConsultationRow[]).map(rowToAdminConsultation);
+  return ((data ?? []) as ConsultatingRow[]).map(rowToAdminConsultating);
 }
 
-export async function updateConsultationStatus(
+export async function updateConsultatingStatus(
   id: string,
-  status: ConsultationStatus,
+  status: ConsultatingStatus,
   internal_notes: string
 ): Promise<{ error: Error | null }> {
   const { error } = await supabase

@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import type { EngagementType, LicensingStage } from '../../types/admin';
-import { createConsultation } from '../../lib/consultations';
+import { createConsultating } from '../../lib/consultations';
 
 const ENGAGEMENT_OPTIONS: { value: EngagementType; label: string }[] = [
   { value: 'licensing_pssp', label: 'Licensing Advisory: PSSP' },
@@ -72,7 +72,7 @@ function getServiceLabel(engagementType: EngagementType, orgType: string, custom
 const isLicensingEngagement = (e: EngagementType) =>
   e === 'licensing_pssp' || e === 'licensing_ptsp' || e === 'licensing_sandbox';
 
-export function ConsultationPage() {
+export function ConsultatingPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -117,13 +117,13 @@ export function ConsultationPage() {
     setStep(3);
   };
 
-  const consultationDate =
+  const consultatingDate =
     selectedYear != null && selectedMonth != null && selectedDay != null
       ? `${MONTH_NAMES[selectedMonth - 1]} ${selectedDay}, ${selectedYear}`
       : '';
-  const consultationTimeSlot = selectedTime ? `${selectedTime} (WAT)` : '';
+  const consultatingTimeSlot = selectedTime ? `${selectedTime} (WAT)` : '';
 
-  async function submitConsultationRequest(payload: {
+  async function submitConsultatingRequest(payload: {
     fullName: string;
     email: string;
     phone: string;
@@ -134,23 +134,23 @@ export function ConsultationPage() {
     license_type?: 'pssp' | 'ptsp' | 'sandbox';
     stage?: LicensingStage;
     note: string;
-    consultationDate?: string;
-    consultationTime?: string;
+    consultatingDate?: string;
+    consultatingTime?: string;
     teamSize: string;
     region: string;
     gap?: string;
   }) {
-    if (!payload.consultationDate || !payload.consultationTime) {
+    if (!payload.consultatingDate || !payload.consultatingTime) {
       return { success: false };
     }
-    const { hours, minutes } = parseTimeSlot(payload.consultationTime);
-    const [monthName, dayStr, yearStr] = payload.consultationDate.replace(/,/g, '').split(/\s+/);
+    const { hours, minutes } = parseTimeSlot(payload.consultatingTime);
+    const [monthName, dayStr, yearStr] = payload.consultatingDate.replace(/,/g, '').split(/\s+/);
     const month = MONTH_NAMES.indexOf(monthName) + 1;
     const day = parseInt(dayStr, 10);
     const year = parseInt(yearStr, 10);
     const scheduledAt = new Date(year, month - 1, day, hours, minutes).toISOString();
 
-    const { data, error } = await createConsultation({
+    const { data, error } = await createConsultating({
       topic: payload.service,
       scheduled_at: scheduledAt,
       details: {
@@ -199,14 +199,14 @@ export function ConsultationPage() {
     e.preventDefault();
     if (!fullName?.trim() || !email?.trim() || !phone?.trim()) return;
     if (isLicensingEngagement(engagementType) && !licensingNote?.trim()) return;
-    if (!consultationDate || !selectedTime) {
+    if (!consultatingDate || !selectedTime) {
       return;
     }
     setSubmitting(true);
     const note = isLicensingEngagement(engagementType) ? licensingNote.trim() : (gap?.trim() || '');
     const licenseType = engagementType === 'licensing_pssp' ? 'pssp' : engagementType === 'licensing_ptsp' ? 'ptsp' : engagementType === 'licensing_sandbox' ? 'sandbox' : undefined;
     try {
-      await submitConsultationRequest({
+      await submitConsultatingRequest({
         fullName: fullName.trim(),
         email: email.trim(),
         phone: phone.trim(),
@@ -217,8 +217,8 @@ export function ConsultationPage() {
         license_type: licenseType,
         stage: isLicensingEngagement(engagementType) ? licensingStage : undefined,
         note,
-        consultationDate: consultationDate || undefined,
-        consultationTime: selectedTime || undefined,
+        consultatingDate: consultatingDate || undefined,
+        consultatingTime: selectedTime || undefined,
         teamSize,
         region,
         gap: gap.trim() || undefined,
@@ -265,7 +265,7 @@ export function ConsultationPage() {
       <div className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 mb-4">
         <Link to="/" className="hover:text-primary">Home</Link>
         <span className="material-symbols-outlined text-xs">chevron_right</span>
-        <span className="text-primary">Consultation</span>
+        <span className="text-primary">Consultating</span>
       </div>
 
       {/* Step 1: Org details + Schedule */}
@@ -273,7 +273,7 @@ export function ConsultationPage() {
         <>
           <div className="mb-12">
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              Book Your Compliance Consultation
+              Book Your Compliance Consultating
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
               Tailored compliance guidance for Banks and Fintechs in Nigeria.
@@ -512,7 +512,7 @@ export function ConsultationPage() {
                 <div>
                   <h4 className="font-bold text-primary mb-1">Confidential Guarantee</h4>
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Your data is protected under global banking security standards. All consultations are under strict NDA.
+                    Your data is protected under global banking security standards. All consultatings are under strict NDA.
                   </p>
                 </div>
               </div>
@@ -530,7 +530,7 @@ export function ConsultationPage() {
               Your Details
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
-              Tell us how to reach you and who will join the consultation.
+              Tell us how to reach you and who will join the consultating.
             </p>
           </div>
 
@@ -602,7 +602,7 @@ export function ConsultationPage() {
                     type="submit"
                     className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
                   >
-                    Request Consultation
+                    Request Consultating
                     <span className="material-symbols-outlined">arrow_forward</span>
                   </button>
                 </div>
@@ -623,7 +623,7 @@ export function ConsultationPage() {
                     Review & Submit
                   </h1>
                   <p className="text-slate-500 dark:text-slate-400 mt-2 text-base">
-                    Review your consultation request and submit. We&apos;ll get back to you shortly.
+                    Review your consultating request and submit. We&apos;ll get back to you shortly.
                   </p>
                 </div>
                 <div className="text-right">
@@ -697,16 +697,16 @@ export function ConsultationPage() {
                         </div>
                       </>
                     )}
-                    {consultationDate && (
+                    {consultatingDate && (
                       <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
                         <span className="text-slate-500 dark:text-slate-400 text-sm">Preferred date</span>
-                        <span className="text-slate-900 dark:text-white font-medium text-right">{consultationDate}</span>
+                        <span className="text-slate-900 dark:text-white font-medium text-right">{consultatingDate}</span>
                       </div>
                     )}
-                    {consultationTimeSlot && (
+                    {consultatingTimeSlot && (
                       <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
                         <span className="text-slate-500 dark:text-slate-400 text-sm">Preferred time</span>
-                        <span className="text-slate-900 dark:text-white font-medium text-right">{consultationTimeSlot}</span>
+                        <span className="text-slate-900 dark:text-white font-medium text-right">{consultatingTimeSlot}</span>
                       </div>
                     )}
                     <div className="flex justify-between items-start py-3 border-b border-slate-100 dark:border-slate-800">
@@ -737,7 +737,7 @@ export function ConsultationPage() {
                         <span className="material-symbols-outlined text-lg">assignment</span>
                       </div>
                       <div>
-                        <p className="text-slate-900 dark:text-white font-bold text-sm">Pre-consultation brief</p>
+                        <p className="text-slate-900 dark:text-white font-bold text-sm">Pre-consultating brief</p>
                         <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">We&apos;ll send a short questionnaire to make the most of our time together.</p>
                       </div>
                     </div>
@@ -758,7 +758,7 @@ export function ConsultationPage() {
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-xl">
                   <form onSubmit={handleSubmitRequest} className="space-y-6">
                     <p className="text-slate-600 dark:text-slate-400 text-sm">
-                      Confirm your details above, then submit your request. Our team will contact you via email or phone to confirm the consultation.
+                      Confirm your details above, then submit your request. Our team will contact you via email or phone to confirm the consultating.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
                       <button
@@ -813,7 +813,7 @@ export function ConsultationPage() {
               Request received
             </h2>
             <p id="success-modal-desc" className="text-slate-600 dark:text-slate-400 mb-8">
-              You&apos;ve successfully requested a consultation. We&apos;ll contact you shortly via email or phone.
+              You&apos;ve successfully requested a consultating. We&apos;ll contact you shortly via email or phone.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link

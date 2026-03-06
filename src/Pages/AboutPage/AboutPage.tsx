@@ -238,7 +238,7 @@ export function AboutPage() {
                 Ready to build a compliance-ready department?
               </h2>
               <p className="text-white/80 text-lg max-w-xl">
-                Schedule a confidential consultation with our partners to audit your current frameworks.
+                Schedule a confidential consultating with our partners to audit your current frameworks.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link

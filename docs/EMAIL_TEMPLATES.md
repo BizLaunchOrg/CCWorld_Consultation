@@ -6,12 +6,12 @@ Use these for a consistent, professional look for **auth emails** (Supabase Auth
 
 ## 1. Sender name = company name (Custom SMTP)
 
-Use it so confirmation emails show **CCworld Consultation** (not "Supabase") in the recipient’s inbox.
+Use it so confirmation emails show **CCworld Consultating** (not "Supabase") in the recipient’s inbox.
 
 ### If you use **Gmail**
 
 - **Sender email:** `ccworldconsultation@gmail.com` (or the Gmail you want to send from).
-- **Sender name:** `CCworld Consultation` ✓ (already correct).
+- **Sender name:** `CCworld Consultating` ✓ (already correct).
 - **Host:** `smtp.gmail.com` ✓  
 - **Port:** `465` ✓  
 - **Username:** Your **full Gmail address** (e.g. `ccworldconsultation@gmail.com`).
@@ -25,7 +25,7 @@ Supabase’s warning appears because Gmail is meant for personal use; deliverabi
 ### If you use **Resend** (recommended for production)
 
 - **Sender email:** `noreply@ccworldconsultation.com` (after the domain is verified in Resend).
-- **Sender name:** `CCworld Consultation`
+- **Sender name:** `CCworld Consultating`
 - **Host:** `smtp.resend.com`
 - **Port:** `465` or `587`
 - **Username:** `resend`

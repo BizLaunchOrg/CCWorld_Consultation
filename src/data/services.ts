@@ -207,7 +207,7 @@ export const SERVICES_LIST: Service[] = [
       { heading: 'Documentation & Operational Evidence', bullets: ['Business plan and 3-year financial projections', 'Governance: CVs of board/senior management', 'IT infrastructure and security overview', 'Partnership agreements (if applicable)'] },
       { heading: 'Regulatory & Compliance', bullets: ['AML/CFT policy and procedures', 'Cybersecurity and data protection framework', 'Reporting and monitoring procedures', 'Dispute management and consumer protection'] },
       { heading: 'Important note', text: 'PSSP does NOT permit holding customer funds, issuing e-wallets, or performing settlement. Those activities require other payment licenses (e.g. MMO, PSP).' },
-      { heading: 'Typical Application Process', bullets: ['Pre-application consultation (recommended)', 'Submission of application and supporting documents', 'Due diligence and review', 'Approval-in-principle (AIP)', 'Final license issuance'] },
+      { heading: 'Typical Application Process', bullets: ['Pre-application consultating (recommended)', 'Submission of application and supporting documents', 'Due diligence and review', 'Approval-in-principle (AIP)', 'Final license issuance'] },
       { heading: 'How we help', bullets: ['Document pack aligned to PSSP requirements', 'Gap review and readiness roadmap', 'Testing plan and compliance framework', 'Engagement and submission support'] },
     ],
   },

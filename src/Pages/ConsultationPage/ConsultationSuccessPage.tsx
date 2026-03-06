@@ -1,11 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
 
-export function ConsultationSuccessPage() {
+export function ConsultatingSuccessPage() {
   const location = useLocation();
   const state = (location.state || {}) as {
     fullName?: string;
-    consultationDate?: string;
-    consultationTime?: string;
+    consultatingDate?: string;
+    consultatingTime?: string;
     amount?: string;
     service?: string;
   };
@@ -20,7 +20,7 @@ export function ConsultationSuccessPage() {
           Payment Successful
         </h1>
         <p className="text-slate-600 dark:text-slate-400 text-lg mb-8">
-          Your consultation has been secured. We've sent a confirmation to your email.
+          Your consultating has been secured. We've sent a confirmation to your email.
         </p>
 
         <div className="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-left mb-10">
@@ -38,16 +38,16 @@ export function ConsultationSuccessPage() {
                 <dd className="text-slate-900 dark:text-white font-medium">{state.service}</dd>
               </div>
             )}
-            {state.consultationDate && (
+            {state.consultatingDate && (
               <div className="flex justify-between">
                 <dt className="text-slate-500">Date</dt>
-                <dd className="text-slate-900 dark:text-white font-medium">{state.consultationDate}</dd>
+                <dd className="text-slate-900 dark:text-white font-medium">{state.consultatingDate}</dd>
               </div>
             )}
-            {state.consultationTime && (
+            {state.consultatingTime && (
               <div className="flex justify-between">
                 <dt className="text-slate-500">Time</dt>
-                <dd className="text-slate-900 dark:text-white font-medium">{state.consultationTime}</dd>
+                <dd className="text-slate-900 dark:text-white font-medium">{state.consultatingTime}</dd>
               </div>
             )}
             {state.amount && (

@@ -132,7 +132,7 @@ export function ServiceDetailsPage() {
                 Book a diagnostic session to see how this service fits your needs.
               </p>
               <span className="inline-block w-full bg-white text-primary font-bold py-4 rounded-2xl hover:bg-slate-100 transition-colors relative z-10 shadow-xl shadow-black/20 text-center">
-                Request a Consultation
+                Request a Consultating
               </span>
             </Link>
             <button

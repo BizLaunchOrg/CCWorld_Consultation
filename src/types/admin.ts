@@ -25,7 +25,7 @@ export interface AdminTransaction {
   item_title?: string;
 }
 
-export type ConsultationStatus = 'new' | 'in_review' | 'scheduled' | 'completed' | 'cancelled';
+export type ConsultatingStatus = 'new' | 'in_review' | 'scheduled' | 'completed' | 'cancelled';
 
 /** Engagement type from request form. */
 export type EngagementType = 'licensing_pssp' | 'licensing_ptsp' | 'licensing_sandbox' | 'training' | 'advisory';
@@ -33,8 +33,8 @@ export type EngagementType = 'licensing_pssp' | 'licensing_ptsp' | 'licensing_sa
 /** Stage when licensing is selected. */
 export type LicensingStage = 'pre_application' | 'aip' | 'existing_ops' | 'not_sure';
 
-/** Consultation requests only (no payment). */
-export interface AdminConsultation {
+/** Consultating requests only (no payment). */
+export interface AdminConsultating {
   id: string;
   /** Engagement type from form. */
   engagement_type?: EngagementType;
@@ -52,7 +52,7 @@ export interface AdminConsultation {
   note: string;
   preferred_date?: string;
   preferred_time?: string;
-  status: ConsultationStatus;
+  status: ConsultatingStatus;
   created_at: string;
   internal_notes?: string;
   /** Optional extra from form: team size, region, gap */

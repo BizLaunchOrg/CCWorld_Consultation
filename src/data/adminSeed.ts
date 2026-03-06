@@ -1,6 +1,6 @@
 import type {
   AdminTransaction,
-  AdminConsultation,
+  AdminConsultating,
   AdminConversation,
   AdminMessage,
 } from '../types/admin';
@@ -33,8 +33,8 @@ export const seedTransactions: AdminTransaction[] = [
   },
 ];
 
-/** Consultation requests only (no payment). */
-export const seedConsultations: AdminConsultation[] = [
+/** Consultating requests only (no payment). */
+export const seedConsultatings: AdminConsultating[] = [
   {
     id: 'con-1',
     customer_name: 'Amina Bello',

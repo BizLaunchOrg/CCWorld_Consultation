@@ -1,4 +1,4 @@
-# CCWORLD Consultation – manual test checklist
+# CCWORLD Consultating – manual test checklist
 
 Use this to verify the full flow after deployment and Supabase setup.
 
@@ -10,16 +10,16 @@ Use this to verify the full flow after deployment and Supabase setup.
 
 ---
 
-## 1. Consultation (no login required)
+## 1. Consultating (no login required)
 
-- [ ] Go to **Consultation**; fill step 1 (org details + date/time), step 2 (your details), step 3 (review).
+- [ ] Go to **Consultating**; fill step 1 (org details + date/time), step 2 (your details), step 3 (review).
 - [ ] Submit; see “Request received” and no errors.
-- [ ] Try booking again for the **same date/time** (guest); expect error “You already have a consultation booked at this date and time” if applicable.
+- [ ] Try booking again for the **same date/time** (guest); expect error “You already have a consultating booked at this date and time” if applicable.
 
-## 2. Admin: consultations and status
+## 2. Admin: consultatings and status
 
 - [ ] In Supabase Dashboard or Admin → **Users**, ensure your test account has `profiles.role` = `admin` (or sign in as an admin account).
-- [ ] Open **Admin** → **Consultations**; see the consultation from step 1.
+- [ ] Open **Admin** → **Consultatings**; see the consultating from step 1.
 - [ ] Open it; change status to **Scheduled** (or **In review**); save.
 
 ## 3. Security checks
@@ -30,7 +30,7 @@ Use this to verify the full flow after deployment and Supabase setup.
 
 ## 4. Live chat (client ↔ admin, no refresh)
 
-- [ ] Apply migration `20250303000006_chat_conversations_messages.sql` so `chat_conversations` and `chat_messages` exist. For **admin notifications** (new consultations), also run `20250303000007_realtime_orders_consultations.sql` to add `consultations` to the Realtime publication.
+- [ ] Apply migration `20250303000006_chat_conversations_messages.sql` so `chat_conversations` and `chat_messages` exist. For **admin notifications** (new consultatings), also run `20250303000007_realtime_orders_consultations.sql` to add `consultations` to the Realtime publication (table name unchanged).
 - [ ] On the **website**, open **Live Chat** (floating button), send a message.
 - [ ] In **Admin** → **Messages**, open the conversation; you should see the client’s message. Reply from admin; the **client’s chat** should show the reply **without refreshing**.
 - [ ] Client sends another message; **admin** sees it **without refreshing**.
@@ -39,6 +39,6 @@ Use this to verify the full flow after deployment and Supabase setup.
 
 **Quick reference**
 
-- Consultation: guest or user can submit; admin sees requests under Admin → Consultations.
+- Consultating: guest or user can submit; admin sees requests under Admin → Consultatings.
 - Live chat: client uses widget, admin uses Admin → Messages; messages sync in real time via Supabase Realtime.
 - No payment or signup on the website; engagements are handled outside the site.

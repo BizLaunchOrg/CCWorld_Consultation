@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import type { AdminConsultation, ConsultationStatus, EngagementType } from '../../types/admin';
-import { fetchAdminConsultations, updateConsultationStatus } from '../../lib/adminConsultations';
+import type { AdminConsultating, ConsultatingStatus, EngagementType } from '../../types/admin';
+import { fetchAdminConsultatings, updateConsultatingStatus } from '../../lib/adminConsultations';
 import { ListCard } from '../../components/admin/ListCard';
 import { Drawer } from '../../components/admin/Drawer';
 
@@ -32,7 +32,7 @@ function formatStage(s?: string): string {
   return map[s] ?? s;
 }
 
-const STATUS_OPTIONS: { value: ConsultationStatus | 'all'; label: string }[] = [
+const STATUS_OPTIONS: { value: ConsultatingStatus | 'all'; label: string }[] = [
   { value: 'all', label: 'All statuses' },
   { value: 'new', label: 'New' },
   { value: 'in_review', label: 'In review' },
@@ -52,28 +52,28 @@ const ENGAGEMENT_OPTIONS: { value: EngagementType | 'all'; label: string }[] = [
 
 export function AdminConsultationsPage() {
   const location = useLocation();
-  const [consultations, setConsultations] = useState<AdminConsultation[]>([]);
+  const [consultations, setConsultations] = useState<AdminConsultating[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selected, setSelected] = useState<AdminConsultation | null>(null);
-  const [status, setStatus] = useState<ConsultationStatus>(selected?.status ?? 'new');
+  const [selected, setSelected] = useState<AdminConsultating | null>(null);
+  const [status, setStatus] = useState<ConsultatingStatus>(selected?.status ?? 'new');
   const [internalNotes, setInternalNotes] = useState(selected?.internal_notes ?? '');
-  const [statusFilter, setStatusFilter] = useState<ConsultationStatus | 'all'>('all');
+  const [statusFilter, setStatusFilter] = useState<ConsultatingStatus | 'all'>('all');
   const [engagementFilter, setEngagementFilter] = useState<EngagementType | 'all'>('all');
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchAdminConsultations().then((list) => {
+    fetchAdminConsultatings().then((list) => {
       setConsultations(list);
       setLoading(false);
     });
   }, []);
 
-  const highlightId = (location.state as { highlightConsultationId?: string })?.highlightConsultationId;
+  const highlightId = (location.state as { highlightConsultatingId?: string })?.highlightConsultatingId;
   useEffect(() => {
     if (!highlightId || !consultations.length) return;
-    const consultation = consultations.find((c) => c.id === highlightId);
-    if (consultation) {
-      setSelected(consultation);
+    const consultating = consultations.find((c) => c.id === highlightId);
+    if (consultating) {
+      setSelected(consultating);
       try { window.history.replaceState({}, '', location.pathname); } catch {}
     }
   }, [highlightId, consultations, location.pathname]);
@@ -102,7 +102,7 @@ export function AdminConsultationsPage() {
     }
   }, [selected?.id]);
 
-  function openDetail(c: AdminConsultation) {
+  function openDetail(c: AdminConsultating) {
     setSelected(c);
     setStatus(c.status);
     setInternalNotes(c.internal_notes ?? '');
@@ -110,7 +110,7 @@ export function AdminConsultationsPage() {
 
   async function handleSaveDetail() {
     if (!selected) return;
-    const { error } = await updateConsultationStatus(selected.id, status, internalNotes);
+    const { error } = await updateConsultatingStatus(selected.id, status, internalNotes);
     if (error) {
       setToast('Failed to save');
       return;
@@ -129,7 +129,7 @@ export function AdminConsultationsPage() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-2xl font-black text-slate-900 dark:text-white md:hidden">Consultation requests</h1>
+            <h1 className="text-2xl font-black text-slate-900 dark:text-white md:hidden">Consultating requests</h1>
             {newCount > 0 && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold bg-teal-accent/20 text-teal-accent border border-teal-accent/30">
                 <span className="relative flex h-2 w-2">
@@ -148,7 +148,7 @@ export function AdminConsultationsPage() {
             <label className="text-sm font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">Status</label>
             <select
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as ConsultationStatus | 'all')}
+              onChange={(e) => setStatusFilter(e.target.value as ConsultatingStatus | 'all')}
               className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
             >
               {STATUS_OPTIONS.map((opt) => (
@@ -180,7 +180,7 @@ export function AdminConsultationsPage() {
 
       <div className="space-y-3">
         {loading ? (
-          <p className="text-slate-500 dark:text-slate-400">Loading consultations…</p>
+          <p className="text-slate-500 dark:text-slate-400">Loading consultatings…</p>
         ) : (
         <>
         {filtered.map((c) => (
@@ -210,7 +210,7 @@ export function AdminConsultationsPage() {
 
       {!loading && filtered.length === 0 && (
         <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
-          {consultations.length === 0 ? 'No consultation requests yet.' : 'No requests match the selected filters.'}
+          {consultations.length === 0 ? 'No consultating requests yet.' : 'No requests match the selected filters.'}
         </div>
       )}
 
@@ -229,7 +229,7 @@ export function AdminConsultationsPage() {
       <Drawer
         open={!!selected}
         onClose={() => setSelected(null)}
-        title="Consultation details"
+        title="Consultating details"
       >
         {selected && (
           <div className="space-y-5">
@@ -259,7 +259,7 @@ export function AdminConsultationsPage() {
               <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Status</label>
               <select
                 value={status}
-                onChange={(e) => setStatus(e.target.value as ConsultationStatus)}
+                onChange={(e) => setStatus(e.target.value as ConsultatingStatus)}
                 className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
               >
               <option value="new">New</option>

@@ -11,13 +11,13 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { markAllMessagesAsReadForAdmin } from '../lib/chatApi';
 
-export type AdminNotificationType = 'message' | 'consultation';
+export type AdminNotificationType = 'message' | 'consultating';
 
 export interface AdminNotification {
   id: string;
   type: AdminNotificationType;
   title: string;
-  /** For message: conversation id to open. For consultation: row id. */
+  /** For message: conversation id to open. For consultating: row id. */
   targetId: string;
   link: string;
   createdAt: string;
@@ -68,8 +68,8 @@ export function AdminNotificationProvider({ children }: { children: ReactNode })
       removeNotification(n.id);
       if (n.type === 'message') {
         navigate('/admin/messages', { state: { openConversationId: n.targetId } });
-      } else if (n.type === 'consultation') {
-        navigate('/admin/consultations', { state: { highlightConsultationId: n.targetId } });
+      } else if (n.type === 'consultating') {
+        navigate('/admin/consultations', { state: { highlightConsultatingId: n.targetId } });
       }
     },
     [navigate, removeNotification]
@@ -98,8 +98,8 @@ export function AdminNotificationProvider({ children }: { children: ReactNode })
         (payload) => {
           const row = payload.new as { id: string; topic: string };
           addNotification({
-            type: 'consultation',
-            title: `New consultation: ${row.topic || 'Request'}`,
+            type: 'consultating',
+            title: `New consultating: ${row.topic || 'Request'}`,
             targetId: row.id,
             link: '/admin/consultations',
           });

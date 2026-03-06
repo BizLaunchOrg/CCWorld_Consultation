@@ -7,7 +7,7 @@ const solutionsLinks = [
 ] as const;
 
 const connectLinks = [
-  { to: '/consultation', label: 'Request Consultation' },
+  { to: '/consultation', label: 'Request Consultating' },
   { to: 'mailto:info@ccworldconsulting.com', label: 'Email' },
   { to: '#', label: 'Lagos Office'},
 ] as const;

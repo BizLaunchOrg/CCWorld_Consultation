@@ -1,6 +1,6 @@
 import { supabase } from './supabase';
 
-export interface ConsultationDetails {
+export interface ConsultatingDetails {
   fullName: string;
   email: string;
   phone: string;
@@ -15,17 +15,17 @@ export interface ConsultationDetails {
   gap?: string;
 }
 
-export interface CreateConsultationInput {
+export interface CreateConsultatingInput {
   topic: string;
   scheduled_at: string; // ISO string
-  details: ConsultationDetails;
+  details: ConsultatingDetails;
 }
 
 /**
- * Submit a consultation booking. Works with or without auth (guest: user_id null).
+ * Submit a consultating booking. Works with or without auth (guest: user_id null).
  */
-export async function createConsultation(
-  input: CreateConsultationInput
+export async function createConsultating(
+  input: CreateConsultatingInput
 ): Promise<{ data?: { id: string }; error: Error | null }> {
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -43,7 +43,7 @@ export async function createConsultation(
 
   if (error) {
     if (error.code === '23505') {
-      return { error: new Error('You already have a consultation booked at this date and time.') };
+      return { error: new Error('You already have a consultating booked at this date and time.') };
     }
     return { error: new Error(error.message) };
   }

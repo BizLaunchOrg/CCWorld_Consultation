@@ -26,7 +26,7 @@ export function EmailConfirmationBanner() {
       role="alert"
     >
       <p className="text-sm font-medium">
-        Please confirm your email address to book consultations and pay for training. Check your inbox for the confirmation link.
+        Please confirm your email address to book consultatings and pay for training. Check your inbox for the confirmation link.
       </p>
       <div className="flex items-center gap-3">
         {message === 'sent' && (

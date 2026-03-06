@@ -1,10 +1,10 @@
 import { supabase } from './supabase';
 
 export interface DashboardStats {
-  newConsultationsCount: number;
+  newConsultatingsCount: number;
   activeTrainingsCount: number;
   unreadMessagesCount: number;
-  recentConsultations: { id: string; customerName: string; topic: string; status: string; created_at: string }[];
+  recentConsultatings: { id: string; customerName: string; topic: string; status: string; created_at: string }[];
   /** Set when one or more Supabase queries failed (e.g. RLS or network). */
   error?: string;
 }
@@ -25,7 +25,7 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
   ]);
 
   const errors: string[] = [];
-  if (consultationsRes.error) errors.push(`Consultations: ${consultationsRes.error.message}`);
+  if (consultationsRes.error) errors.push(`Consultatings: ${consultationsRes.error.message}`);
   if (productsRes.error) errors.push(`Products: ${productsRes.error.message}`);
   if (unreadRes.error) errors.push(`Unread: ${unreadRes.error.message}`);
   const error = errors.length > 0 ? errors.join('; ') : undefined;
@@ -38,11 +38,11 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
     created_at: string;
   }>;
 
-  const newConsultationsCount = consultations.filter((c) => c.status === 'new').length;
+  const newConsultatingsCount = consultations.filter((c) => c.status === 'new').length;
   const activeTrainingsCount = (productsRes.data ?? []).length;
   const unreadMessagesCount = unreadRes.count ?? 0;
 
-  const recentConsultations = consultations.slice(0, 10).map((c) => ({
+  const recentConsultatings = consultations.slice(0, 10).map((c) => ({
     id: c.id,
     customerName: (c.details?.fullName as string) || '—',
     topic: c.topic,
@@ -51,10 +51,10 @@ export async function fetchAdminDashboardStats(): Promise<DashboardStats> {
   }));
 
   return {
-    newConsultationsCount,
+    newConsultatingsCount,
     activeTrainingsCount,
     unreadMessagesCount,
-    recentConsultations,
+    recentConsultatings,
     error,
   };
 }

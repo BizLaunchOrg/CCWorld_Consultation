@@ -126,7 +126,7 @@ export function LicensingDetailPage() {
           <div className="rounded-3xl border border-teal-accent/20 bg-teal-accent/5 dark:bg-teal-accent/10 p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white">
-                Request a Consultation
+                Request a Consultating
               </h3>
               <p className="text-slate-600 dark:text-slate-400 mt-1">No payment required. We'll discuss your licensing needs and next steps.</p>
             </div>
@@ -135,7 +135,7 @@ export function LicensingDetailPage() {
                 to="/consultation"
                 className="px-6 py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_24px_rgba(45,212,191,0.3)] transition-all"
               >
-                Request a Consultation
+                Request a Consultating
               </Link>
               <button
                 type="button"
@@ -176,10 +176,10 @@ export function LicensingDetailPage() {
               </div>
               <h3 className="text-xl font-bold mb-4 relative z-10">Ready to start?</h3>
               <p className="text-blue-100 text-sm mb-8 relative z-10 leading-relaxed">
-                Request a consultation. We'll prepare a tailored pack and support you through the process.
+                Request a consultating. We'll prepare a tailored pack and support you through the process.
               </p>
               <span className="inline-block w-full bg-white text-primary font-bold py-4 rounded-2xl hover:bg-slate-100 transition-colors relative z-10 text-center">
-                Request Consultation
+                Request Consultating
               </span>
             </Link>
           </div>

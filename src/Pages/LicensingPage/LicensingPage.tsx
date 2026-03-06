@@ -32,14 +32,14 @@ export function LicensingPage() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">Ready to start?</h2>
           <p className="text-slate-600 dark:text-slate-400 mb-8">
-            Request a consultation or open live chat. No payment required — we'll discuss your licensing needs and next steps.
+            Request a consultating or open live chat. No payment required — we'll discuss your licensing needs and next steps.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               to="/consultation"
               className="px-8 py-4 bg-teal-accent text-background-dark font-black rounded-xl hover:shadow-[0_0_30px_rgba(45,212,191,0.35)] transition-all flex items-center gap-2"
             >
-              Request a Consultation <span className="material-symbols-outlined">arrow_forward</span>
+              Request a Consultating <span className="material-symbols-outlined">arrow_forward</span>
             </Link>
             <button
               type="button"
