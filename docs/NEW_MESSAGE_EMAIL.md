@@ -1,6 +1,6 @@
-# Email when someone sends a new chat message
+# Email when the admin has a new unread chat message
 
-You get an email at **ccworldconsulting@gmail.com** whenever a visitor sends a message via the site chat. Uses **Brevo** (free, one API key, no Resend).
+The **admin** (ccworldconsulting@gmail.com) gets one email when someone sends a message **only if they haven’t opened that conversation yet**. If there are already unread user messages in that conversation, we don’t send another email (no spam). Uses **Brevo** (free, one API key).
 
 ## 1. Get a Brevo API key (free)
 

@@ -1,8 +1,7 @@
-// Supabase Edge Function: email ccworldconsulting@gmail.com when someone sends a new chat message.
-// Uses Brevo (free, simple): sign up at brevo.com → API Keys → create key.
-// Set secret: supabase secrets set BREVO_API_KEY=your_key
-// Deploy: supabase functions deploy notify-new-message
-// In Supabase Dashboard add Database Webhook: table chat_messages, event INSERT, URL https://<project-ref>.supabase.co/functions/v1/notify-new-message
+// Supabase Edge Function: email admin only when a new user message arrives AND the admin
+// hasn't opened the conversation yet (no other unread user messages in that conversation).
+// So we send at most one email per "unread thread" — not one per message.
+// Uses Brevo. Set BREVO_API_KEY in Supabase secrets. Deploy and add DB webhook on chat_messages INSERT.
 
 const ADMIN_EMAIL = 'ccworldconsulting@gmail.com';
 
@@ -36,6 +35,29 @@ Deno.serve(async (req: Request) => {
         headers: { 'Content-Type': 'application/json' },
       });
     }
+    const conversationId = payload.record.conversation_id;
+    if (!conversationId) {
+      return new Response(JSON.stringify({ ok: true, skipped: 'no conversation_id' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }
+    // Only notify if admin hasn't opened this conversation yet: count unread user messages.
+    // If there's more than one, admin already had unread — don't send another email.
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    if (supabaseUrl && serviceRoleKey) {
+      const countRes = await fetch(
+        `${supabaseUrl}/rest/v1/chat_messages?conversation_id=eq.${conversationId}&sender_role=eq.user&read_at=is.null&select=id`,
+        { headers: { apikey: serviceRoleKey, Authorization: `Bearer ${serviceRoleKey}` } }
+      );
+      if (countRes.ok) {
+        const rows = await countRes.json();
+        if (Array.isArray(rows) && rows.length > 1) {
+          return new Response(JSON.stringify({ ok: true, skipped: 'admin already has unread in this conversation' }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+      }
+    }
     const apiKey = Deno.env.get('BREVO_API_KEY');
     if (!apiKey) {
       console.error('BREVO_API_KEY not set');
@@ -52,6 +74,7 @@ Deno.serve(async (req: Request) => {
       <p>${escapeHtml(truncated)}</p>
       <p><a href="https://www.ccworldconsulting.com/admin/messages">Open Admin → Messages</a></p>
     `;
+    // Brevo requires the sender email to be verified in Brevo dashboard (Senders & IP).
     const res = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -65,14 +88,21 @@ Deno.serve(async (req: Request) => {
         htmlContent: html,
       }),
     });
+    const resText = await res.text();
     if (!res.ok) {
-      const err = await res.text();
-      console.error('Brevo error:', res.status, err);
-      return new Response(JSON.stringify({ error: err }), { status: 502, headers: { 'Content-Type': 'application/json' } });
+      console.error('Brevo API error:', res.status, resText);
+      return new Response(
+        JSON.stringify({
+          error: 'Brevo failed',
+          details: resText,
+          hint: 'Verify sender email in Brevo (Senders & IP) and check API key.',
+        }),
+        { status: 502, headers: { 'Content-Type': 'application/json' } }
+      );
     }
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (e) {
-    console.error(e);
+    console.error('notify-new-message error:', e);
     return new Response(JSON.stringify({ error: String(e) }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
 });
