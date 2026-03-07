@@ -13,12 +13,14 @@ import { TrainingPage } from './Pages/TrainingPage/TrainingPage';
 import { TrainingDetailsPage } from './Pages/TrainingDetailsPage/TrainingDetailsPage';
 import { LicensingPage } from './Pages/LicensingPage/LicensingPage';
 import { LicensingDetailPage } from './Pages/LicensingDetailPage/LicensingDetailPage';
+import { ContactPage } from './Pages/ContactPage/ContactPage';
 import { AdminLoginPage } from './Pages/Admin/AdminLoginPage';
 import { AdminUsersPage } from './Pages/Admin/AdminUsersPage';
 import { AdminDashboardPage } from './Pages/Admin/AdminDashboardPage';
 import { AdminServicesPage } from './Pages/Admin/AdminServicesPage';
 import { AdminTrainingsPage } from './Pages/Admin/AdminTrainingsPage';
 import { AdminConsultationsPage } from './Pages/Admin/AdminConsultationsPage';
+import { AdminContactPage } from './Pages/Admin/AdminContactPage';
 import { AdminMessagesPage } from './Pages/Admin/AdminMessagesPage';
 import { AdminSettingsPage } from './Pages/Admin/AdminSettingsPage';
 
@@ -43,6 +45,7 @@ function App() {
           <Route path="services" element={<AdminServicesPage />} />
           <Route path="trainings" element={<AdminTrainingsPage />} />
           <Route path="consulting" element={<AdminConsultationsPage />} />
+          <Route path="contact" element={<AdminContactPage />} />
           <Route path="messages" element={<AdminMessagesPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
@@ -53,6 +56,7 @@ function App() {
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/services/:serviceSlug" element={<ServiceDetailsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/insights" element={<InsightsPage />} />
           <Route path="/consulting" element={<ConsultatingPage />} />
           <Route path="/licensing" element={<LicensingPage />} />

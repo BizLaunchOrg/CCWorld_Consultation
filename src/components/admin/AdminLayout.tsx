@@ -10,6 +10,7 @@ const routeTitles: Record<string, string> = {
   '/admin/services': 'Services',
   '/admin/trainings': 'Trainings',
   '/admin/consulting': 'Consultatings',
+  '/admin/contact': 'Contact form',
   '/admin/messages': 'Messages',
   '/admin/settings': 'Settings',
 };

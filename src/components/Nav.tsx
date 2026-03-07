@@ -8,6 +8,7 @@ const navLinks: { to: string; label: string }[] = [
   { to: "/services", label: "Services" },
   { to: "/training", label: "Training" },
   { to: "/about", label: "About" },
+  { to: "/contact", label: "Contact Us" },
   { to: "/insights", label: "Insights" },
 ];
 

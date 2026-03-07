@@ -1,6 +1,6 @@
 # Email when the admin has a new unread chat message
 
-The **admin** (ccworldconsulting@gmail.com) gets one email when someone sends a message **only if they haven’t opened that conversation yet**. If there are already unread user messages in that conversation, we don’t send another email (no spam). Uses **Brevo** (free, one API key).
+The **admin** gets one email when someone sends a message **only if they haven’t opened that conversation yet**. Uses **Brevo**.
 
 ## 1. Get a Brevo API key (free)
 

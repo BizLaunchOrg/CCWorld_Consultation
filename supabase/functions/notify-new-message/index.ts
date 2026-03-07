@@ -1,9 +1,6 @@
-// Supabase Edge Function: email admin only when a new user message arrives AND the admin
-// hasn't opened the conversation yet (no other unread user messages in that conversation).
-// So we send at most one email per "unread thread" — not one per message.
-// Uses Brevo. Set BREVO_API_KEY in Supabase secrets. Deploy and add DB webhook on chat_messages INSERT.
-
-const ADMIN_EMAIL = 'ccworldconsulting@gmail.com';
+// Notify admin by email when a new chat message arrives (only if they haven't opened that convo yet).
+// Uses Brevo. Set BREVO_API_KEY in Supabase secrets. Optional: NOTIFY_EMAIL to override recipient/sender.
+const DEFAULT_NOTIFY_EMAIL = 'ccworldconsulting@gmail.com';
 
 interface WebhookPayload {
   type: 'INSERT' | 'UPDATE' | 'DELETE';
@@ -58,32 +55,29 @@ Deno.serve(async (req: Request) => {
         }
       }
     }
-    const apiKey = Deno.env.get('BREVO_API_KEY');
-    if (!apiKey) {
-      console.error('BREVO_API_KEY not set');
-      return new Response(JSON.stringify({ error: 'Email not configured. Set BREVO_API_KEY in Supabase secrets.' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
     const body = payload.record.body ?? '';
     const truncated = body.length > 300 ? body.slice(0, 300) + '…' : body;
+    const notifyEmail = Deno.env.get('NOTIFY_EMAIL') || DEFAULT_NOTIFY_EMAIL;
+    const brevoKey = Deno.env.get('BREVO_API_KEY');
+    if (!brevoKey) {
+      console.error('BREVO_API_KEY not set');
+      return new Response(
+        JSON.stringify({ error: 'Email not configured. Set BREVO_API_KEY in Supabase secrets.' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
     const html = `
       <p>You have a new message from the website chat.</p>
       <p><strong>Message:</strong></p>
       <p>${escapeHtml(truncated)}</p>
       <p><a href="https://www.ccworldconsulting.com/admin/messages">Open Admin → Messages</a></p>
     `;
-    // Brevo requires the sender email to be verified in Brevo dashboard (Senders & IP).
     const res = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': apiKey,
-      },
+      headers: { 'Content-Type': 'application/json', 'api-key': brevoKey },
       body: JSON.stringify({
-        sender: { email: ADMIN_EMAIL, name: 'CC World Consulting' },
-        to: [{ email: ADMIN_EMAIL }],
+        sender: { email: notifyEmail, name: 'CC World Consulting' },
+        to: [{ email: notifyEmail }],
         subject: 'New chat message on CC World Consulting',
         htmlContent: html,
       }),
@@ -92,11 +86,7 @@ Deno.serve(async (req: Request) => {
     if (!res.ok) {
       console.error('Brevo API error:', res.status, resText);
       return new Response(
-        JSON.stringify({
-          error: 'Brevo failed',
-          details: resText,
-          hint: 'Verify sender email in Brevo (Senders & IP) and check API key.',
-        }),
+        JSON.stringify({ error: 'Brevo failed', details: resText, hint: 'Verify sender email in Brevo (Senders & IP).' }),
         { status: 502, headers: { 'Content-Type': 'application/json' } }
       );
     }

@@ -6,6 +6,7 @@ const navItems: { to: string; label: string; icon: string }[] = [
   { to: '/admin/services', label: 'Services', icon: 'design_services' },
   { to: '/admin/trainings', label: 'Trainings', icon: 'school' },
   { to: '/admin/consulting', label: 'Consultatings', icon: 'event_note' },
+  { to: '/admin/contact', label: 'Contact form', icon: 'contact_mail' },
   { to: '/admin/messages', label: 'Messages', icon: 'chat' },
   { to: '/admin/settings', label: 'Settings', icon: 'settings' },
 ];
