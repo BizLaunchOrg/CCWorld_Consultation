@@ -1,5 +1,8 @@
 import { supabase } from './supabase';
 
+const FORMSPREE_CONTACT_ENDPOINT =
+  import.meta.env.VITE_FORMSPREE_CONTACT_ENDPOINT || 'https://formspree.io/f/mreybzkv';
+
 export type ContactSendTo = 'general' | 'company' | 'opeyemi';
 
 export interface ContactSubmission {
@@ -43,6 +46,33 @@ export async function submitContactForm(data: {
     message: data.message.trim(),
   });
   return { error: error ? new Error(error.message) : null };
+}
+
+/** Send the same contact data to Formspree so the client receives an email. */
+export async function submitContactFormToFormspree(data: {
+  name: string;
+  email: string;
+  send_to: ContactSendTo;
+  subject?: string;
+  message: string;
+}): Promise<{ error: Error | null }> {
+  const body = {
+    name: data.name.trim(),
+    email: data.email.trim(),
+    message: data.message.trim(),
+    _subject: data.subject?.trim() || `Contact from ${data.name.trim()}`,
+    _replyto: data.email.trim(),
+    'Send to': getContactSendToLabel(data.send_to),
+  };
+  const res = await fetch(FORMSPREE_CONTACT_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    return { error: new Error(`Formspree: ${res.status}`) };
+  }
+  return { error: null };
 }
 
 export async function fetchAdminContactSubmissions(): Promise<ContactSubmission[]> {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   submitContactForm,
+  submitContactFormToFormspree,
   CONTACT_SEND_TO_OPTIONS,
   type ContactSendTo,
 } from '../../lib/contactSubmissions';
@@ -19,18 +20,22 @@ export function ContactPage() {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) return;
     setSubmitting(true);
-    const { error } = await submitContactForm({
+    const payload = {
       name: name.trim(),
       email: email.trim(),
       send_to: sendTo,
       subject: subject.trim() || undefined,
       message: message.trim(),
-    });
-    setSubmitting(false);
+    };
+    const { error } = await submitContactForm(payload);
     if (error) {
+      setSubmitting(false);
       alert(error.message);
       return;
     }
+    // Also send to Formspree so they get an email (don't block success if Formspree fails)
+    submitContactFormToFormspree(payload).catch(() => {});
+    setSubmitting(false);
     setSuccess(true);
     setName('');
     setEmail('');
