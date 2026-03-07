@@ -24,7 +24,7 @@ export function AdminSidebar({ collapsed, onClose }: AdminSidebarProps) {
         to="/admin"
         className="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-900 dark:text-white font-black text-lg"
       >
-        <span className="material-symbols-outlined text-teal-accent">admin_panel_settings</span>
+        <img src="/logo.png" alt="CC World Consulting" className="h-8 w-8 object-contain shrink-0" />
         {!collapsed && <span>Admin</span>}
       </Link>
       <nav className="mt-6 flex flex-col gap-1">
