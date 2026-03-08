@@ -58,7 +58,7 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
         )}
         <div className="hidden md:block flex-1 max-w-xs">
           <div className="relative">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xl">
+            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-xl">
               search
             </span>
             <input
@@ -66,7 +66,7 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search…"
-              className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
             />
           </div>
         </div>
@@ -76,7 +76,7 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
           <button
             type="button"
             onClick={() => setDropdownOpen((o) => !o)}
-            className="relative p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10"
+            className="relative p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
             aria-label="Notifications"
           >
             <span className="material-symbols-outlined">notifications</span>
@@ -109,7 +109,7 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
                       key={n.id}
                       type="button"
                       onClick={() => handleGoTo(n)}
-                      className="w-full text-left px-4 py-3 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 flex items-start gap-3"
+                      className="w-full text-left px-4 py-3 border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-start gap-3"
                     >
                       <span className="material-symbols-outlined text-primary shrink-0 mt-0.5">
                         {n.type === 'message' ? 'chat' : 'event_note'}
