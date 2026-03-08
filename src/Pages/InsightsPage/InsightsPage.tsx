@@ -86,7 +86,7 @@ export function InsightsPage() {
       </section>
 
       {/* Regulatory Radar strip */}
-      <div className="bg-charcoal text-white py-4 overflow-hidden border-y border-slate-200 dark:border-slate-800">
+      <div className="bg-charcoal dark:bg-slate-800 text-white py-4 overflow-hidden border-y border-slate-200 dark:border-slate-700">
         <div className="max-w-7xl mx-auto px-6 md:px-20 flex items-center gap-6">
           <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest shrink-0">
             <span className="relative flex h-2 w-2">

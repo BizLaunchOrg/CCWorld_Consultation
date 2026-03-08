@@ -50,7 +50,7 @@ export function HomePage() {
               <h1 className="text-5xl font-black leading-[1.1] tracking-tight text-charcoal dark:text-white md:text-7xl">
                 Build a stronger <span className="text-primary">compliance</span> function with clear structure.
               </h1>
-              <p className="mt-8 max-w-xl text-lg text-charcoal/70 leading-relaxed">
+              <p className="mt-8 max-w-xl text-lg text-charcoal/70 dark:text-slate-300 leading-relaxed">
                 Strategic regulatory consulting for high-growth financial institutions and fintechs. We move beyond manual checks to integrated governance frameworks.
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
@@ -62,14 +62,14 @@ export function HomePage() {
                 </Link>
                 <Link
                   to="/training"
-                  className="rounded-lg border border-charcoal/10 bg-white dark:bg-white/5 px-8 py-4 text-base font-bold text-charcoal dark:text-white hover:bg-charcoal/5 dark:hover:bg-white/10"
+                  className="rounded-lg border border-charcoal/10 dark:border-slate-600 bg-white dark:bg-slate-800/80 px-8 py-4 text-base font-bold text-charcoal dark:text-white hover:bg-charcoal/5 dark:hover:bg-slate-700"
                 >
                   Explore Training
                 </Link>
               </div>
             </div>
             <div className="w-full lg:w-[40%]">
-              <div className="relative rounded-2xl bg-white dark:bg-white/5 p-4 shadow-2xl border border-charcoal/5">
+              <div className="relative rounded-2xl bg-white dark:bg-slate-800/80 p-4 shadow-2xl border border-charcoal/5 dark:border-slate-700">
                 <img alt="Compliance Framework" className="rounded-lg w-full h-auto object-cover" src={COMPLIANCE_IMAGE} />
                 <div className="absolute -bottom-6 -left-6 rounded-lg bg-primary p-6 text-white shadow-xl">
                   <p className="text-3xl font-bold">100%</p>
@@ -111,7 +111,7 @@ export function HomePage() {
           <div className="group transition-all duration-300 hover:translate-y-[-2px]">
             <div className="h-1 w-12 bg-primary mb-6 transition-all duration-300 group-hover:w-full rounded-full" />
             <h3 className="text-2xl font-bold text-charcoal dark:text-white mb-4">Regulatory Strategy</h3>
-            <p className="text-charcoal/60 dark:text-slate-400 leading-relaxed">
+            <p className="text-charcoal/60 dark:text-slate-300 leading-relaxed">
               We align your business objectives with global regulatory expectations, ensuring a seamless path to market entry and sustained operation.
             </p>
           </div>
@@ -125,7 +125,7 @@ export function HomePage() {
           <div className="group transition-all duration-300 hover:translate-y-[-2px]">
             <div className="h-1 w-12 bg-primary mb-6 transition-all duration-300 group-hover:w-full rounded-full" />
             <h3 className="text-2xl font-bold text-charcoal dark:text-white mb-4">Internal Audit</h3>
-            <p className="text-charcoal/60 dark:text-slate-400 leading-relaxed">
+            <p className="text-charcoal/60 dark:text-slate-300 leading-relaxed">
               Rigorous third-party evaluations designed to satisfy regulators and provide internal stakeholders with absolute clarity.
             </p>
           </div>
@@ -133,19 +133,19 @@ export function HomePage() {
       </section>
 
       {/* Core Deliverables - full list from old content, new design */}
-      <section className="px-6 py-24 bg-white dark:bg-charcoal/20">
+      <section className="px-6 py-24 bg-white dark:bg-slate-800/40">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col items-start gap-4 mb-16">
             <h2 className="text-3xl font-bold text-charcoal dark:text-white md:text-4xl tracking-tight">Core Deliverables</h2>
             <div className="h-1 w-20 bg-primary" />
-            <p className="text-charcoal/60 max-w-2xl">We don&apos;t just advise; we build the infrastructure required to scale securely.</p>
+            <p className="text-charcoal/60 dark:text-slate-400 max-w-2xl">We don&apos;t just advise; we build the infrastructure required to scale securely.</p>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {deliverables.map(({ icon, title, desc }) => (
-              <div key={title} className="group flex flex-col gap-4 border border-charcoal/5 p-8 rounded-xl hover:shadow-xl transition-all duration-300">
+              <div key={title} className="group flex flex-col gap-4 border border-charcoal/5 dark:border-slate-700 p-8 rounded-xl hover:shadow-xl transition-all duration-300 bg-white dark:bg-slate-900/50">
                 <span className="material-symbols-outlined text-primary text-4xl">{icon}</span>
                 <h3 className="text-xl font-bold text-charcoal dark:text-white">{title}</h3>
-                <p className="text-sm text-charcoal/60 leading-relaxed">{desc}</p>
+                <p className="text-sm text-charcoal/60 dark:text-slate-400 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -153,7 +153,7 @@ export function HomePage() {
       </section>
 
       {/* Framework Section */}
-      <section className="bg-charcoal px-6 py-24 text-white">
+      <section className="bg-charcoal dark:bg-slate-800 px-6 py-24 text-white">
         <div className="mx-auto max-w-7xl">
           <div className="mb-16 max-w-2xl">
             <h2 className="text-4xl font-bold tracking-tight mb-6">Compliance Department Framework</h2>
@@ -185,7 +185,7 @@ export function HomePage() {
                 </ul>
               </div>
               <div className="flex-shrink-0">
-                <Link to="/consulting" className="inline-block bg-white text-primary px-10 py-5 rounded-xl font-bold text-lg hover:bg-background-light transition-colors">
+                <Link to="/consulting" className="inline-block bg-white text-primary px-10 py-5 rounded-xl font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
                   Book License Audit
                 </Link>
               </div>
@@ -201,33 +201,33 @@ export function HomePage() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-bold text-charcoal dark:text-white">Our Engagement Process</h2>
-            <p className="mt-4 text-charcoal/60">A structured path to regulatory excellence.</p>
+            <p className="mt-4 text-charcoal/60 dark:text-slate-400">A structured path to regulatory excellence.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div className="flex flex-col items-center text-center">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-charcoal/40 text-primary shadow-lg border border-primary/10 font-bold text-xl">1</div>
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-slate-800 text-primary shadow-lg border border-primary/20 dark:border-slate-600 font-bold text-xl">1</div>
               <h3 className="font-bold text-charcoal dark:text-white mb-2">Discovery</h3>
-              <p className="text-xs text-charcoal/60 leading-relaxed">In-depth assessment of current status.</p>
+              <p className="text-xs text-charcoal/60 dark:text-slate-400 leading-relaxed">In-depth assessment of current status.</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-charcoal/40 text-primary shadow-lg border border-primary/10 font-bold text-xl">2</div>
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-slate-800 text-primary shadow-lg border border-primary/20 dark:border-slate-600 font-bold text-xl">2</div>
               <h3 className="font-bold text-charcoal dark:text-white mb-2">Gap Analysis</h3>
-              <p className="text-xs text-charcoal/60 leading-relaxed">Identifying regulatory shortfalls.</p>
+              <p className="text-xs text-charcoal/60 dark:text-slate-400 leading-relaxed">Identifying regulatory shortfalls.</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-charcoal/40 text-primary shadow-lg border border-primary/10 font-bold text-xl">3</div>
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-slate-800 text-primary shadow-lg border border-primary/20 dark:border-slate-600 font-bold text-xl">3</div>
               <h3 className="font-bold text-charcoal dark:text-white mb-2">Framework</h3>
-              <p className="text-xs text-charcoal/60 leading-relaxed">Custom solution architecture.</p>
+              <p className="text-xs text-charcoal/60 dark:text-slate-400 leading-relaxed">Custom solution architecture.</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-charcoal/40 text-primary shadow-lg border border-primary/10 font-bold text-xl">4</div>
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-slate-800 text-primary shadow-lg border border-primary/20 dark:border-slate-600 font-bold text-xl">4</div>
               <h3 className="font-bold text-charcoal dark:text-white mb-2">Implementation</h3>
-              <p className="text-xs text-charcoal/60 leading-relaxed">Hands-on setup and training.</p>
+              <p className="text-xs text-charcoal/60 dark:text-slate-400 leading-relaxed">Hands-on setup and training.</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-charcoal/40 text-primary shadow-lg border border-primary/10 font-bold text-xl">5</div>
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white dark:bg-slate-800 text-primary shadow-lg border border-primary/20 dark:border-slate-600 font-bold text-xl">5</div>
               <h3 className="font-bold text-charcoal dark:text-white mb-2">Handover</h3>
-              <p className="text-xs text-charcoal/60 leading-relaxed">Continuous support & monitoring.</p>
+              <p className="text-xs text-charcoal/60 dark:text-slate-400 leading-relaxed">Continuous support & monitoring.</p>
             </div>
           </div>
         </div>
@@ -239,25 +239,25 @@ export function HomePage() {
           <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
             <div className="max-w-xl">
               <h2 className="text-4xl font-bold text-charcoal dark:text-white mb-4">Who We Serve</h2>
-              <p className="text-charcoal/60">Partnering with pioneers in the financial ecosystem.</p>
+              <p className="text-charcoal/60 dark:text-slate-400">Partnering with pioneers in the financial ecosystem.</p>
             </div>
             <div className="flex gap-4">
-              <span className="rounded-lg bg-charcoal/5 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">Commercial Banks</span>
-              <span className="rounded-lg bg-charcoal/5 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">Fintechs</span>
-              <span className="rounded-lg bg-charcoal/5 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">IMTOs</span>
+              <span className="rounded-lg bg-charcoal/5 dark:bg-slate-700/50 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">Commercial Banks</span>
+              <span className="rounded-lg bg-charcoal/5 dark:bg-slate-700/50 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">Fintechs</span>
+              <span className="rounded-lg bg-charcoal/5 dark:bg-slate-700/50 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">IMTOs</span>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map(({ quote, name, org, img }) => (
-              <div key={name} className="rounded-2xl bg-white dark:bg-charcoal/30 p-8 border border-charcoal/5">
-                <p className="italic text-charcoal/80 mb-6 text-lg">{quote}</p>
+              <div key={name} className="rounded-2xl bg-white dark:bg-slate-800/60 p-8 border border-charcoal/5 dark:border-slate-700">
+                <p className="italic text-charcoal/80 dark:text-slate-300 mb-6 text-lg">{quote}</p>
                 <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-charcoal/10 overflow-hidden shrink-0">
+                  <div className="h-12 w-12 rounded-full bg-charcoal/10 dark:bg-slate-700 overflow-hidden shrink-0">
                     <img alt="" className="h-full w-full object-cover" src={img} />
                   </div>
                   <div>
                     <p className="font-bold text-sm text-charcoal dark:text-white">{name}</p>
-                    <p className="text-xs text-charcoal/50">{org}</p>
+                    <p className="text-xs text-charcoal/50 dark:text-slate-500">{org}</p>
                   </div>
                 </div>
               </div>
@@ -267,7 +267,7 @@ export function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="px-6 py-32 bg-charcoal text-white text-center">
+      <section className="px-6 py-32 bg-charcoal dark:bg-slate-800 text-white text-center">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
             Move from compliance intention to compliance <span className="text-primary">structure</span>.

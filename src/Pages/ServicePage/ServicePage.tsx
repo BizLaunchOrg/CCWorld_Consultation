@@ -117,7 +117,7 @@ export default function ServicePage() {
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Service Navigator</span>
                 <span className="text-xs font-bold text-primary">LIVE</span>
               </div>
-              <div className="rounded-xl bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-700 p-4">
+              <div className="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4">
                 <div className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-3">Pick by pillar</div>
                 <div className="flex flex-wrap gap-2">
                   {['Governance', 'Policies', 'Processes', 'Technology', 'Monitoring'].map((x) => (
@@ -127,7 +127,7 @@ export default function ServicePage() {
                   ))}
                 </div>
               </div>
-              <div className="rounded-xl bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-700 p-4">
+              <div className="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4">
                 <div className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-3">Typical outputs</div>
                 <div className="grid grid-cols-2 gap-3">
                   {[
@@ -170,14 +170,14 @@ export default function ServicePage() {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search (e.g. AML, reporting, dashboards)…"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
                   />
                 </div>
               </div>
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="py-3 px-4 rounded-xl bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 outline-none focus:ring-2 focus:ring-primary focus:border-primary min-w-[180px]"
+                className="py-3 px-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 outline-none focus:ring-2 focus:ring-primary focus:border-primary min-w-[180px]"
               >
                 {filters.map((f) => (
                   <option key={f} value={f}>{f}</option>
@@ -261,7 +261,7 @@ export default function ServicePage() {
                     </span>
                   ) : null}
                 </div>
-                <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-background-dark p-4">
+                <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-4">
                   <div className="text-slate-600 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-3">Typical outputs</div>
                   <div className="space-y-2">
                     {s.outcomes.slice(0, 3).map((o) => (

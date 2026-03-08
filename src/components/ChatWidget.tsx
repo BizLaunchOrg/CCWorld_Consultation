@@ -154,11 +154,11 @@ export function ChatWidget() {
           aria-hidden
         >
           <div
-            className="pointer-events-auto w-full max-w-md h-[min(70vh,520px)] rounded-2xl border border-charcoal/10 bg-white/90 dark:bg-charcoal/95 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden"
+            className="pointer-events-auto w-full max-w-md h-[min(70vh,520px)] rounded-2xl border border-charcoal/10 dark:border-slate-600 bg-white/90 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden"
             role="dialog"
             aria-label="Live Chat"
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-charcoal/10 bg-charcoal/5 dark:bg-white/5">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-charcoal/10 dark:border-slate-600 bg-charcoal/5 dark:bg-slate-700/50">
               <div className="flex items-center gap-2">
                 <span className="text-charcoal dark:text-white font-bold">Live Chat</span>
                 <span className="flex items-center gap-1.5 text-xs text-primary">
@@ -169,7 +169,7 @@ export function ChatWidget() {
               <button
                 type="button"
                 onClick={closeChat}
-                className="p-2 rounded-lg text-charcoal/60 hover:text-charcoal dark:hover:text-white hover:bg-charcoal/5 dark:hover:bg-white/10 transition-colors"
+                className="p-2 rounded-lg text-charcoal/60 dark:text-slate-400 hover:text-charcoal dark:hover:text-white hover:bg-charcoal/5 dark:hover:bg-slate-600 transition-colors"
                 aria-label="Close"
               >
                 <span className="material-symbols-outlined">close</span>
@@ -178,7 +178,7 @@ export function ChatWidget() {
 
             <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
               {loading ? (
-                <p className="text-charcoal/60 text-sm">Loading…</p>
+                <p className="text-charcoal/60 dark:text-slate-400 text-sm">Loading…</p>
               ) : (
                 <>
                   {messages.map((msg) => (
@@ -190,7 +190,7 @@ export function ChatWidget() {
                         className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                           msg.sender_role === 'user'
                             ? 'bg-primary text-white rounded-br-md'
-                            : 'bg-charcoal/10 dark:bg-white/10 text-charcoal dark:text-slate-200 border border-charcoal/5 dark:border-white/10 rounded-bl-md'
+                            : 'bg-charcoal/10 dark:bg-slate-700 text-charcoal dark:text-slate-200 border border-charcoal/5 dark:border-slate-600 rounded-bl-md'
                         }`}
                       >
                         <p className="text-sm whitespace-pre-wrap">{renderMessageBody(msg.body)}</p>
@@ -203,7 +203,7 @@ export function ChatWidget() {
               )}
             </div>
 
-            <div className="p-3 border-t border-charcoal/10 flex gap-2">
+            <div className="p-3 border-t border-charcoal/10 dark:border-slate-600 flex gap-2">
               <input
                 ref={inputRef}
                 type="text"
@@ -211,7 +211,7 @@ export function ChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                 placeholder="Type a message…"
-                className="flex-1 rounded-xl bg-charcoal/5 dark:bg-white/5 border border-charcoal/10 dark:border-white/10 px-4 py-3 text-charcoal dark:text-slate-200 placeholder:text-charcoal/50 outline-none focus:border-primary text-sm"
+                className="flex-1 rounded-xl bg-charcoal/5 dark:bg-slate-700/50 border border-charcoal/10 dark:border-slate-600 px-4 py-3 text-charcoal dark:text-slate-200 placeholder:text-charcoal/50 dark:placeholder:text-slate-500 outline-none focus:border-primary text-sm"
               />
               <button
                 type="button"

@@ -110,7 +110,7 @@ export function ContactPage() {
               </Link>
               <Link
                 to="/about"
-                className="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 border-2 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white text-base font-bold hover:bg-slate-50 dark:hover:bg-slate-900"
+                className="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 border-2 border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white text-base font-bold hover:bg-slate-50 dark:hover:bg-slate-700"
               >
                 Our Approach
               </Link>
@@ -137,7 +137,7 @@ export function ContactPage() {
             <p className="text-slate-500 dark:text-slate-400 mt-2">Reach out to our team in Lagos or via WhatsApp.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="group flex flex-col p-8 bg-white dark:bg-background-dark rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+            <div className="group flex flex-col p-8 bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
               <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <span className="material-symbols-outlined">mail</span>
               </div>
@@ -145,7 +145,7 @@ export function ContactPage() {
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">For general enquiries and support.</p>
               <a className="text-primary font-bold text-sm hover:underline" href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
             </div>
-            <div className="group flex flex-col p-8 bg-white dark:bg-background-dark rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+            <div className="group flex flex-col p-8 bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
               <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <span className="material-symbols-outlined">chat</span>
               </div>
@@ -153,7 +153,7 @@ export function ContactPage() {
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Chat with our team directly.</p>
               <a className="text-primary font-bold text-sm hover:underline" href={SITE_WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">{SITE_PHONE}</a>
             </div>
-            <div className="group flex flex-col p-8 bg-white dark:bg-background-dark rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+            <div className="group flex flex-col p-8 bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
               <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <span className="material-symbols-outlined">schedule</span>
               </div>
@@ -161,7 +161,7 @@ export function ContactPage() {
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Available during business days.</p>
               <p className="text-primary font-bold text-sm">{SITE_OFFICE_HOURS}</p>
             </div>
-            <div className="group flex flex-col p-8 bg-white dark:bg-background-dark rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+            <div className="group flex flex-col p-8 bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
               <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <span className="material-symbols-outlined">location_on</span>
               </div>
@@ -202,13 +202,13 @@ export function ContactPage() {
               </div>
             </div>
           </div>
-          <div className="bg-white dark:bg-slate-900 p-8 md:p-12 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-2xl">
+          <div className="bg-white dark:bg-slate-800/90 p-8 md:p-12 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-2xl">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Full name *</label>
                   <input
-                    className="h-12 px-4 rounded-lg bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white"
+                    className="h-12 px-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white"
                     placeholder="John Doe"
                     type="text"
                     value={name}
@@ -219,7 +219,7 @@ export function ContactPage() {
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Company</label>
                   <input
-                    className="h-12 px-4 rounded-lg bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white"
+                    className="h-12 px-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white"
                     placeholder="Acme Corp"
                     type="text"
                     value={company}
@@ -230,7 +230,7 @@ export function ContactPage() {
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Email address *</label>
                 <input
-                  className="h-12 px-4 rounded-lg bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white"
+                  className="h-12 px-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white"
                   placeholder="john@company.com"
                   type="email"
                   value={email}
@@ -241,7 +241,7 @@ export function ContactPage() {
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Subject *</label>
                 <select
-                  className="h-12 px-4 rounded-lg bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white"
+                  className="h-12 px-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value as ContactSendTo)}
                   required
@@ -254,7 +254,7 @@ export function ContactPage() {
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Message *</label>
                 <textarea
-                  className="p-4 rounded-lg bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white resize-none"
+                  className="p-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white resize-none"
                   placeholder="How can we help you?"
                   rows={4}
                   value={message}
@@ -276,7 +276,7 @@ export function ContactPage() {
       </div>
 
       {/* FAQ strip - no USA regions */}
-      <div className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark">
+      <div className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800">
         <div className="max-w-7xl mx-auto px-6 md:px-20 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex items-center gap-6 overflow-x-auto pb-4 md:pb-0">

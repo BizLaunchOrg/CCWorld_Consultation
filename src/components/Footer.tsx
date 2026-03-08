@@ -17,7 +17,7 @@ const resourcesLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-charcoal/5 bg-white dark:bg-charcoal px-6 py-20 text-charcoal dark:text-slate-200">
+    <footer className="border-t border-charcoal/5 dark:border-slate-700 bg-white dark:bg-slate-800/80 px-6 py-20 text-charcoal dark:text-slate-200">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
@@ -28,13 +28,13 @@ export function Footer() {
               Strategic compliance and regulatory consulting for the modern financial landscape.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-charcoal/40 hover:text-primary transition-colors" aria-label="Share">
+              <a href="#" className="text-charcoal/40 dark:text-slate-400 hover:text-primary transition-colors" aria-label="Share">
                 <span className="material-symbols-outlined">share</span>
               </a>
-              <a href={`mailto:${SITE_EMAIL}`} className="text-charcoal/40 hover:text-primary transition-colors" aria-label="Email">
+              <a href={`mailto:${SITE_EMAIL}`} className="text-charcoal/40 dark:text-slate-400 hover:text-primary transition-colors" aria-label="Email">
                 <span className="material-symbols-outlined">mail</span>
               </a>
-              <a href="#" className="text-charcoal/40 hover:text-primary transition-colors" aria-label="Language">
+              <a href="#" className="text-charcoal/40 dark:text-slate-400 hover:text-primary transition-colors" aria-label="Language">
                 <span className="material-symbols-outlined">language</span>
               </a>
             </div>
@@ -79,13 +79,13 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-charcoal/5 dark:border-white/10 pt-8 text-xs text-charcoal/40 dark:text-slate-500 flex flex-col md:flex-row justify-between gap-4">
+        <div className="border-t border-charcoal/5 dark:border-slate-700 pt-8 text-xs text-charcoal/40 dark:text-slate-500 flex flex-col md:flex-row justify-between gap-4">
           <p>© 2026 {SITE_COMPANY_NAME}. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link to="#" className="hover:text-charcoal dark:hover:text-white transition-colors">
+            <Link to="#" className="hover:text-charcoal dark:hover:text-slate-200 transition-colors">
               Privacy Policy
             </Link>
-            <Link to="#" className="hover:text-charcoal dark:hover:text-white transition-colors">
+            <Link to="#" className="hover:text-charcoal dark:hover:text-slate-200 transition-colors">
               Terms of Service
             </Link>
           </div>

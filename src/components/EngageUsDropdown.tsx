@@ -83,7 +83,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
         >
           Live Chat
         </button>
-        <div className="py-3 px-4 rounded-2xl border border-charcoal/10 dark:border-white/10 bg-charcoal/5 dark:bg-[#0f172a]">
+        <div className="py-3 px-4 rounded-2xl border border-charcoal/10 dark:border-slate-600 bg-charcoal/5 dark:bg-slate-800">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">Email us</div>
           <EmailRow email={OFFICIAL_EMAIL} onCopy={handleCopy} />
         </div>
@@ -110,13 +110,13 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
       </button>
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 w-72 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden z-50 bg-white dark:bg-[#0f172a]"
+          className="absolute right-0 top-full mt-2 w-72 rounded-2xl border border-slate-200 dark:border-slate-600 shadow-xl overflow-hidden z-50 bg-white dark:bg-slate-800"
           role="menu"
         >
           <Link
             to="/contact"
             onClick={() => setOpen(false)}
-            className="block px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white transition-colors border-b border-slate-200 dark:border-white/10"
+            className="block px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors border-b border-slate-200 dark:border-slate-600"
             role="menuitem"
           >
             Contact form
@@ -124,7 +124,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
           <Link
             to="/consulting"
             onClick={() => setOpen(false)}
-            className="block px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white transition-colors border-b border-slate-200 dark:border-white/10"
+            className="block px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors border-b border-slate-200 dark:border-slate-600"
             role="menuitem"
           >
             Request Consultation
@@ -132,7 +132,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
           <button
             type="button"
             onClick={() => { openChat(); setOpen(false); }}
-            className="block w-full text-left px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white transition-colors border-b border-slate-200 dark:border-white/10"
+            className="block w-full text-left px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors border-b border-slate-200 dark:border-slate-600"
             role="menuitem"
           >
             Live Chat

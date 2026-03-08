@@ -101,7 +101,7 @@ export function TrainingPage() {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search trainings…"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
                   />
                 </div>
               </div>

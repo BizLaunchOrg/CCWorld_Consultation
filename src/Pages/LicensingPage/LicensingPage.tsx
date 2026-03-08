@@ -94,7 +94,7 @@ export function LicensingPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               to="/consulting"
-              className="px-8 py-4 bg-white text-primary font-bold rounded-xl hover:scale-105 transition-transform shadow-xl flex items-center gap-2"
+              className="px-8 py-4 bg-white dark:bg-slate-200 text-primary font-bold rounded-xl hover:scale-105 transition-transform shadow-xl flex items-center gap-2"
             >
               Request a Consultation <span className="material-symbols-outlined">arrow_forward</span>
             </Link>

@@ -391,7 +391,7 @@ export function ConsultatingPage() {
                         placeholder="e.g. Microfinance, Holding Company"
                         className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400"
                       />
-                      <p className="text-xs text-slate-500 mt-1">Type your organization — selection updates as you type.</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Type your organization — selection updates as you type.</p>
                     </div>
                   )}
                 </div>

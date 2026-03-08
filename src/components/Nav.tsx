@@ -35,7 +35,7 @@ export function Nav() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-charcoal/5 bg-background-light/80 dark:bg-charcoal/95 backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full border-b border-charcoal/5 dark:border-slate-700/80 bg-background-light/80 dark:bg-slate-900/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 h-14">
           <Link to="/" className="flex items-center shrink-0 h-full" aria-label={`${SITE_COMPANY_NAME} - Home`}>
             <img
@@ -85,13 +85,13 @@ export function Nav() {
             aria-hidden
             onClick={closeMobile}
           />
-          <div className="absolute top-0 right-0 bottom-0 w-full max-w-sm flex flex-col border-l border-charcoal/5 dark:border-white/10 bg-background-light dark:bg-charcoal shadow-2xl">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-charcoal/5 dark:border-white/10 shrink-0">
+          <div className="absolute top-0 right-0 bottom-0 w-full max-w-sm flex flex-col border-l border-charcoal/5 dark:border-slate-700 bg-background-light dark:bg-slate-900 shadow-2xl">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-charcoal/5 dark:border-slate-700 shrink-0">
               <span className="text-sm font-bold text-charcoal dark:text-white">Menu</span>
               <button
                 type="button"
                 onClick={closeMobile}
-                className="p-2 rounded-lg text-charcoal dark:text-white hover:bg-charcoal/5 dark:hover:bg-white/10"
+                className="p-2 rounded-lg text-charcoal dark:text-white hover:bg-charcoal/5 dark:hover:bg-slate-800"
                 aria-label="Close menu"
               >
                 <span className="material-symbols-outlined">close</span>
@@ -106,7 +106,7 @@ export function Nav() {
                   onClick={closeMobile}
                   className={({ isActive }) =>
                     `block py-3 px-4 rounded-lg text-sm font-medium transition-colors ${
-                      isActive ? 'bg-primary/10 text-primary' : 'text-charcoal dark:text-slate-200 hover:bg-charcoal/5 dark:hover:bg-white/10'
+                      isActive ? 'bg-primary/10 text-primary' : 'text-charcoal dark:text-slate-200 hover:bg-charcoal/5 dark:hover:bg-slate-800'
                     }`
                   }
                 >

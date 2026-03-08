@@ -79,7 +79,7 @@ export function LoginPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 focus:ring-2 focus:ring-teal-accent/20 outline-none transition-all"
+                className="w-full rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 focus:ring-2 focus:ring-teal-accent/20 outline-none transition-all"
                 placeholder="you@company.com"
               />
               {errors.email && (
@@ -96,7 +96,7 @@ export function LoginPage() {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 focus:ring-2 focus:ring-teal-accent/20 outline-none transition-all"
+                className="w-full rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 focus:ring-2 focus:ring-teal-accent/20 outline-none transition-all"
                 placeholder="••••••••"
               />
               {errors.password && (
