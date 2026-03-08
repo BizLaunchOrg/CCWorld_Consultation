@@ -3,19 +3,17 @@ interface StatCardProps {
   value: string | number;
   subtitle?: string;
   icon: string;
-  accent?: 'teal' | 'gold' | 'primary';
+  accent?: 'primary' | 'muted';
 }
 
-export function StatCard({ title, value, subtitle, icon, accent = 'teal' }: StatCardProps) {
+export function StatCard({ title, value, subtitle, icon, accent = 'primary' }: StatCardProps) {
   const accentCls =
-    accent === 'teal'
-      ? 'bg-teal-accent/10 border-teal-accent/20 text-teal-accent'
-      : accent === 'gold'
-        ? 'bg-gold-accent/10 border-gold-accent/20 text-gold-accent'
-        : 'bg-primary/10 border-primary/20 text-primary';
+    accent === 'primary'
+      ? 'bg-primary/10 text-primary'
+      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
 
   return (
-    <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-5 md:p-6 shadow-sm dark:shadow-none">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
@@ -29,7 +27,7 @@ export function StatCard({ title, value, subtitle, icon, accent = 'teal' }: Stat
           )}
         </div>
         <span
-          className={`size-12 rounded-2xl border flex items-center justify-center shrink-0 ${accentCls}`}
+          className={`size-12 rounded-xl flex items-center justify-center shrink-0 ${accentCls}`}
         >
           <span className="material-symbols-outlined text-2xl">{icon}</span>
         </span>

@@ -23,10 +23,10 @@ export function ServiceDetailsPage() {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-12 pt-24">
+    <main className="max-w-7xl mx-auto px-6 md:px-20 py-8 pt-16">
       {/* Hero */}
-      <div className="relative w-full h-[320px] sm:h-[400px] rounded-3xl overflow-hidden mb-12">
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-50/95 dark:from-background-dark via-slate-100/80 dark:via-background-dark/60 to-transparent z-10" />
+      <div className="relative w-full h-[280px] sm:h-[360px] rounded-2xl overflow-hidden mb-12">
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 dark:from-slate-900/95 via-slate-800/70 to-transparent z-10" />
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -36,17 +36,17 @@ export function ServiceDetailsPage() {
         />
         <div className="relative z-20 h-full flex flex-col justify-center px-8 sm:px-12 max-w-2xl">
           <div className="flex items-center gap-2 mb-4">
-            <span className="px-3 py-1 bg-accent-emerald/20 text-accent-emerald text-xs font-bold uppercase tracking-widest rounded-full">
+            <span className="px-3 py-1 bg-primary/20 text-primary text-xs font-bold uppercase tracking-wider rounded-full">
               {service.level}
             </span>
-            <span className="px-3 py-1 bg-accent-sand/20 text-accent-sand text-xs font-bold uppercase tracking-widest rounded-full">
+            <span className="px-3 py-1 bg-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-full">
               {service.duration_label}
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight mb-4">
             {service.title}
           </h1>
-          <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
             {service.tagline}
           </p>
         </div>
@@ -76,7 +76,7 @@ export function ServiceDetailsPage() {
             <ul className="space-y-4">
               {service.outcomes.map((o) => (
                 <li key={o} className="flex items-start gap-3 text-slate-700 dark:text-slate-300">
-                  <span className="material-symbols-outlined text-teal-accent shrink-0">check_circle</span>
+                  <span className="material-symbols-outlined text-primary shrink-0">check_circle</span>
                   {o}
                 </li>
               ))}
@@ -84,7 +84,7 @@ export function ServiceDetailsPage() {
           </section>
 
           <section className="pb-12">
-            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900/40 p-6">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6">
               <div className="flex flex-wrap gap-2">
                 {service.categories.map((c) => (
                   <span
@@ -102,7 +102,7 @@ export function ServiceDetailsPage() {
         {/* Sidebar */}
         <aside className="w-full lg:w-80 shrink-0">
           <div className="sticky top-32 space-y-6">
-            <div className="bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-slate-800 rounded-3xl p-6">
+            <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
               <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">This service</h4>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
@@ -122,7 +122,7 @@ export function ServiceDetailsPage() {
 
             <Link
               to="/consulting"
-              className="block bg-primary rounded-3xl p-8 text-white relative overflow-hidden group"
+              className="block bg-primary rounded-2xl p-8 text-white relative overflow-hidden group shadow-lg shadow-primary/20"
             >
               <div className="absolute -right-8 -bottom-8 opacity-10 group-hover:scale-110 transition-transform duration-700">
                 <span className="material-symbols-outlined text-[160px]">support_agent</span>
@@ -138,7 +138,7 @@ export function ServiceDetailsPage() {
             <button
               type="button"
               onClick={() => openChat()}
-              className="block w-full mt-4 py-4 px-6 rounded-2xl border-2 border-gold-accent/50 text-gold-accent font-black hover:bg-gold-accent/10 transition-all text-center"
+              className="block w-full mt-4 py-4 px-6 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-center"
             >
               Live Chat
             </button>

@@ -30,13 +30,13 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         aria-hidden
       />
       <div
-        className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-2xl max-h-[90vh] flex flex-col"
+        className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl max-h-[90vh] flex flex-col"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-white/10 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
           <h2 id="modal-title" className="text-lg font-bold text-slate-900 dark:text-white">
             {title}
           </h2>

@@ -114,15 +114,15 @@ export function AdminMessagesPage() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)] md:h-[calc(100vh-6rem)] rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 overflow-hidden">
+    <div className="flex flex-col h-[calc(100vh-8rem)] md:h-[calc(100vh-6rem)] rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/60 overflow-hidden">
       <div className="flex flex-1 min-h-0 flex-col md:flex-row">
         {/* Conversation list: on mobile hide when a conversation is open */}
         <div
-          className={`flex flex-col shrink-0 w-full md:w-80 border-r border-slate-200 dark:border-white/10 ${
+          className={`flex flex-col shrink-0 w-full md:w-80 border-r border-slate-200 dark:border-slate-700 ${
             selectedId ? 'hidden md:flex' : 'flex'
           }`}
         >
-          <div className="p-3 border-b border-slate-200 dark:border-white/10">
+          <div className="p-3 border-b border-slate-200 dark:border-slate-700">
             <h2 className="font-bold text-slate-900 dark:text-white">Conversations</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Live chat with site visitors. Tap a conversation to open it.
@@ -130,7 +130,7 @@ export function AdminMessagesPage() {
             <button
               type="button"
               onClick={() => { setLoading(true); loadConversations(); }}
-              className="mt-2 text-xs font-semibold text-teal-accent hover:underline"
+              className="mt-2 text-xs font-semibold text-primary hover:underline"
             >
               Refresh list
             </button>
@@ -148,8 +148,8 @@ export function AdminMessagesPage() {
                   key={c.id}
                   type="button"
                   onClick={() => setSelectedId(c.id)}
-                  className={`w-full text-left px-4 py-3 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 active:bg-teal-accent/10 flex items-start gap-3 touch-manipulation ${
-                    selectedId === c.id ? 'bg-teal-accent/10 border-l-4 border-l-teal-accent' : ''
+                  className={`w-full text-left px-4 py-3 border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 active:bg-primary/10 flex items-start gap-3 touch-manipulation ${
+                    selectedId === c.id ? 'bg-primary/10 border-l-4 border-l-primary' : ''
                   }`}
                 >
                   <div className="min-w-0 flex-1">
@@ -184,16 +184,16 @@ export function AdminMessagesPage() {
         >
           {selectedId ? (
             <>
-              <div className="p-3 md:p-4 border-b border-slate-200 dark:border-white/10 flex items-center gap-2 shrink-0">
+              <div className="p-3 md:p-4 border-b border-slate-200 dark:border-slate-700 flex items-center gap-2 shrink-0">
                 <button
                   type="button"
                   onClick={() => setSelectedId(null)}
-                  className="md:hidden p-2 -ml-1 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10 touch-manipulation"
+                  className="md:hidden p-2 -ml-1 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 touch-manipulation"
                   aria-label="Back to conversations"
                 >
                   <span className="material-symbols-outlined">arrow_back</span>
                 </button>
-                <span className="material-symbols-outlined text-teal-accent shrink-0">person</span>
+                <span className="material-symbols-outlined text-primary shrink-0">person</span>
                 <div className="min-w-0 flex-1">
                   <p className="font-bold text-slate-900 dark:text-white truncate">{selected?.customer_name ?? 'Guest'}</p>
                   <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{selected?.customer_email ?? '—'}</p>
@@ -208,9 +208,9 @@ export function AdminMessagesPage() {
                     <div
                       className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                         m.sender_role === 'admin'
-                          ? 'bg-teal-accent text-background-dark rounded-br-md'
+                          ? 'bg-primary text-white rounded-br-md'
                           : m.sender_role === 'system'
-                            ? 'bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 rounded-bl-md'
+                            ? 'bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 rounded-bl-md'
                             : 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white rounded-bl-md'
                       }`}
                     >
@@ -221,7 +221,7 @@ export function AdminMessagesPage() {
                 ))}
                 <div ref={messagesEndRef} />
               </div>
-              <div className="p-3 border-t border-slate-200 dark:border-white/10 flex gap-2 shrink-0">
+              <div className="p-3 border-t border-slate-200 dark:border-slate-700 flex gap-2 shrink-0">
                 <input
                   ref={replyInputRef}
                   type="text"
@@ -232,13 +232,13 @@ export function AdminMessagesPage() {
                   }}
                   onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
                   placeholder="Type a reply…"
-                  className="flex-1 min-w-0 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none text-sm"
+                  className="flex-1 min-w-0 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none text-sm"
                 />
                 <button
                   type="button"
                   onClick={handleSend}
                   disabled={!reply.trim()}
-                  className="rounded-2xl bg-teal-accent text-background-dark px-4 py-3 disabled:opacity-50 font-bold shrink-0 touch-manipulation"
+                  className="rounded-2xl bg-primary text-white px-4 py-3 disabled:opacity-50 font-bold shrink-0 touch-manipulation"
                 >
                   Send
                 </button>

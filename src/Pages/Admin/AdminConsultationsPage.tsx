@@ -131,10 +131,10 @@ export function AdminConsultationsPage() {
           <div className="flex items-center gap-3 flex-wrap">
             <h1 className="text-2xl font-black text-slate-900 dark:text-white md:hidden">Consultating requests</h1>
             {newCount > 0 && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold bg-teal-accent/20 text-teal-accent border border-teal-accent/30">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold bg-primary/10 text-primary border border-primary/20">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-accent opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-accent" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
                 {newCount} new
               </span>
@@ -149,7 +149,7 @@ export function AdminConsultationsPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as ConsultatingStatus | 'all')}
-              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
+              className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
             >
               {STATUS_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -161,7 +161,7 @@ export function AdminConsultationsPage() {
             <select
               value={engagementFilter}
               onChange={(e) => setEngagementFilter(e.target.value as EngagementType | 'all')}
-              className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none min-w-[180px]"
+              className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none min-w-[180px]"
             >
               {ENGAGEMENT_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -171,7 +171,7 @@ export function AdminConsultationsPage() {
           <button
             type="button"
             onClick={() => { setStatusFilter('all'); setEngagementFilter('all'); }}
-            className="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-teal-accent"
+            className="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary"
           >
             Clear filters
           </button>
@@ -192,11 +192,11 @@ export function AdminConsultationsPage() {
             badge={
               <div className="flex items-center gap-2">
                 {c.status === 'new' && (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-accent text-background-dark uppercase">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary text-white uppercase">
                     New
                   </span>
                 )}
-                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400">
+                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400">
                   {c.status}
                 </span>
               </div>
@@ -209,14 +209,14 @@ export function AdminConsultationsPage() {
       </div>
 
       {!loading && filtered.length === 0 && (
-        <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
           {consultations.length === 0 ? 'No consultating requests yet.' : 'No requests match the selected filters.'}
         </div>
       )}
 
       {toast && (
         <div
-          className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 px-4 py-3 rounded-2xl bg-teal-accent text-background-dark font-bold shadow-lg"
+          className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 px-4 py-3 rounded-2xl bg-primary text-white font-bold shadow-lg"
           style={{ animation: 'fadeIn 0.2s ease-out' }}
           role="status"
           aria-live="polite"
@@ -233,7 +233,7 @@ export function AdminConsultationsPage() {
       >
         {selected && (
           <div className="space-y-5">
-            <div className="rounded-2xl border border-slate-200 dark:border-white/10 p-4 space-y-3 text-sm">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 space-y-3 text-sm">
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Engagement type</span>{formatEngagementType(selected.engagement_type)}</p>
               {selected.license_type && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">License type</span><span className="capitalize">{selected.license_type}</span></p>}
               {selected.stage && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Stage</span>{formatStage(selected.stage)}</p>}
@@ -251,7 +251,7 @@ export function AdminConsultationsPage() {
               {selected.gap && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Gap / focus</span>{selected.gap}</p>}
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Submitted at</span>{formatDate(selected.created_at)}</p>
             </div>
-            <div className="rounded-2xl border border-slate-200 dark:border-white/10 p-4">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
               <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Note / message</p>
               <p className="text-slate-900 dark:text-white whitespace-pre-wrap">{selected.note || '—'}</p>
             </div>
@@ -260,7 +260,7 @@ export function AdminConsultationsPage() {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as ConsultatingStatus)}
-                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
               >
               <option value="new">New</option>
               <option value="in_review">In review</option>
@@ -275,14 +275,14 @@ export function AdminConsultationsPage() {
                 value={internalNotes}
                 onChange={(e) => setInternalNotes(e.target.value)}
                 rows={4}
-                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none resize-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none resize-none"
                 placeholder="Internal notes (not visible to customer)"
               />
             </div>
             <button
               type="button"
               onClick={handleSaveDetail}
-              className="w-full py-3 rounded-2xl bg-teal-accent text-background-dark font-bold"
+              className="w-full py-3 rounded-2xl bg-primary text-white font-bold"
             >
               Save changes
             </button>

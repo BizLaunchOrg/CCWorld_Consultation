@@ -41,12 +41,12 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between gap-4 h-16 px-4 md:px-6 border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 flex items-center justify-between gap-4 h-16 px-4 md:px-6 border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md">
       <div className="flex items-center gap-4">
         <button
           type="button"
           onClick={onMenuClick}
-          className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-teal-accent md:hidden"
+          className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary md:hidden"
           aria-label="Open menu"
         >
           <span className="material-symbols-outlined">menu</span>
@@ -66,7 +66,7 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search…"
-              className="w-full pl-10 pr-4 py-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark text-slate-900 dark:text-slate-100 placeholder:text-slate-500 text-sm focus:border-teal-accent/50 outline-none"
+              className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
             />
           </div>
         </div>
@@ -87,14 +87,14 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
             )}
           </button>
           {dropdownOpen && (
-            <div className="absolute right-0 top-full mt-2 w-80 max-h-[70vh] overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-xl z-50 flex flex-col">
-              <div className="p-3 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
+            <div className="absolute right-0 top-full mt-2 w-80 max-h-[70vh] overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl z-50 flex flex-col">
+              <div className="p-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
                 <span className="font-bold text-slate-900 dark:text-white text-sm">Notifications</span>
                 {count > 0 && (
                   <button
                     type="button"
                     onClick={() => { markAllAsRead(); setDropdownOpen(false); }}
-                    className="text-xs font-semibold text-teal-accent hover:underline"
+                    className="text-xs font-semibold text-primary hover:underline"
                   >
                     Mark all as read
                   </button>
@@ -111,7 +111,7 @@ export function AdminTopbar({ onMenuClick, title }: AdminTopbarProps) {
                       onClick={() => handleGoTo(n)}
                       className="w-full text-left px-4 py-3 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 flex items-start gap-3"
                     >
-                      <span className="material-symbols-outlined text-teal-accent shrink-0 mt-0.5">
+                      <span className="material-symbols-outlined text-primary shrink-0 mt-0.5">
                         {n.type === 'message' ? 'chat' : 'event_note'}
                       </span>
                       <div className="min-w-0 flex-1">

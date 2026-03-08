@@ -32,7 +32,7 @@ export function AdminContactPage() {
         {loading ? (
           <p className="text-slate-500 dark:text-slate-400">Loading…</p>
         ) : submissions.length === 0 ? (
-          <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-10 text-center text-slate-500 dark:text-slate-400">
             No contact form submissions yet.
           </div>
         ) : (
@@ -43,7 +43,7 @@ export function AdminContactPage() {
               subtitle={s.subject || s.message.slice(0, 80) + (s.message.length > 80 ? '…' : '')}
               meta={`${formatDate(s.created_at)} · Sent to: ${getContactSendToLabel(s.send_to)}`}
               badge={
-                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400">
+                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400">
                   {s.send_to}
                 </span>
               }
@@ -56,7 +56,7 @@ export function AdminContactPage() {
       <Drawer open={!!selected} onClose={() => setSelected(null)} title="Contact submission">
         {selected && (
           <div className="space-y-5">
-            <div className="rounded-2xl border border-slate-200 dark:border-white/10 p-4 space-y-3 text-sm">
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 space-y-3 text-sm">
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Name</span>{selected.name}</p>
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Email</span>{selected.email}</p>
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Sent to</span>{getContactSendToLabel(selected.send_to)}</p>
@@ -65,7 +65,7 @@ export function AdminContactPage() {
               )}
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Submitted</span>{formatDate(selected.created_at)}</p>
             </div>
-            <div className="rounded-2xl border border-slate-200 dark:border-white/10 p-4">
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4">
               <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Message</p>
               <p className="text-slate-900 dark:text-white whitespace-pre-wrap">{selected.message}</p>
             </div>

@@ -4,13 +4,14 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #1152d4;
+  --color-primary: #b91c1c;
   --color-teal-accent: #2dd4bf;
   --color-gold-accent: #eab308;
   --color-accent-emerald: #10b981;
   --color-accent-sand: #fcd34d;
   --color-background-light: #f8fafc;
   --color-background-dark: #0f172a;
+  --color-charcoal: #1e293b;
   --color-card-dark: #1e293b;
   --font-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --animate-marquee: marquee 30s linear infinite;
@@ -43,6 +44,19 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 25s linear infinite;
 }
 
 .ticker-scroll {
@@ -91,4 +105,9 @@
   background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
+}
+
+/* CC World Consulting logo - no filter so it displays as-is */
+.site-logo {
+  display: block;
 }

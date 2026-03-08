@@ -52,7 +52,7 @@ function ListEditor({
     <div>
       <div className="flex items-center justify-between mb-1">
         <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{label}</label>
-        <button type="button" onClick={add} className="text-xs font-semibold text-teal-accent">+ Add</button>
+        <button type="button" onClick={add} className="text-xs font-semibold text-primary">+ Add</button>
       </div>
       <div className="space-y-2">
         {items.map((item, i) => (
@@ -62,7 +62,7 @@ function ListEditor({
               value={item}
               onChange={(e) => set(i, e.target.value)}
               placeholder={placeholder}
-              className="flex-1 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-3 py-2 text-sm text-slate-900 dark:text-slate-100"
+              className="flex-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-sm text-slate-900 dark:text-slate-100"
             />
             <button type="button" onClick={() => remove(i)} className="p-2 text-red-500 hover:bg-red-500/10 rounded-xl">
               <span className="material-symbols-outlined text-lg">remove</span>
@@ -233,16 +233,16 @@ export function AdminServicesPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search services…"
-            className="flex-1 min-w-[200px] rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 px-4 py-2.5 text-slate-900 dark:text-slate-100 text-sm placeholder:text-slate-500 focus:border-teal-accent/50 outline-none"
+            className="flex-1 min-w-[200px] rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-slate-900 dark:text-slate-100 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
           />
-          <div className="flex rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden">
+          <div className="flex rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
             {(['all', 'published', 'draft', 'licensing'] as const).map((f) => (
               <button
                 key={f}
                 type="button"
                 onClick={() => setFilter(f)}
                 className={`px-4 py-2.5 text-sm font-semibold capitalize ${
-                  filter === f ? 'bg-teal-accent text-background-dark' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                  filter === f ? 'bg-primary text-white' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 {f === 'licensing' ? 'Payment Licensing' : f}
@@ -252,7 +252,7 @@ export function AdminServicesPage() {
           <button
             type="button"
             onClick={openCreate}
-            className="px-5 py-2.5 rounded-2xl bg-teal-accent text-background-dark font-bold hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all flex items-center gap-2"
+            className="px-5 py-2.5 rounded-2xl bg-primary text-white font-bold hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all flex items-center gap-2"
           >
             <span className="material-symbols-outlined">add</span>
             Add Service
@@ -266,7 +266,7 @@ export function AdminServicesPage() {
           return (
           <div
             key={s.id}
-            className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-5 shadow-sm dark:shadow-none"
+            className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/60 p-5 shadow-sm dark:shadow-none"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
@@ -281,7 +281,7 @@ export function AdminServicesPage() {
                     Payment Licensing
                   </span>
                 )}
-                <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-teal-accent/10 text-teal-accent">
+                <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">
                   {s.level}
                 </span>
               </div>
@@ -292,11 +292,11 @@ export function AdminServicesPage() {
                   type="checkbox"
                   checked={s.published}
                   onChange={() => togglePublished(s)}
-                  className="rounded border-slate-300 text-teal-accent focus:ring-teal-accent"
+                  className="rounded border-slate-300 text-primary focus:ring-primary"
                 />
                 <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Published</span>
               </label>
-              <button type="button" onClick={() => openEdit(s)} className="text-sm font-semibold text-teal-accent hover:underline">
+              <button type="button" onClick={() => openEdit(s)} className="text-sm font-semibold text-primary hover:underline">
                 Edit
               </button>
             </div>
@@ -306,7 +306,7 @@ export function AdminServicesPage() {
       </div>
 
       {filtered.length === 0 && (
-        <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
           No services match your filters.
         </div>
       )}
@@ -322,7 +322,7 @@ export function AdminServicesPage() {
                   type="text"
                   value={form.title}
                   onChange={(e) => handleTitleChange(e.target.value)}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
                   placeholder="Service title"
                 />
                 {errors.title && <p className="text-xs text-red-500 mt-1">{errors.title}</p>}
@@ -333,7 +333,7 @@ export function AdminServicesPage() {
                   type="text"
                   value={form.slug}
                   onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
                   placeholder="url-slug"
                 />
                 {errors.slug && <p className="text-xs text-red-500 mt-1">{errors.slug}</p>}
@@ -344,7 +344,7 @@ export function AdminServicesPage() {
                   type="text"
                   value={form.tagline}
                   onChange={(e) => setForm((f) => ({ ...f, tagline: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
                   placeholder="Short one-liner"
                 />
                 {errors.tagline && <p className="text-xs text-red-500 mt-1">{errors.tagline}</p>}
@@ -355,7 +355,7 @@ export function AdminServicesPage() {
                   value={form.summary}
                   onChange={(e) => setForm((f) => ({ ...f, summary: e.target.value }))}
                   rows={3}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 focus:border-teal-accent/50 outline-none resize-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none resize-none"
                   placeholder="Longer description"
                 />
                 {errors.summary && <p className="text-xs text-red-500 mt-1">{errors.summary}</p>}
@@ -386,7 +386,7 @@ export function AdminServicesPage() {
             <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">Optional. Used for licensing and other detail pages. Each section has a heading and either paragraph text or bullet list.</p>
             <div className="space-y-4">
               {(form.content_sections ?? []).map((sec, idx) => (
-                <div key={idx} className="rounded-2xl border border-slate-200 dark:border-white/10 p-4 space-y-3">
+                <div key={idx} className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 space-y-3">
                   <div className="flex items-center justify-between gap-2">
                     <input
                       type="text"
@@ -397,7 +397,7 @@ export function AdminServicesPage() {
                         setForm((f) => ({ ...f, content_sections: sections }));
                       }}
                       placeholder="Section heading"
-                      className="flex-1 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-3 py-2 text-sm font-bold text-slate-900 dark:text-slate-100"
+                      className="flex-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-sm font-bold text-slate-900 dark:text-slate-100"
                     />
                     <button
                       type="button"
@@ -418,7 +418,7 @@ export function AdminServicesPage() {
                       }}
                       rows={2}
                       placeholder="Paragraph text"
-                      className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-3 py-2 text-sm text-slate-900 dark:text-slate-100 resize-none"
+                      className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 resize-none"
                     />
                   </div>
                   <div>
@@ -438,7 +438,7 @@ export function AdminServicesPage() {
               <button
                 type="button"
                 onClick={() => setForm((f) => ({ ...f, content_sections: [...(f.content_sections ?? []), { heading: '' }] }))}
-                className="text-sm font-semibold text-teal-accent hover:underline"
+                className="text-sm font-semibold text-primary hover:underline"
               >
                 + Add section
               </button>
@@ -454,7 +454,7 @@ export function AdminServicesPage() {
                   type="text"
                   value={form.duration_label}
                   onChange={(e) => setForm((f) => ({ ...f, duration_label: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
                   placeholder="e.g. 8–12 weeks"
                 />
                 {errors.duration_label && <p className="text-xs text-red-500 mt-1">{errors.duration_label}</p>}
@@ -464,7 +464,7 @@ export function AdminServicesPage() {
                 <select
                   value={form.level}
                   onChange={(e) => setForm((f) => ({ ...f, level: e.target.value as ServiceLevel }))}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
                 >
                   {LEVELS.map((l) => (
                     <option key={l} value={l}>{l}</option>
@@ -477,7 +477,7 @@ export function AdminServicesPage() {
                   type="text"
                   value={form.amount}
                   onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
                   placeholder="NGN 450,000"
                 />
                 {errors.amount && <p className="text-xs text-red-500 mt-1">{errors.amount}</p>}
@@ -488,7 +488,7 @@ export function AdminServicesPage() {
                   type="text"
                   value={form.icon}
                   onChange={(e) => setForm((f) => ({ ...f, icon: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
                   placeholder="design_services"
                 />
               </div>
@@ -503,7 +503,7 @@ export function AdminServicesPage() {
                   type="checkbox"
                   checked={form.published}
                   onChange={(e) => setForm((f) => ({ ...f, published: e.target.checked }))}
-                  className="rounded border-slate-300 text-teal-accent focus:ring-teal-accent"
+                  className="rounded border-slate-300 text-primary focus:ring-primary"
                 />
                 <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Published</span>
               </label>
@@ -514,7 +514,7 @@ export function AdminServicesPage() {
                   min={0}
                   value={form.sort_order ?? 0}
                   onChange={(e) => setForm((f) => ({ ...f, sort_order: Number(e.target.value) || 0 }))}
-                  className="w-20 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-3 py-2 text-sm"
+                  className="w-20 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-sm"
                 />
               </div>
             </div>
@@ -524,14 +524,14 @@ export function AdminServicesPage() {
             <button
               type="button"
               onClick={handleSave}
-              className="flex-1 py-3 rounded-2xl bg-teal-accent text-background-dark font-bold"
+              className="flex-1 py-3 rounded-2xl bg-primary text-white font-bold"
             >
               {editing ? 'Save' : 'Add'}
             </button>
             <button
               type="button"
               onClick={() => setModalOpen(false)}
-              className="px-5 py-3 rounded-2xl border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 font-semibold"
+              className="px-5 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold"
             >
               Cancel
             </button>
@@ -541,7 +541,7 @@ export function AdminServicesPage() {
 
       {toast && (
         <div
-          className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 px-4 py-3 rounded-2xl bg-teal-accent text-background-dark font-bold shadow-lg"
+          className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 px-4 py-3 rounded-2xl bg-primary text-white font-bold shadow-lg"
           style={{ animation: 'fadeIn 0.2s ease-out' }}
           role="status"
           aria-live="polite"

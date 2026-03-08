@@ -11,8 +11,8 @@ interface ListCardProps {
 export function ListCard({ title, subtitle, meta, badge, onClick, children, className = '' }: ListCardProps) {
   return (
     <div
-      className={`rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-4 md:p-5 shadow-sm dark:shadow-none transition-colors ${
-        onClick ? 'cursor-pointer hover:border-teal-accent/25 hover:shadow-md' : ''
+      className={`rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-4 md:p-5 shadow-sm transition-all ${
+        onClick ? 'cursor-pointer hover:border-primary/30 hover:shadow-md' : ''
       } ${className}`}
       onClick={onClick}
       onKeyDown={onClick ? (e) => e.key === 'Enter' && onClick() : undefined}

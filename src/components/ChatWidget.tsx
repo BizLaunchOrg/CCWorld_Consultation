@@ -23,7 +23,6 @@ function formatTime(iso: string): string {
   return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 }
 
-// Match URLs (http/https) so we can render them as clickable links
 const URL_RE = /(https?:\/\/[^\s]+)/g;
 function renderMessageBody(body: string) {
   const parts = body.split(URL_RE);
@@ -34,7 +33,7 @@ function renderMessageBody(body: string) {
         href={part}
         target="_blank"
         rel="noopener noreferrer"
-        className="underline break-all text-teal-accent hover:text-teal-accent/90"
+        className="underline break-all text-primary hover:text-primary/90"
       >
         {part}
       </a>
@@ -61,7 +60,6 @@ export function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  // When opening chat: get or create conversation, load messages, subscribe to new ones. Send pending initial message if set.
   useEffect(() => {
     if (!isOpen) return;
     clearUnread();
@@ -88,7 +86,6 @@ export function ChatWidget() {
       .finally(() => setLoading(false));
   }, [isOpen, clearUnread, user?.id, consumePendingMessage]);
 
-  // Realtime: new messages (including admin replies) appear without refresh
   useEffect(() => {
     if (!conversationId) return;
     const unsub = subscribeToMessages(conversationId, (msg) => {
@@ -140,12 +137,12 @@ export function ChatWidget() {
       <button
         type="button"
         onClick={() => (isOpen ? closeChat() : openChat())}
-        className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-14 h-14 rounded-2xl bg-teal-accent text-background-dark shadow-lg hover:shadow-[0_0_24px_rgba(45,212,191,0.35)] transition-all border border-teal-accent/20"
+        className="fixed bottom-8 right-8 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-2xl hover:scale-110 transition-transform"
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
-        <span className="material-symbols-outlined text-2xl">chat</span>
+        <span className="material-symbols-outlined text-2xl">forum</span>
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-5 h-5 px-1 rounded-full bg-primary text-white text-xs font-bold">
+          <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-5 h-5 px-1 rounded-full bg-white text-primary text-xs font-bold shadow-lg">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
@@ -157,22 +154,22 @@ export function ChatWidget() {
           aria-hidden
         >
           <div
-            className="pointer-events-auto w-full max-w-md h-[min(70vh,520px)] rounded-2xl border border-white/10 bg-background-dark/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden"
+            className="pointer-events-auto w-full max-w-md h-[min(70vh,520px)] rounded-2xl border border-charcoal/10 bg-white/90 dark:bg-charcoal/95 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden"
             role="dialog"
             aria-label="Live Chat"
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-charcoal/10 bg-charcoal/5 dark:bg-white/5">
               <div className="flex items-center gap-2">
-                <span className="text-white font-bold">Live Chat</span>
-                <span className="flex items-center gap-1.5 text-xs text-teal-accent">
-                  <span className="size-2 rounded-full bg-teal-accent" />
+                <span className="text-charcoal dark:text-white font-bold">Live Chat</span>
+                <span className="flex items-center gap-1.5 text-xs text-primary">
+                  <span className="size-2 rounded-full bg-primary" />
                   {status}
                 </span>
               </div>
               <button
                 type="button"
                 onClick={closeChat}
-                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                className="p-2 rounded-lg text-charcoal/60 hover:text-charcoal dark:hover:text-white hover:bg-charcoal/5 dark:hover:bg-white/10 transition-colors"
                 aria-label="Close"
               >
                 <span className="material-symbols-outlined">close</span>
@@ -181,7 +178,7 @@ export function ChatWidget() {
 
             <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
               {loading ? (
-                <p className="text-slate-400 text-sm">Loading…</p>
+                <p className="text-charcoal/60 text-sm">Loading…</p>
               ) : (
                 <>
                   {messages.map((msg) => (
@@ -192,8 +189,8 @@ export function ChatWidget() {
                       <div
                         className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                           msg.sender_role === 'user'
-                            ? 'bg-teal-accent text-background-dark rounded-br-md'
-                            : 'bg-white/10 text-slate-200 border border-white/10 rounded-bl-md'
+                            ? 'bg-primary text-white rounded-br-md'
+                            : 'bg-charcoal/10 dark:bg-white/10 text-charcoal dark:text-slate-200 border border-charcoal/5 dark:border-white/10 rounded-bl-md'
                         }`}
                       >
                         <p className="text-sm whitespace-pre-wrap">{renderMessageBody(msg.body)}</p>
@@ -206,7 +203,7 @@ export function ChatWidget() {
               )}
             </div>
 
-            <div className="p-3 border-t border-white/10 flex gap-2">
+            <div className="p-3 border-t border-charcoal/10 flex gap-2">
               <input
                 ref={inputRef}
                 type="text"
@@ -214,13 +211,13 @@ export function ChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                 placeholder="Type a message…"
-                className="flex-1 rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-slate-200 placeholder:text-slate-500 outline-none focus:border-teal-accent/50 text-sm"
+                className="flex-1 rounded-xl bg-charcoal/5 dark:bg-white/5 border border-charcoal/10 dark:border-white/10 px-4 py-3 text-charcoal dark:text-slate-200 placeholder:text-charcoal/50 outline-none focus:border-primary text-sm"
               />
               <button
                 type="button"
                 onClick={sendMessage}
                 disabled={!input.trim() || loading}
-                className="rounded-xl bg-teal-accent text-background-dark px-4 py-3 disabled:opacity-50 disabled:pointer-events-none hover:shadow-[0_0_16px_rgba(45,212,191,0.3)] transition-all"
+                className="rounded-xl bg-primary text-white px-4 py-3 disabled:opacity-50 disabled:pointer-events-none hover:bg-primary/90 transition-colors"
                 aria-label="Send"
               >
                 <span className="material-symbols-outlined">send</span>

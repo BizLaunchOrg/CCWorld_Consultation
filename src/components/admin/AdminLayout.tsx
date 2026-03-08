@@ -25,7 +25,7 @@ export function AdminLayout() {
   const title = getPageTitle(location.pathname);
 
   return (
-    <div className="min-h-screen flex bg-slate-100 dark:bg-background-dark">
+    <div className="min-h-screen flex bg-slate-50 dark:bg-slate-900/50">
       {/* Desktop sidebar */}
       <div className="hidden md:block">
         <AdminSidebar collapsed={false} />
@@ -53,7 +53,7 @@ export function AdminLayout() {
       <div className="flex-1 flex flex-col min-w-0">
         <AdminNotificationProvider>
           <AdminTopbar title={title} onMenuClick={() => setMobileOpen(true)} />
-          <main className="flex-1 p-4 md:p-6">
+          <main className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
             <Outlet />
           </main>
         </AdminNotificationProvider>

@@ -99,9 +99,12 @@ export function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100 dark:bg-background-dark px-4">
-      <div className="w-full max-w-md rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/80 shadow-xl dark:shadow-none p-8">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 px-4 py-12">
+      <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 shadow-xl p-8 md:p-10">
         <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 text-primary mb-6">
+            <span className="material-symbols-outlined text-3xl">admin_panel_settings</span>
+          </div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white">Admin sign in</h1>
           <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm">
             Sign in with an account that has admin role.
@@ -134,7 +137,7 @@ export function AdminLoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
               placeholder="admin@example.com"
               autoComplete="email"
             />
@@ -147,7 +150,7 @@ export function AdminLoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:border-teal-accent/50 outline-none"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
               placeholder="••••••••"
               autoComplete="current-password"
             />
@@ -158,7 +161,7 @@ export function AdminLoginPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3 rounded-2xl bg-teal-accent text-background-dark font-black hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all disabled:opacity-60"
+            className="w-full py-3 rounded-xl bg-primary text-white font-black hover:bg-primary/90 transition-all disabled:opacity-60 shadow-lg shadow-primary/20"
           >
             {submitting ? 'Signing in…' : 'Sign in'}
           </button>
@@ -166,7 +169,7 @@ export function AdminLoginPage() {
 
         <div className="relative my-6">
           <span className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-slate-200 dark:border-white/10" />
+            <span className="w-full border-t border-slate-200 dark:border-slate-700" />
           </span>
           <span className="relative flex justify-center text-xs font-medium text-slate-500 dark:text-slate-400">
             Or continue with
@@ -177,7 +180,7 @@ export function AdminLoginPage() {
           type="button"
           onClick={handleGoogleSignIn}
           disabled={googleLoading}
-          className="w-full py-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
+          className="w-full py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
         >
           {googleLoading ? (
             'Redirecting…'

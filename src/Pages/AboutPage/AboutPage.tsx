@@ -48,14 +48,17 @@ export function AboutPage() {
   };
 
   return (
-    <main className="flex-1 pt-20">
+    <main className="flex-1">
       {/* Hero */}
-      <section className="max-w-[1200px] mx-auto px-6 md:px-20 lg:px-10 py-16 md:py-24">
+      <section className="max-w-7xl mx-auto px-6 md:px-20 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider w-fit">
+            <div className="flex items-center gap-3">
+              <img src="/logo.png" alt="CCworld Consulting" className="site-logo h-12 w-12 object-contain shrink-0" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider w-fit">
               <span className="material-symbols-outlined text-sm">verified</span>
               Compliance Excellence
+              </div>
             </div>
             <h1 className="text-4xl md:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
               The Gold Standard in Financial Compliance
@@ -96,8 +99,8 @@ export function AboutPage() {
       </section>
 
       {/* Mission, Vision, Objective & Values */}
-      <section className="bg-slate-100 dark:bg-slate-900/50 py-24">
-        <div className="max-w-[1200px] mx-auto px-6">
+      <section className="bg-slate-50 dark:bg-slate-900/50 py-24 border-y border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-6 md:px-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
             <div>
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Objective</h2>
@@ -124,7 +127,7 @@ export function AboutPage() {
             {values.map(({ icon, title, desc }) => (
               <div
                 key={title}
-                className="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-primary transition-colors group"
+                className="bg-white dark:bg-slate-900/50 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:border-primary/30 transition-all duration-300 group"
               >
                 <div className="size-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all">
                   <span className="material-symbols-outlined text-3xl">{icon}</span>
@@ -135,7 +138,7 @@ export function AboutPage() {
             ))}
             </div>
           </div>
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 p-8">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-8">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Brand Personality</h2>
             <p className="text-slate-600 dark:text-slate-400 mb-4">
               <strong className="text-slate-900 dark:text-white">We are:</strong> Clear, confident, and solutions-driven.
@@ -149,7 +152,7 @@ export function AboutPage() {
 
       {/* Strategic Approach */}
       <section className="py-24 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 md:px-20">
           <h2 className="text-3xl font-bold text-center mb-16 text-slate-900 dark:text-white">Our Strategic Approach</h2>
           <div className="relative">
             <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-800 hidden lg:block" />
@@ -229,7 +232,7 @@ export function AboutPage() {
 
       {/* Final CTA */}
       <section className="py-24">
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 md:px-20">
           <div className="bg-primary rounded-[2rem] p-12 md:p-20 text-center relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />

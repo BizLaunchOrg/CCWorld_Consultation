@@ -65,10 +65,29 @@ export function InsightsPage() {
       : ARTICLES.filter((a) => a.category === activeFilter);
 
   return (
-    <main className="flex-1 pt-20">
-      {/* Regulatory Radar Ticker */}
-      <div className="bg-primary/10 dark:bg-primary/5 border-y border-primary/20 py-3 overflow-hidden whitespace-nowrap">
-        <div className="max-w-7xl mx-auto px-6 flex items-center gap-6">
+    <main className="flex-1">
+      {/* Hero - new design */}
+      <section className="px-6 md:px-20 py-16 md:py-24 max-w-7xl mx-auto">
+        <div className="flex flex-col gap-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider w-fit">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            Insights & Intelligence
+          </div>
+          <h1 className="text-slate-900 dark:text-slate-100 text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight">
+            Insights & <span className="text-primary">strategic intelligence</span>
+          </h1>
+          <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+            Expert analysis on the shifting landscape of African financial regulation, AML/CFT frameworks, and governance excellence.
+          </p>
+        </div>
+      </section>
+
+      {/* Regulatory Radar strip */}
+      <div className="bg-charcoal text-white py-4 overflow-hidden border-y border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-6 md:px-20 flex items-center gap-6">
           <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest shrink-0">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
@@ -76,14 +95,14 @@ export function InsightsPage() {
             </span>
             Regulatory Radar
           </div>
-          <div className="ticker-scroll gap-12 text-sm font-medium flex">
+          <div className="ticker-scroll gap-12 text-sm font-medium flex flex-1 min-w-0 overflow-hidden">
             {[...RADAR_ITEMS, ...RADAR_ITEMS].map((item, i) =>
               item.label === 'sep' ? (
                 <span key={`${i}-sep`} className="flex items-center gap-2 text-slate-400 px-6">
                   |
                 </span>
               ) : (
-                <span key={`${item.label}-${i}`} className="flex items-center gap-2 flex-shrink-0 px-6">
+                <span key={`${item.label}-${i}`} className="flex items-center gap-2 flex-shrink-0 px-6 text-white/90">
                   <b className="text-primary">{item.label}</b> {item.text}
                 </span>
               )
@@ -92,21 +111,10 @@ export function InsightsPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-20 py-12">
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Main Content */}
           <div className="flex-1">
-            <div className="mb-12">
-              <h1 className="text-5xl font-extrabold mb-4 tracking-tight leading-tight text-slate-900 dark:text-white">
-                Insights & <br />
-                <span className="text-primary italic font-serif">Strategic Intelligence</span>
-              </h1>
-              <p className="text-xl text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-                Expert analysis on the shifting landscape of African financial regulation, AML/CFT frameworks, and
-                governance excellence.
-              </p>
-            </div>
-
             {/* Filters */}
             <div className="flex flex-wrap items-center gap-3 mb-10 pb-6 border-b border-slate-200 dark:border-slate-800">
               {FILTERS.map((filter) => (
@@ -200,7 +208,7 @@ export function InsightsPage() {
           {/* Sidebar */}
           <aside className="w-full lg:w-80 shrink-0 space-y-8">
             {/* Subscribe */}
-            <div className="bg-slate-100 dark:bg-slate-900 rounded-2xl p-8 text-slate-900 dark:text-white relative overflow-hidden border border-slate-200 dark:border-slate-800">
+            <div id="subscribe" className="bg-slate-100 dark:bg-slate-900 rounded-2xl p-8 text-slate-900 dark:text-white relative overflow-hidden border border-slate-200 dark:border-slate-800">
               <div className="absolute top-0 right-0 p-4 opacity-10">
                 <span className="material-symbols-outlined text-6xl">mail</span>
               </div>
@@ -284,6 +292,28 @@ export function InsightsPage() {
           </aside>
         </div>
       </div>
+
+      {/* CTA */}
+      <section className="py-24 px-6 md:px-20 bg-primary">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
+            Get the latest compliance insights in your inbox
+          </h2>
+          <p className="text-white/90 leading-relaxed">
+            Subscribe to our Compliance Brief for weekly regulatory updates and expert analysis.
+          </p>
+          <a
+            href="#subscribe"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary font-bold rounded-xl hover:scale-105 transition-transform shadow-xl"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('subscribe')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            Scroll to subscribe <span className="material-symbols-outlined">arrow_forward</span>
+          </a>
+        </div>
+      </section>
     </main>
   );
 }

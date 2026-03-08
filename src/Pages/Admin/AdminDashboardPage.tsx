@@ -69,15 +69,15 @@ export function AdminDashboardPage() {
     .slice(0, 8);
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-black text-slate-900 dark:text-white md:hidden">Dashboard</h1>
+      <div className="pb-2">
+        <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">Dashboard</h1>
         <p className="text-slate-600 dark:text-slate-400 mt-1">Overview of your compliance platform.</p>
       </div>
 
       {/* KPI cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <StatCard
-          title="New consultating requests"
+          title="New consultation requests"
           value={stats.newConsultatingsCount}
           icon="event_note"
           accent="primary"
@@ -86,38 +86,38 @@ export function AdminDashboardPage() {
           title="Unread messages"
           value={stats.unreadMessagesCount}
           icon="chat"
-          accent="teal"
+          accent="primary"
         />
         <StatCard
           title="Trainings & services"
           value={`${stats.activeTrainingsCount} · ${publishedServices}`}
           subtitle="Active trainings (database) · Published services (website)"
           icon="inventory_2"
-          accent="gold"
+          accent="muted"
         />
       </div>
 
       {/* Quick actions */}
-      <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 shadow-sm dark:shadow-none">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 shadow-sm">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick actions</h2>
         <div className="flex flex-wrap gap-3">
           <Link
             to="/admin/trainings"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-teal-accent text-background-dark font-bold hover:shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
           >
             <span className="material-symbols-outlined">add</span>
             Add Training
           </Link>
           <Link
             to="/admin/services"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border-2 border-teal-accent/50 text-teal-accent font-bold hover:bg-teal-accent/10 transition-all"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
           >
             <span className="material-symbols-outlined">add</span>
             Add Service
           </Link>
           <Link
             to="/admin/messages"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border-2 border-primary/50 text-primary font-bold hover:bg-primary/10 transition-all"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/50 text-primary font-bold hover:bg-primary/10 transition-all"
           >
             <span className="material-symbols-outlined">chat</span>
             Open Messages
@@ -126,7 +126,7 @@ export function AdminDashboardPage() {
       </div>
 
       {/* Recent activity */}
-      <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 shadow-sm dark:shadow-none">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 shadow-sm">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Recent activity</h2>
         {recentActivity.length === 0 ? (
           <p className="text-slate-500 dark:text-slate-400 text-sm">No recent activity yet.</p>
@@ -135,9 +135,9 @@ export function AdminDashboardPage() {
           {recentActivity.map((item) => (
             <li
               key={item.id}
-              className="flex items-start gap-3 py-3 border-b border-slate-100 dark:border-white/5 last:border-0"
+              className="flex items-start gap-3 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0"
             >
-              <span className="material-symbols-outlined text-teal-accent shrink-0 mt-0.5">
+              <span className="material-symbols-outlined text-primary shrink-0 mt-0.5">
                 {item.type === 'consultating' ? 'event_note' : 'chat'}
               </span>
               <div className="min-w-0">
@@ -151,9 +151,9 @@ export function AdminDashboardPage() {
       </div>
 
       {/* Chart placeholder */}
-      <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 shadow-sm dark:shadow-none">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 shadow-sm">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Overview</h2>
-        <div className="h-40 flex items-center justify-center rounded-2xl bg-slate-50 dark:bg-background-dark border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 text-sm">
+        <div className="h-40 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 text-sm">
           Chart placeholder — connect Supabase + chart library later
         </div>
       </div>

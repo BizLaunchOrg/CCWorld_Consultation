@@ -4,9 +4,9 @@ import { useTheme } from '../../contexts/ThemeContext';
 
 export function AdminSettingsPage() {
   const { theme } = useTheme();
-  const [profile, setProfile] = useState({ name: 'Admin User', email: 'admin@ccworldconsulting.com' });
+  const [profile, setProfile] = useState({ name: 'Admin User', email: 'ccworldconsulting@gmail.com' });
   const [site, setSite] = useState({
-    company_email: 'info@ccworldconsulting.com',
+    company_email: 'ccworldconsulting@gmail.com',
     phone: '+234 800 000 0000',
     whatsapp_link: 'https://wa.me/2348000000000',
   });
@@ -16,7 +16,7 @@ export function AdminSettingsPage() {
       <h1 className="text-2xl font-black text-slate-900 dark:text-white md:hidden">Settings</h1>
 
       {/* Theme */}
-      <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 shadow-sm dark:shadow-none">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 shadow-sm dark:shadow-none">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Theme</h2>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
           Switch between light and dark mode. Preference is saved.
@@ -28,7 +28,7 @@ export function AdminSettingsPage() {
       </div>
 
       {/* Admin profile stub */}
-      <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 shadow-sm dark:shadow-none">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 shadow-sm dark:shadow-none">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Admin profile</h2>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
           Placeholder. Replace with Supabase auth profile.
@@ -40,7 +40,7 @@ export function AdminSettingsPage() {
               type="text"
               value={profile.name}
               onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
             />
           </div>
           <div>
@@ -49,12 +49,12 @@ export function AdminSettingsPage() {
               type="email"
               value={profile.email}
               onChange={(e) => setProfile((p) => ({ ...p, email: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
             />
           </div>
           <button
             type="button"
-            className="px-5 py-2.5 rounded-2xl bg-teal-accent text-background-dark font-bold text-sm"
+            className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary/90"
           >
             Save (stub)
           </button>
@@ -62,7 +62,7 @@ export function AdminSettingsPage() {
       </div>
 
       {/* Site settings placeholders */}
-      <div className="rounded-2xl md:rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 shadow-sm dark:shadow-none">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 shadow-sm dark:shadow-none">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Site settings</h2>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
           Contact details shown on the public site. Store in Supabase or env later.
@@ -74,7 +74,7 @@ export function AdminSettingsPage() {
               type="text"
               value={site.company_email}
               onChange={(e) => setSite((s) => ({ ...s, company_email: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
             />
           </div>
           <div>
@@ -83,7 +83,7 @@ export function AdminSettingsPage() {
               type="text"
               value={site.phone}
               onChange={(e) => setSite((s) => ({ ...s, phone: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
             />
           </div>
           <div>
@@ -92,12 +92,12 @@ export function AdminSettingsPage() {
               type="url"
               value={site.whatsapp_link}
               onChange={(e) => setSite((s) => ({ ...s, whatsapp_link: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark px-4 py-3 text-slate-900 dark:text-slate-100"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
             />
           </div>
           <button
             type="button"
-            className="px-5 py-2.5 rounded-2xl bg-teal-accent text-background-dark font-bold text-sm"
+            className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary/90"
           >
             Save (stub)
           </button>

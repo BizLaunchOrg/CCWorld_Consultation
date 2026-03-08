@@ -25,7 +25,7 @@ export function AdminSidebar({ collapsed, onClose }: AdminSidebarProps) {
         to="/admin"
         className="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-900 dark:text-white font-black text-lg"
       >
-        <img src="/logo.png" alt="CC World Consulting" className="h-8 w-8 object-contain shrink-0" />
+        <img src="/logo.png" alt="CCworld Consulting" className="site-logo h-8 w-8 object-contain shrink-0" />
         {!collapsed && <span>Admin</span>}
       </Link>
       <nav className="mt-6 flex flex-col gap-1">
@@ -38,8 +38,8 @@ export function AdminSidebar({ collapsed, onClose }: AdminSidebarProps) {
               onClick={onClose}
               className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${
                 isActive
-                  ? 'bg-teal-accent/15 text-teal-accent border border-teal-accent/25'
-                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-primary/10 text-primary border border-primary/20'
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <span className="material-symbols-outlined text-xl">{icon}</span>
@@ -49,10 +49,10 @@ export function AdminSidebar({ collapsed, onClose }: AdminSidebarProps) {
         })}
       </nav>
       {!collapsed && (
-        <div className="mt-auto pt-6 border-t border-slate-200 dark:border-white/10">
+        <div className="mt-auto pt-6 border-t border-slate-200 dark:border-slate-800">
           <Link
             to="/"
-            className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm text-slate-600 dark:text-slate-400 hover:text-teal-accent"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-primary/5"
           >
             <span className="material-symbols-outlined">open_in_new</span>
             View site
@@ -64,7 +64,7 @@ export function AdminSidebar({ collapsed, onClose }: AdminSidebarProps) {
 
   return (
     <aside
-      className={`flex flex-col bg-white dark:bg-slate-900/95 border-r border-slate-200 dark:border-white/10 transition-all duration-200 ${
+      className={`flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-all duration-200 ${
         collapsed ? 'w-[72px] min-w-[72px] px-2 py-4' : 'w-64 min-w-[256px] px-4 py-6'
       }`}
     >

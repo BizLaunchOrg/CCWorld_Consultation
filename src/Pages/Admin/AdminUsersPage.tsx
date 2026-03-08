@@ -71,7 +71,7 @@ export function AdminUsersPage() {
             badge={
               <span
                 className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                  p.role === 'admin' ? 'bg-teal-accent/15 text-teal-accent' : 'bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400'
+                  p.role === 'admin' ? 'bg-primary/10 text-primary' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
                 {p.role}
@@ -84,7 +84,7 @@ export function AdminUsersPage() {
                   type="button"
                   onClick={() => setRole(p.id, 'client')}
                   disabled={updating === p.id}
-                  className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 text-sm font-semibold hover:bg-slate-100 dark:hover:bg-white/5 disabled:opacity-50"
+                  className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50"
                 >
                   {updating === p.id ? 'Updating…' : 'Demote to client'}
                 </button>
@@ -93,7 +93,7 @@ export function AdminUsersPage() {
                   type="button"
                   onClick={() => setRole(p.id, 'admin')}
                   disabled={updating === p.id}
-                  className="px-3 py-1.5 rounded-xl bg-teal-accent/20 text-teal-accent border border-teal-accent/30 text-sm font-semibold hover:bg-teal-accent/30 disabled:opacity-50"
+                  className="px-3 py-1.5 rounded-xl bg-primary/10 text-primary border border-primary/20 text-sm font-semibold hover:bg-primary/20 disabled:opacity-50"
                 >
                   {updating === p.id ? 'Updating…' : 'Promote to admin'}
                 </button>
@@ -104,14 +104,14 @@ export function AdminUsersPage() {
       </div>
 
       {profiles.length === 0 && (
-        <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-10 text-center text-slate-500 dark:text-slate-400">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-10 text-center text-slate-500 dark:text-slate-400">
           No users yet. Users appear here after they sign up.
         </div>
       )}
 
       {toast && (
         <div
-          className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 px-4 py-3 rounded-2xl bg-teal-accent text-background-dark font-bold shadow-lg"
+          className="fixed bottom-6 right-6 z-[200] flex items-center gap-2 px-4 py-3 rounded-2xl bg-primary text-white font-bold shadow-lg"
           role="status"
           aria-live="polite"
         >

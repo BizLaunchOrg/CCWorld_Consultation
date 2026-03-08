@@ -17,8 +17,8 @@ export interface ContactSubmission {
 
 const SEND_TO_LABELS: Record<ContactSendTo, string> = {
   general: 'General (ccworldconsulting@gmail.com)',
-  company: 'Company (ccworldconsulting.com)',
-  opeyemi: 'Opeyemi (Opeyemioluwa@ccworldconsulting.com)',
+  company: 'Company (ccworldconsulting@gmail.com)',
+  opeyemi: 'Opeyemi (ccworldconsulting@gmail.com)',
 };
 
 export const CONTACT_SEND_TO_OPTIONS: { value: ContactSendTo; label: string }[] = [

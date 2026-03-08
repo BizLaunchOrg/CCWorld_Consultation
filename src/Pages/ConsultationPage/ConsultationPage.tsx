@@ -260,23 +260,43 @@ export function ConsultatingPage() {
   }, [successModalOpen]);
 
   return (
-    <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 pt-24">
+    <main className="flex-1 w-full">
+      {/* Hero - new design */}
+      <section className="px-6 md:px-20 py-12 md:py-16 max-w-7xl mx-auto border-b border-slate-200 dark:border-slate-800">
+        <div className="flex flex-col gap-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider w-fit">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            Book a consultation
+          </div>
+          <h1 className="text-slate-900 dark:text-slate-100 text-4xl md:text-5xl font-black leading-tight tracking-tight">
+            Book your compliance <span className="text-primary">consultation</span>
+          </h1>
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+            Tailored compliance guidance for Banks and Fintechs in Nigeria. Choose your engagement type, pick a slot, and we'll get back to you.
+          </p>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-20 py-8">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 mb-4">
+      <div className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 mb-6">
         <Link to="/" className="hover:text-primary">Home</Link>
         <span className="material-symbols-outlined text-xs">chevron_right</span>
-        <span className="text-primary">Consultating</span>
+        <span className="text-primary">Consultation</span>
       </div>
 
       {/* Step 1: Org details + Schedule */}
       {step === 1 && (
         <>
-          <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              Book Your Compliance Consultating
-            </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
-              Tailored compliance guidance for Banks and Fintechs in Nigeria.
+          <div className="mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
+              Organization & schedule
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400">
+              Tell us what you need and when you're available.
             </p>
           </div>
 
@@ -300,7 +320,7 @@ export function ConsultatingPage() {
                   </select>
                 </div>
                 {isLicensingEngagement(engagementType) && (
-                  <div className="rounded-xl border-2 border-teal-accent/20 bg-teal-accent/5 dark:bg-teal-accent/10 p-4 space-y-4">
+                  <div className="rounded-xl border-2 border-primary/20 bg-primary/5 dark:bg-primary/10 p-4 space-y-4">
                     <p className="text-sm font-bold text-slate-700 dark:text-slate-300">Licensing details</p>
                     <div>
                       <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Company name (optional)</label>
@@ -424,7 +444,7 @@ export function ConsultatingPage() {
             </div>
 
             <div className="lg:col-span-5 space-y-8">
-              <div className="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800">
+              <div className="bg-white dark:bg-slate-900/50 rounded-2xl p-8 shadow-sm border border-slate-200 dark:border-slate-800">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-lg font-bold">Schedule a Slot</h2>
                   <div className="flex items-center gap-2">
@@ -535,7 +555,7 @@ export function ConsultatingPage() {
           </div>
 
           <div className="max-w-2xl">
-            <div className="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-xl border border-slate-200 dark:border-slate-800">
+            <div className="bg-white dark:bg-slate-900/50 rounded-2xl p-8 shadow-sm border border-slate-200 dark:border-slate-800">
               <form onSubmit={handleStep2} className="space-y-6">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
@@ -791,6 +811,8 @@ export function ConsultatingPage() {
         </div>
       )}
 
+      </div>
+
       {/* Success modal */}
       {successModalOpen && (
         <div
@@ -846,7 +868,7 @@ export function ConsultatingPage() {
               Headquartered in Lagos, serving financial institutions across Nigeria.
             </p>
           </div>
-          <div className="relative w-full aspect-[21/9] bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden group shadow-inner">
+          <div className="relative w-full aspect-[21/9] bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden group shadow-inner mt-12">
             <div className="absolute inset-0 opacity-40 mix-blend-multiply dark:mix-blend-overlay">
               <img
                 className="w-full h-full object-cover"
