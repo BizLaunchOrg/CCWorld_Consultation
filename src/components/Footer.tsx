@@ -21,8 +21,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <img src="/logo.png" alt={SITE_COMPANY_NAME} className="site-logo h-14 w-14 md:h-16 md:w-16 object-contain shrink-0" />
+            <div className="flex items-center gap-4 mb-6">
+              <img src="/logo.png" alt={SITE_COMPANY_NAME} className="site-logo h-20 w-20 md:h-24 md:w-24 object-contain shrink-0" />
             </div>
             <p className="text-sm text-charcoal/60 dark:text-slate-400 leading-relaxed mb-6">
               Strategic compliance and regulatory consulting for the modern financial landscape.
