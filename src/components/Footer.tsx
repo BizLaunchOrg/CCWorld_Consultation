@@ -19,10 +19,10 @@ export function Footer() {
   return (
     <footer className="border-t border-charcoal/5 dark:border-slate-700 bg-white dark:bg-slate-800/80 px-6 py-20 text-charcoal dark:text-slate-200">
       <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <img src="/logo.png" alt={SITE_COMPANY_NAME} className="site-logo h-12 w-12 object-contain shrink-0" />
+            <div className="flex items-center gap-3 mb-6">
+              <img src="/logo.png" alt={SITE_COMPANY_NAME} className="site-logo h-14 w-14 md:h-16 md:w-16 object-contain shrink-0" />
             </div>
             <p className="text-sm text-charcoal/60 dark:text-slate-400 leading-relaxed mb-6">
               Strategic compliance and regulatory consulting for the modern financial landscape.
@@ -63,24 +63,9 @@ export function Footer() {
               ))}
             </ul>
           </div>
-          <div>
-            <h4 className="font-bold mb-6 text-charcoal dark:text-white">Contact</h4>
-            <ul className="space-y-4 text-sm text-charcoal/60 dark:text-slate-400">
-              <li className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-xs mt-1 shrink-0">location_on</span>
-                <span>{SITE_ADDRESS_LINES.join(', ')}</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-xs shrink-0">call</span>
-                <a href={SITE_WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                  {SITE_PHONE}
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
         <div className="border-t border-charcoal/5 dark:border-slate-700 pt-8 text-xs text-charcoal/40 dark:text-slate-500 flex flex-col md:flex-row justify-between gap-4">
-          <p>© 2026 {SITE_COMPANY_NAME}. All rights reserved.</p>
+          <p>© 2026 {SITE_COMPANY_NAME}. RC:9395139. All rights reserved.</p>
           <div className="flex gap-6">
             <Link to="#" className="hover:text-charcoal dark:hover:text-slate-200 transition-colors">
               Privacy Policy
