@@ -195,6 +195,33 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Background Check Highlight */}
+      <section className="px-6 pb-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="relative overflow-hidden rounded-3xl bg-charcoal text-white px-8 py-16 md:px-16">
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+              <div className="max-w-xl">
+                <h2 className="text-4xl font-black mb-6">Background Check Services</h2>
+                <p className="text-lg text-white/80 mb-8 leading-relaxed">
+                  Verify the integrity, credibility, and compliance status of individuals and entities before you commit.
+                  Our background checks support risk-based due diligence for safer hiring, onboarding, and partnerships.
+                </p>
+                <ul className="space-y-4">
+                  <li className="flex items-center gap-3">
+                    <span className="material-symbols-outlined">check_circle</span> Identity, employment, and reference verification
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <span className="material-symbols-outlined">check_circle</span> Sanctions and watchlist screening (OFAC, UN, NIGSAC, others)
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/5" />
+            <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-white/5" />
+          </div>
+        </div>
+      </section>
+
       {/* Engagement Process */}
       <section className="px-6 py-24 bg-background-light dark:bg-background-dark">
         <div className="mx-auto max-w-7xl">

@@ -136,6 +136,268 @@ export const DEMO_TRAININGS: Training[] = [
     updated_at: '2025-02-25T11:00:00Z',
     published: true,
   },
+  {
+    id: 't5',
+    slug: 'aml-cft-cpf-foundation-course',
+    title: 'AML/CFT/CPF Foundation Course',
+    tagline: 'Introductory AML/CFT/CPF awareness for new and frontline staff.',
+    summary:
+      'This foundation course introduces executive trainees, new hires, and staff encountering AML/CFT/CPF compliance for the first time. It is designed to nurture a sustainable compliance culture from day one.',
+    benefits: [
+      'Clear introduction to AML/CFT/CPF concepts and obligations',
+      'Practical examples relevant to day-to-day operations',
+      'Awareness of red flags and reporting expectations',
+      'Baseline culture-building for new hires across the organization',
+    ],
+    priceNGN: 180_000,
+    category: 'training',
+    whoItsFor:
+      'Executive trainees, new hires, and staff who are new to AML/CFT/CPF compliance and need a practical introduction.',
+    modules: [
+      'Overview of AML/CFT/CPF concepts and terminology',
+      'Understanding your institution’s compliance obligations',
+      'Customer due diligence and basic KYC expectations',
+      'Red flags, suspicious activities, and escalation',
+      'Embedding AML/CFT/CPF culture from day one',
+    ],
+    deliveryFormat: 'Online or onsite; typically delivered as a half-day or full-day session.',
+    faq: [
+      {
+        q: 'Is this suitable for non-technical staff?',
+        a: 'Yes. The course is designed for all staff, including non-technical and non-compliance roles.',
+      },
+      {
+        q: 'Can we customize examples to our products?',
+        a: 'Yes. We tailor case studies and examples to your business model.',
+      },
+    ],
+    duration_label: '0.5–1 day',
+    icon: 'lightbulb',
+    updated_at: '2026-03-10T10:00:00Z',
+    published: true,
+  },
+  {
+    id: 't6',
+    slug: 'aml-cft-cpf-intermediate-course',
+    title: 'AML/CFT/CPF Intermediate Course',
+    tagline: 'Latest trends, patterns, and updates for middle and senior management.',
+    summary:
+      'The intermediate course provides deeper exposure to emerging AML/CFT/CPF risks, regulatory expectations, and practical control enhancements for middle level staff and senior/executive management.',
+    benefits: [
+      'Up-to-date view of AML/CFT/CPF risks, trends, and typologies',
+      'Better understanding of management and board responsibilities',
+      'Guidance on strengthening existing controls and reporting processes',
+      'Reduced incidences of non-compliance and regulatory breaches',
+    ],
+    priceNGN: 260_000,
+    category: 'training',
+    whoItsFor:
+      'Middle level staff, senior management, and executives who need deeper AML/CFT/CPF exposure and practical guidance to reduce non-compliance.',
+    modules: [
+      'Emerging AML/CFT/CPF risks and typologies',
+      'Management and board accountability and expectations',
+      'Enhancing transaction monitoring, reporting, and documentation',
+      'Case studies on enforcement actions and lessons learned',
+      'Designing a stronger compliance culture and oversight framework',
+    ],
+    deliveryFormat: 'Workshop format over 1–2 days, online or onsite.',
+    faq: [
+      {
+        q: 'Is this different from the foundation course?',
+        a: 'Yes. It assumes basic awareness and focuses on deeper responsibilities, trends, and control enhancements.',
+      },
+      {
+        q: 'Can we invite board members?',
+        a: 'Yes. Board and executive participation is encouraged where possible.',
+      },
+    ],
+    duration_label: '1–2 days',
+    icon: 'trending_up',
+    updated_at: '2026-03-10T10:00:00Z',
+    published: true,
+  },
+  {
+    id: 't7',
+    slug: 'aml-cft-cpf-train-the-trainer',
+    title: 'AML/CFT/CPF Train-the-Trainer',
+    tagline: 'Equip internal trainers to cascade AML/CFT/CPF knowledge.',
+    summary:
+      'This course equips selected staff with the expertise, content, and facilitation skills needed to deliver in-house AML/CFT/CPF training and support sustainable capacity development.',
+    benefits: [
+      'Internal training champions with deep AML/CFT/CPF knowledge',
+      'Structured training materials and facilitation guides',
+      'Improved consistency and quality of in-house training',
+      'Reduced long-term external training costs',
+    ],
+    priceNGN: 320_000,
+    category: 'training',
+    whoItsFor:
+      'Compliance, risk, HR, and other staff nominated to champion in-house AML/CFT/CPF capacity building.',
+    modules: [
+      'Advanced AML/CFT/CPF concepts and practical applications',
+      'Adult learning principles and facilitation skills',
+      'Designing and adapting training modules for internal teams',
+      'Assessments, quizzes, and evidence of completion',
+      'Ongoing mentoring and refresh planning',
+    ],
+    deliveryFormat: 'Instructor-led program delivered over 2–3 days, onsite or virtual.',
+    faq: [
+      {
+        q: 'Do participants get reusable training materials?',
+        a: 'Yes. Participants receive slide decks, facilitator notes, and sample assessments.',
+      },
+      {
+        q: 'Can we run this for multiple entities?',
+        a: 'Yes. We can structure it as a cohort for a group of related entities.',
+      },
+    ],
+    duration_label: '2–3 days',
+    icon: 'record_voice_over',
+    updated_at: '2026-03-10T10:00:00Z',
+    published: true,
+  },
+  {
+    id: 't8',
+    slug: 'aml-cft-cpf-upskilling-top-up',
+    title: 'AML/CFT/CPF Up-skilling & Top-up Class',
+    tagline: 'Deep dive into statutory and legislative AML/CFT/CPF frameworks.',
+    summary:
+      'An intensive class focused on interpreting the letters and spirit of the AML/CFT/CPF statutory and legislative framework in Nigeria, including the future of compliance and supporting technologies.',
+    benefits: [
+      'Clear interpretation of key AML/CFT/CPF laws and regulations',
+      'Better understanding of regulatory expectations and enforcement posture',
+      'Insight into the future of compliance and enabling technologies',
+      'Improved ability to design result-oriented compliance programs',
+    ],
+    priceNGN: 280_000,
+    category: 'training',
+    whoItsFor:
+      'Compliance officers, legal teams, internal auditors, and senior management seeking deeper understanding of statutory AML/CFT/CPF frameworks.',
+    modules: [
+      'Detailed review of Nigerian AML/CFT/CPF legislation and regulations',
+      'Regulatory expectations and thematic review focus areas',
+      'Designing risk-based, result-oriented compliance controls',
+      'Technology trends and the future of AML/CFT/CPF compliance',
+      'Interactive case studies and Q&A',
+    ],
+    deliveryFormat: 'Hybrid (online and/or onsite) as a 1–2 day intensive class.',
+    faq: [
+      {
+        q: 'Is this suitable as a refresher course?',
+        a: 'Yes. It can serve as an up-skilling or refresher class for experienced professionals.',
+      },
+    ],
+    duration_label: '1–2 days',
+    icon: 'upgrade',
+    updated_at: '2026-03-10T10:00:00Z',
+    published: true,
+  },
+  {
+    id: 't9',
+    slug: 'aml-cft-cpf-bank-directors-training',
+    title: 'AML/CFT/CPF Bank Directors Training',
+    tagline: 'Board-level AML/CFT/CPF responsibilities and oversight.',
+    summary:
+      'A focused program for board members and executive management on their ultimate responsibility for AML/CFT/CPF compliance and how to exercise effective oversight.',
+    benefits: [
+      'Board-level understanding of AML/CFT/CPF obligations and liabilities',
+      'Clarity on governance structures, reporting lines, and risk appetite',
+      'Tools for effective oversight, challenge, and decision-making',
+      'Reduced personal and institutional exposure to regulatory sanctions',
+    ],
+    priceNGN: 350_000,
+    category: 'training',
+    whoItsFor: 'Board members and executive management of banks and other regulated institutions.',
+    modules: [
+      'Board and senior management AML/CFT/CPF responsibilities',
+      'Reading and challenging AML/CFT/CPF reports and dashboards',
+      'Approving risk appetite, policies, and key frameworks',
+      'Regulatory expectations and enforcement case studies',
+      'Practical oversight tools and questions to ask management',
+    ],
+    deliveryFormat: 'Board retreat or dedicated session, onsite or virtual.',
+    faq: [
+      {
+        q: 'Can this be delivered during a board retreat?',
+        a: 'Yes. We frequently deliver this as part of strategy or governance retreats.',
+      },
+    ],
+    duration_label: '0.5–1 day',
+    icon: 'chair_alt',
+    updated_at: '2026-03-10T10:00:00Z',
+    published: true,
+  },
+  {
+    id: 't10',
+    slug: 'aml-cft-cpf-master-class',
+    title: 'AML/CFT/CPF Master Class',
+    tagline: 'Regulatory intelligence and emerging AML/CFT/CPF issues.',
+    summary:
+      'A master-level course that teaches participants how to leverage regulatory intelligence, understand new technologies, and manage international and emerging AML/CFT/CPF issues.',
+    benefits: [
+      'Ability to anticipate and navigate upcoming regulations and guidance',
+      'Deeper understanding of new technologies and their compliance impact',
+      'Practical tools for managing cross-border and emerging AML/CFT/CPF risks',
+      'Enhanced strategic positioning of the compliance function',
+    ],
+    priceNGN: 420_000,
+    category: 'training',
+    whoItsFor:
+      'Senior compliance professionals, heads of compliance, chief risk officers, and other leaders dealing with complex AML/CFT/CPF issues.',
+    modules: [
+      'Using regulatory intelligence and horizon scanning',
+      'Responding to new guidance, policy, and legislation',
+      'Technology-driven financial crime risks and controls',
+      'International perspectives and cross-border issues',
+      'Designing agile, future-proof compliance programs',
+    ],
+    deliveryFormat: 'Advanced workshop over 2 days, with optional follow-on clinics.',
+    faq: [
+      {
+        q: 'Is this program exam-focused?',
+        a: 'It is practice-focused, with insights that also support exam and audit readiness.',
+      },
+    ],
+    duration_label: '2 days',
+    icon: 'stars',
+    updated_at: '2026-03-10T10:00:00Z',
+    published: true,
+  },
+  {
+    id: 't11',
+    slug: 'compliance-firewalls-training',
+    title: 'Compliance Firewalls Training',
+    tagline: 'Monthly deep dives on burning compliance issues.',
+    summary:
+      'The Compliance Firewalls training is a monthly program for professionals who want to stay current on burning compliance issues across customer due diligence, compliance, and risk management.',
+    benefits: [
+      'Regular exposure to current and emerging compliance topics',
+      'Focused sessions on CDD, compliance, and risk management themes',
+      'Opportunities to discuss real-life scenarios with practitioners',
+      'Ongoing professional development throughout the year',
+    ],
+    priceNGN: 75_000,
+    category: 'training',
+    whoItsFor:
+      'Compliance, risk, operations, and front-office professionals who want continuous learning on topical compliance issues.',
+    modules: [
+      'Monthly themed sessions on key compliance topics',
+      'Customer Due Diligence deep dives',
+      'Risk management and control themes',
+      'Interactive Q&A and peer sharing',
+    ],
+    deliveryFormat: 'Monthly virtual sessions with optional recordings and materials.',
+    faq: [
+      {
+        q: 'Can we subscribe for multiple staff?',
+        a: 'Yes. Organizations can enroll multiple staff on an annual or monthly basis.',
+      },
+    ],
+    duration_label: 'Monthly series',
+    icon: 'fireplace',
+    updated_at: '2026-03-10T10:00:00Z',
+    published: true,
+  },
   // Advisory offerings
   {
     id: 'a1',

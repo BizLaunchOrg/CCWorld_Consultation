@@ -66,7 +66,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-charcoal/5 dark:border-slate-700 pt-8 text-xs text-charcoal/40 dark:text-slate-500 flex flex-col md:flex-row justify-between gap-4">
-          <p>© 2026 {SITE_COMPANY_NAME}. RC:9395139. All rights reserved.</p>
+          <p>©️ Copyright 2026 | CCworldconsulting | All Rights Reserved |</p>
           <div className="flex gap-6">
             <Link to="#" className="hover:text-charcoal dark:hover:text-slate-200 transition-colors">
               Privacy Policy
