@@ -171,11 +171,16 @@ export function HomePage() {
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
               <div className="max-w-xl">
                 <h2 className="text-4xl font-black mb-6">Strategic Licensing Advisory</h2>
-                <p className="text-lg text-white/80 mb-8 leading-relaxed">Accelerate your market entry. We handle the complexities of PSSP, PTSP, and Regulatory Sandbox applications globally.</p>
+                <p className="text-lg text-white/80 mb-8 leading-relaxed">
+                  Dedicated licensing support to help you prepare, document, and structure your application properly from day one.
+                </p>
                 <ul className="space-y-4">
-                  <li className="flex items-center gap-3"><span className="material-symbols-outlined">check_circle</span> Pre-application feasibility study</li>
-                  <li className="flex items-center gap-3"><span className="material-symbols-outlined">check_circle</span> Document preparation & vetting</li>
-                  <li className="flex items-center gap-3"><span className="material-symbols-outlined">check_circle</span> Regulator engagement & advocacy</li>
+                  <li className="flex items-center gap-3">
+                    <span className="material-symbols-outlined">check_circle</span> Pre-application feasibility study
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <span className="material-symbols-outlined">check_circle</span> Document preparation &amp; vetting
+                  </li>
                 </ul>
               </div>
               <div className="flex-shrink-0">
