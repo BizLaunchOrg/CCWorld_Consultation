@@ -3,6 +3,7 @@ import { SITE_COMPANY_NAME, SITE_EMAIL } from '../lib/siteConfig';
 
 const servicesLinks = [
   { to: '/licensing', label: 'Licensing Advisory' },
+  { to: '/services/background-check', label: 'Background Check' },
   { to: '/services', label: 'AML/CFT Frameworks' },
   { to: '/licensing', label: 'Regulatory Sandbox' },
   { to: '/services', label: 'Risk Management' },
