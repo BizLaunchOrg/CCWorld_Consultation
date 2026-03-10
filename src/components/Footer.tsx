@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { SITE_COMPANY_NAME, SITE_PHONE, SITE_WHATSAPP_LINK, SITE_ADDRESS_LINES, SITE_EMAIL } from '../lib/siteConfig';
+import { SITE_COMPANY_NAME, SITE_EMAIL } from '../lib/siteConfig';
 
 const servicesLinks = [
   { to: '/licensing', label: 'Licensing Advisory' },

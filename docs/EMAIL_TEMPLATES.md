@@ -10,12 +10,12 @@ Use it so confirmation emails show **CCworld Consultating** (not "Supabase") in 
 
 ### If you use **Gmail**
 
-- **Sender email:** `ccworldconsulting@gmail.com` (or the Gmail you want to send from).
+- **Sender email:** `hello@ccworldconsult.com` (or the sender email you want to use).
 - **Sender name:** `CCworld Consultating` ✓ (already correct).
 - **Host:** `smtp.gmail.com` ✓  
 - **Port:** `465` ✓  
-- **Username:** Your **full Gmail address** (e.g. `ccworldconsulting@gmail.com`).
-- **Password:** A **Gmail App Password**, not your normal Gmail password.  
+- **Username:** Your **full email address** (e.g. `hello@ccworldconsult.com`).
+- **Password:** A **Gmail App Password**, not your normal email password.  
   1. Turn on 2-Step Verification for that Google account.  
   2. Go to [Google App Passwords](https://myaccount.google.com/apppasswords).  
   3. Create an app password for “Mail” and paste it into the Password field.

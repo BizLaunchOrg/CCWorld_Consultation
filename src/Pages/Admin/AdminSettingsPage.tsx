@@ -4,11 +4,11 @@ import { useTheme } from '../../contexts/ThemeContext';
 
 export function AdminSettingsPage() {
   const { theme } = useTheme();
-  const [profile, setProfile] = useState({ name: 'Admin User', email: 'ccworldconsulting@gmail.com' });
+  const [profile, setProfile] = useState({ name: 'Admin User', email: 'hello@ccworldconsult.com' });
   const [site, setSite] = useState({
-    company_email: 'ccworldconsulting@gmail.com',
-    phone: '+234 800 000 0000',
-    whatsapp_link: 'https://wa.me/2348000000000',
+    company_email: 'hello@ccworldconsult.com',
+    phone: '',
+    whatsapp_link: '',
   });
 
   return (

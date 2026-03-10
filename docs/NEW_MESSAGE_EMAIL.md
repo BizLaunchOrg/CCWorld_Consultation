@@ -6,7 +6,7 @@ The **admin** gets one email when someone sends a message **only if they haven�
 
 1. Sign up at [brevo.com](https://www.brevo.com) (formerly Sendinblue).
 2. Go to **Settings** → **SMTP & API** → **API Keys** → **Generate a new API key**. Copy it.
-3. Add your sender email in Brevo: **Settings** → **Senders & IP** → add **ccworldconsulting@gmail.com** and verify it (they send a code to that inbox). That way the “From” of the notification email is your address.
+3. Add your sender email in Brevo: **Settings** → **Senders & IP** → add **hello@ccworldconsult.com** and verify it (they send a code to that inbox). That way the “From” of the notification email is your address.
 
 ## 2. Put the key in Supabase
 
@@ -39,4 +39,4 @@ supabase functions deploy notify-new-message
      (Replace `YOUR_PROJECT_REF` with your project ref from **Project Settings** → **General**.)
 4. Save.
 
-After this, every new user message in the chat will trigger the function and send one email to ccworldconsulting@gmail.com.
+After this, every new user message in the chat will trigger the function and send one email to hello@ccworldconsult.com.

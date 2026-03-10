@@ -1,6 +1,6 @@
 // Notify admin by email when a new chat message arrives (only if they haven't opened that convo yet).
 // Uses Brevo. Set BREVO_API_KEY in Supabase secrets. Optional: NOTIFY_EMAIL to override recipient/sender.
-const DEFAULT_NOTIFY_EMAIL = 'ccworldconsulting@gmail.com';
+const DEFAULT_NOTIFY_EMAIL = 'hello@ccworldconsult.com';
 
 interface WebhookPayload {
   type: 'INSERT' | 'UPDATE' | 'DELETE';

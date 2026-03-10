@@ -18,7 +18,7 @@ You need to set up **Brevo** (free) once. Follow these steps.
 1. In Brevo, go to **Settings** (gear icon) → **Senders, domains & dedicated IPs** → **Senders**.
 2. Click **Add sender**.
 3. Enter:
-   - **Email:** your company email (e.g. **ccworldconsulting@gmail.com**)
+   - **Email:** your company email (e.g. **hello@ccworldconsult.com**)
    - **Name:** e.g. **CC World Consulting**
 4. Save. Brevo will send a verification code to that email.
 5. Open that email and confirm. The sender must show **Verified** (green) before you can send.

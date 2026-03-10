@@ -5,13 +5,7 @@ import {
   submitContactFormToFormspree,
   type ContactSendTo,
 } from '../../lib/contactSubmissions';
-import {
-  SITE_PHONE,
-  SITE_WHATSAPP_LINK,
-  SITE_ADDRESS_LINES,
-  SITE_EMAIL,
-  SITE_OFFICE_HOURS,
-} from '../../lib/siteConfig';
+import { SITE_ADDRESS_LINES, SITE_EMAIL, SITE_OFFICE_HOURS } from '../../lib/siteConfig';
 
 const SUBJECT_OPTIONS: { value: ContactSendTo; label: string }[] = [
   { value: 'company', label: 'Licensing Support' },
@@ -129,14 +123,14 @@ export function ContactPage() {
         </div>
       </div>
 
-      {/* Contact Detail Cards - no USA, use WhatsApp */}
+      {/* Contact Detail Cards - email and office only */}
       <div className="bg-slate-50 dark:bg-slate-900/50 py-20 px-6 md:px-20 border-y border-slate-200 dark:border-slate-800">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
             <h2 className="text-slate-900 dark:text-slate-100 text-3xl font-bold tracking-tight">Get in touch</h2>
-            <p className="text-slate-500 dark:text-slate-400 mt-2">Reach out to our team in Lagos or via WhatsApp.</p>
+            <p className="text-slate-500 dark:text-slate-400 mt-2">Reach out to our team in Lagos by email.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="group flex flex-col p-8 bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
               <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 <span className="material-symbols-outlined">mail</span>
@@ -144,14 +138,6 @@ export function ContactPage() {
               <h3 className="text-slate-900 dark:text-slate-100 text-lg font-bold mb-2">Email us</h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">For general enquiries and support.</p>
               <a className="text-primary font-bold text-sm hover:underline" href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
-            </div>
-            <div className="group flex flex-col p-8 bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-              <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined">chat</span>
-              </div>
-              <h3 className="text-slate-900 dark:text-slate-100 text-lg font-bold mb-2">WhatsApp</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4">Chat with our team directly.</p>
-              <a className="text-primary font-bold text-sm hover:underline" href={SITE_WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">{SITE_PHONE}</a>
             </div>
             <div className="group flex flex-col p-8 bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
               <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">

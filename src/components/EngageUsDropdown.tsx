@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useChat } from '../contexts/ChatContext';
 import { SITE_EMAIL } from '../lib/siteConfig';
 
-const OFFICIAL_EMAIL = SITE_EMAIL; // only ccworldconsulting@gmail.com
+const OFFICIAL_EMAIL = SITE_EMAIL;
 
 function EmailRow({ email, onCopy }: { email: string; onCopy: (e: string) => void }) {
   const [copied, setCopied] = useState(false);
