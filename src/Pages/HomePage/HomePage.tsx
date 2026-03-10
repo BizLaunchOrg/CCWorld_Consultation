@@ -28,12 +28,6 @@ export function HomePage() {
     { title: 'Assurance', desc: 'Continuous testing and internal audits to prove framework effectiveness.' },
   ];
 
-  const testimonials = [
-    { quote: '"Their approach to our PTSP license application was surgical. They didn\'t just tell us what to do; they built the department with us."', name: 'Head of Compliance', org: 'Tier 1 Commercial Bank', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD3IDhQNkJaqg0Yxx4LYmzGl0MBmWrRunQUlGcAa8ke9Ws9IX-H11OxgXtN51Al-LCQBDyq4EfQ3uz2HHS9JIJEzdPdEOaX1cY_suwYPRucEs3-XQiV2oNqXBKyrTXnB4d5SS71TR7xs1mZxAtlDP-IqJx48W5ePhK7QHyldwQGF9KOjvA3LT5pMgv1Nw7ly1MMqOnXPc8Unsw2T5pJNs-EkTJ1yJxeSnkfTDOORrf39f1jMpAf70nyHPvAtlKbvVTJ9bwx7OjGU2M' },
-    { quote: '"The training modules provided to our AML team transformed our reporting efficiency by 40%. Highly professional."', name: 'CEO & Founder', org: 'Regional Fintech Unicorn', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHLmqoI-fPJF6HJA4b7-bILwqNN4Z4vvBuHUEkj53p3IIGkkWeTiVi79KE8qWdD_uJ7XQZXkpmbfFVz7DVE-pinTcqpOzUXgLu0OEWb_qYgPvNl_tesBZxlIpUKb5HigUQqF-0HuCXmDVDrlyukz9bOpt2cbD-WCEfhe7iTJ7pwgUCZ1QMM4ZWrC524W_5GNZjo5RhjCK-rE7W4auix_lqAnAwl-Gn8EqSJhfvwSbQyZRq3mYy6OSGMYRXrpLIV9azoLOZPYAcP_w' },
-    { quote: '"Trustworthy, responsive, and incredibly deep knowledge of Central Bank regulations across multiple African markets."', name: 'Director of Ops', org: 'Global Money Transfer Org', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBMYRYcn13D2qbYKsGPx2laAlUSlHPAuSSanJY9Dyq3EjzEBJjHBb5qYm4z4HRg-fNT8MBcyFchMFWn_nB3kS-5td1mIx04XASXDOcmbfYGFLQU3yg1rz4xH0kDYFTP8W6HiGEHOUmXhvqNFhEdxk63GW8QfDgqnSoSk4ICkEdapb7__qGI-xSAqs_veL8-TgqR5RlL7qToriPczEeiyI_MV2xct2WbLvDHI9S-9gF2uocVI5urej81YUSIQ8duBfmS7y-iboeU1X0' },
-  ];
-
   return (
     <main className="flex-1">
       {adminDenied && (
@@ -229,39 +223,6 @@ export function HomePage() {
               <h3 className="font-bold text-charcoal dark:text-white mb-2">Handover</h3>
               <p className="text-xs text-charcoal/60 dark:text-slate-400 leading-relaxed">Continuous support & monitoring.</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Who We Serve */}
-      <section className="px-6 py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
-            <div className="max-w-xl">
-              <h2 className="text-4xl font-bold text-charcoal dark:text-white mb-4">Who We Serve</h2>
-              <p className="text-charcoal/60 dark:text-slate-400">Partnering with pioneers in the financial ecosystem.</p>
-            </div>
-            <div className="flex gap-4">
-              <span className="rounded-lg bg-charcoal/5 dark:bg-slate-700/50 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">Commercial Banks</span>
-              <span className="rounded-lg bg-charcoal/5 dark:bg-slate-700/50 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">Fintechs</span>
-              <span className="rounded-lg bg-charcoal/5 dark:bg-slate-700/50 px-4 py-2 text-sm font-semibold text-charcoal dark:text-white">IMTOs</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map(({ quote, name, org, img }) => (
-              <div key={name} className="rounded-2xl bg-white dark:bg-slate-800/60 p-8 border border-charcoal/5 dark:border-slate-700">
-                <p className="italic text-charcoal/80 dark:text-slate-300 mb-6 text-lg">{quote}</p>
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-charcoal/10 dark:bg-slate-700 overflow-hidden shrink-0">
-                    <img alt="" className="h-full w-full object-cover" src={img} />
-                  </div>
-                  <div>
-                    <p className="font-bold text-sm text-charcoal dark:text-white">{name}</p>
-                    <p className="text-xs text-charcoal/50 dark:text-slate-500">{org}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
