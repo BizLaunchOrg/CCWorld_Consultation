@@ -21,7 +21,6 @@ const emptyForm: Omit<Service, 'id' | 'updated_at'> & { id?: string; updated_at?
   outcomes: [],
   duration_label: '',
   level: 'Foundation',
-  amount: '',
   icon: 'design_services',
   published: false,
   sort_order: 0,
@@ -130,7 +129,6 @@ export function AdminServicesPage() {
       outcomes: [...s.outcomes],
       duration_label: s.duration_label,
       level: s.level,
-      amount: s.amount,
       icon: s.icon,
       published: s.published,
       sort_order: s.sort_order ?? 0,
@@ -157,7 +155,6 @@ export function AdminServicesPage() {
     if (!form.tagline.trim()) e.tagline = 'Tagline is required';
     if (!form.summary.trim()) e.summary = 'Summary is required';
     if (!form.duration_label.trim()) e.duration_label = 'Duration is required';
-    if (!form.amount.trim()) e.amount = 'Amount is required';
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -199,7 +196,6 @@ export function AdminServicesPage() {
           outcomes: form.outcomes.filter(Boolean),
           duration_label: form.duration_label.trim(),
           level: form.level,
-          amount: form.amount.trim(),
           icon: form.icon.trim() || 'design_services',
           published: form.published,
           sort_order: form.sort_order ?? 0,
@@ -273,7 +269,6 @@ export function AdminServicesPage() {
                 <h3 className="font-bold text-slate-900 dark:text-white">{s.title}</h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{s.slug}</p>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">{s.tagline}</p>
-                <p className="text-primary font-bold mt-2">{s.amount}</p>
               </div>
               <div className="shrink-0 flex flex-col items-end gap-1">
                 {isLicensing && (
@@ -470,17 +465,6 @@ export function AdminServicesPage() {
                     <option key={l} value={l}>{l}</option>
                   ))}
                 </select>
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Amount *</label>
-                <input
-                  type="text"
-                  value={form.amount}
-                  onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100"
-                  placeholder="NGN 450,000"
-                />
-                {errors.amount && <p className="text-xs text-red-500 mt-1">{errors.amount}</p>}
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Icon (Material Symbol)</label>

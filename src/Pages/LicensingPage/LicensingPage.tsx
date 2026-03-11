@@ -1,10 +1,20 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useChat } from '../../contexts/ChatContext';
-import { getLicensingServices } from '../../data/services';
+import { fetchLicensingServices } from '../../lib/servicesApi';
+import type { Service } from '../../types/service';
 
 export function LicensingPage() {
   const { openChat } = useChat();
-  const licensingServices = getLicensingServices();
+  const [licensingServices, setLicensingServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchLicensingServices().then((list) => {
+      setLicensingServices(list);
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <main className="flex-1">
@@ -50,7 +60,7 @@ export function LicensingPage() {
       </section>
 
       {/* Licensing options grid (if we have any) */}
-      {licensingServices.length > 0 && (
+      {!loading && licensingServices.length > 0 && (
         <section className="px-6 md:px-20 py-14 max-w-7xl mx-auto">
           <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-2">Licensing options</h2>
           <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl">

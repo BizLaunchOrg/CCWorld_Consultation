@@ -18,7 +18,7 @@ const resourcesLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-charcoal/5 dark:border-slate-700 bg-white dark:bg-slate-800/80 px-6 py-20 text-charcoal dark:text-slate-200">
+    <footer className="border-t border-charcoal/5 dark:border-slate-700 bg-white dark:bg-slate-800/80 px-6 py-8 md:py-12 text-charcoal dark:text-slate-200">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">

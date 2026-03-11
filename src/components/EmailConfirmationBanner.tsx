@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 /**
  * Shown when user is logged in but email is not confirmed.
- * Blocks booking/payment flows until confirmed.
+ * Blocks booking flows until confirmed.
  */
 export function EmailConfirmationBanner() {
   const { user, isEmailConfirmed, resendConfirmation } = useAuth();

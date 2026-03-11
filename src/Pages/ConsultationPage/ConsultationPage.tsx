@@ -864,7 +864,6 @@ export function ConsultatingPage() {
               <div className="bg-white/10 backdrop-blur-md p-4 rounded-lg border border-white/20">
                 <p className="text-[10px] uppercase font-bold tracking-widest text-primary mb-1">HQ</p>
                 <p className="font-bold text-white">Lagos, Nigeria</p>
-                <p className="text-xs text-slate-300">Victoria Island, Lagos</p>
               </div>
             </div>
           </div>

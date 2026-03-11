@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { StatCard } from '../../components/admin/StatCard';
 import { fetchAdminDashboardStats } from '../../lib/adminDashboard';
 import { subscribeToAllMessages } from '../../lib/chatApi';
-import { getPublishedServices } from '../../data/services';
+import { fetchPublishedServices } from '../../lib/servicesApi';
 
 function formatTimeAgo(iso: string): string {
   const d = new Date(iso);
@@ -34,7 +34,11 @@ export function AdminDashboardPage() {
     return unsub;
   }, []);
 
-  const publishedServices = getPublishedServices().length;
+  const [publishedServicesCount, setPublishedServicesCount] = useState<number>(0);
+
+  useEffect(() => {
+    fetchPublishedServices().then((list) => setPublishedServicesCount(list.length));
+  }, []);
 
   if (loading || !stats) {
     return (
@@ -90,7 +94,7 @@ export function AdminDashboardPage() {
         />
         <StatCard
           title="Trainings & services"
-          value={`${stats.activeTrainingsCount} · ${publishedServices}`}
+          value={`${stats.activeTrainingsCount} · ${publishedServicesCount}`}
           subtitle="Active trainings (database) · Published services (website)"
           icon="inventory_2"
           accent="muted"

@@ -6,7 +6,6 @@ export interface TrainingProduct {
   id: string;
   name: string;
   slug: string;
-  amount: number;
   active: boolean;
   summary: string | null;
   created_at: string;

@@ -1,8 +1,6 @@
 import type { Training } from '../types/training';
 
-/**
- * Demo in-memory trainings. Replace with Supabase fetch via fetchTrainings() when DB is wired.
- */
+
 export const DEMO_TRAININGS: Training[] = [
   {
     id: 't1',
@@ -17,7 +15,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Culture campaigns with reporting',
       'Audit-ready evidence of training',
     ],
-    priceNGN: 250_000,
     category: 'training',
     whoItsFor: 'Compliance officers, HR, and department heads who need to roll out organization-wide compliance awareness and attestations.',
     modules: [
@@ -27,7 +24,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Escalation and reporting',
       'Case studies and assessments',
     ],
-    deliveryFormat: 'Online, onsite, or hybrid. Typically 2–4 sessions over 2–4 weeks.',
     faq: [
       { q: 'How long does the program run?', a: 'Typically 2–4 weeks with flexible scheduling.' },
       { q: 'Do we get certificates?', a: 'Yes. Completion certificates and evidence packs for audits and compliance.' },
@@ -50,7 +46,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Exam and audit readiness tips',
       'Q&A with practitioners',
     ],
-    priceNGN: 320_000,
     category: 'training',
     whoItsFor: 'New compliance staff, legal, and operations leads who need a clear map of applicable rules and how they apply day to day.',
     modules: [
@@ -83,7 +78,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Multi-level (board to frontline)',
       'Evidence packs for audits and compliance',
     ],
-    priceNGN: 180_000,
     category: 'training',
     whoItsFor: 'Organizations that must demonstrate mandatory compliance training (AML/CFT, sanctions, code of conduct) to auditors and for exam readiness.',
     modules: [
@@ -116,7 +110,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Completion and attestation reporting',
       'Reduced internal training burden',
     ],
-    priceNGN: 450_000,
     category: 'training',
     whoItsFor: 'Teams that want a full internal training program delivered by experts without building an in-house training function.',
     modules: [
@@ -149,7 +142,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Awareness of red flags and reporting expectations',
       'Baseline culture-building for new hires across the organization',
     ],
-    priceNGN: 180_000,
     category: 'training',
     whoItsFor:
       'Executive trainees, new hires, and staff who are new to AML/CFT/CPF compliance and need a practical introduction.',
@@ -189,7 +181,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Guidance on strengthening existing controls and reporting processes',
       'Reduced incidences of non-compliance and regulatory breaches',
     ],
-    priceNGN: 260_000,
     category: 'training',
     whoItsFor:
       'Middle level staff, senior management, and executives who need deeper AML/CFT/CPF exposure and practical guidance to reduce non-compliance.',
@@ -229,7 +220,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Improved consistency and quality of in-house training',
       'Reduced long-term external training costs',
     ],
-    priceNGN: 320_000,
     category: 'training',
     whoItsFor:
       'Compliance, risk, HR, and other staff nominated to champion in-house AML/CFT/CPF capacity building.',
@@ -269,7 +259,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Insight into the future of compliance and enabling technologies',
       'Improved ability to design result-oriented compliance programs',
     ],
-    priceNGN: 280_000,
     category: 'training',
     whoItsFor:
       'Compliance officers, legal teams, internal auditors, and senior management seeking deeper understanding of statutory AML/CFT/CPF frameworks.',
@@ -305,7 +294,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Tools for effective oversight, challenge, and decision-making',
       'Reduced personal and institutional exposure to regulatory sanctions',
     ],
-    priceNGN: 350_000,
     category: 'training',
     whoItsFor: 'Board members and executive management of banks and other regulated institutions.',
     modules: [
@@ -340,7 +328,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Practical tools for managing cross-border and emerging AML/CFT/CPF risks',
       'Enhanced strategic positioning of the compliance function',
     ],
-    priceNGN: 420_000,
     category: 'training',
     whoItsFor:
       'Senior compliance professionals, heads of compliance, chief risk officers, and other leaders dealing with complex AML/CFT/CPF issues.',
@@ -376,7 +363,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Opportunities to discuss real-life scenarios with practitioners',
       'Ongoing professional development throughout the year',
     ],
-    priceNGN: 75_000,
     category: 'training',
     whoItsFor:
       'Compliance, risk, operations, and front-office professionals who want continuous learning on topical compliance issues.',
@@ -387,14 +373,47 @@ export const DEMO_TRAININGS: Training[] = [
       'Interactive Q&A and peer sharing',
     ],
     deliveryFormat: 'Monthly virtual sessions with optional recordings and materials.',
-    faq: [
-      {
-        q: 'Can we subscribe for multiple staff?',
-        a: 'Yes. Organizations can enroll multiple staff on an annual or monthly basis.',
-      },
-    ],
     duration_label: 'Monthly series',
     icon: 'fireplace',
+    updated_at: '2026-03-10T10:00:00Z',
+    published: true,
+  },
+  {
+    id: 't12',
+    slug: 'aml-cft-cpf-compliance-manual-compilation-training',
+    title: 'AML/CFT/CPF Compliance Manual Compilation',
+    tagline: 'Practical workshop on developing AML/CFT/CPF manuals and KYC handbooks.',
+    summary:
+      'Hands-on training for financial institutions and DNFIs on designing and compiling AML/CFT/CPF compliance manuals, KYC handbooks, and documented programs that meet NFIU and SCUML expectations.',
+    benefits: [
+      'Clarity on statutory AML/CFT/CPF program expectations under the MLPA',
+      'Guided structure for AML/CFT/CPF compliance manuals and staff KYC handbooks',
+      'Better alignment of policies, processes, and procedures with regulatory expectations',
+      'Improved readiness for regulatory inspections and intelligence requests',
+    ],
+    category: 'training',
+    whoItsFor:
+      'Compliance officers, legal teams, and operations leaders in banks and DNFIs responsible for developing AML/CFT/CPF documentation.',
+    modules: [
+      'Regulatory basis for AML/CFT/CPF programs and manuals (MLPA and related regulations)',
+      'Core components of an institution-specific AML/CFT/CPF compliance manual',
+      'Designing and structuring a staff KYC handbook',
+      'Documenting programs, processes, and procedures for DNFIs',
+      'Practical clinic: reviewing and improving your existing documentation',
+    ],
+    deliveryFormat: 'Workshop-style training, online or onsite, typically delivered over 1 day.',
+    faq: [
+      {
+        q: 'Is this training suitable if we already have a manual?',
+        a: 'Yes. We review and benchmark your existing documentation and provide guidance on closing gaps.',
+      },
+      {
+        q: 'Does this replace implementation support?',
+        a: 'The training focuses on equipping your team; we can provide separate advisory support for full compilation projects.',
+      },
+    ],
+    duration_label: '1 day',
+    icon: 'menu_book',
     updated_at: '2026-03-10T10:00:00Z',
     published: true,
   },
@@ -412,7 +431,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Board-ready report and executive summary',
       'Follow-up support to implement key actions',
     ],
-    priceNGN: 550_000,
     category: 'advisory',
     whoItsFor: 'Boards, C-suite, and compliance leads who want an external view of their compliance and operational risk before exams or strategic decisions.',
     modules: [
@@ -445,7 +463,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Clear report with findings and next steps',
       'Optional follow-on for implementation support',
     ],
-    priceNGN: 380_000,
     category: 'advisory',
     whoItsFor: 'Organizations that want a fast, external view of compliance health before an audit, exam, or licensing step.',
     modules: [

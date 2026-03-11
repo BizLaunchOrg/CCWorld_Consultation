@@ -20,7 +20,6 @@ export interface Service {
   outcomes: string[];
   duration_label: string;
   level: ServiceLevel;
-  amount: string;
   icon: string;
   published: boolean;
   sort_order?: number;

@@ -1,13 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getPublishedNonLicensingServices } from '../../data/services';
 import type { Service } from '../../types/service';
+import { fetchPublishedNonLicensingServices } from '../../lib/servicesApi';
 import { useChat } from '../../contexts/ChatContext';
 
 const cx = (...a: Array<string | false | null | undefined>) => a.filter(Boolean).join(' ');
 
 export default function ServicePage() {
-  const services = getPublishedNonLicensingServices();
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
   const { openChat } = useChat();
   const prefersReduced =
     typeof window !== 'undefined' &&
@@ -32,6 +33,13 @@ export default function ServicePage() {
 
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<string>('All');
+
+  useEffect(() => {
+    fetchPublishedNonLicensingServices().then((list) => {
+      setServices(list);
+      setLoading(false);
+    });
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -228,6 +236,9 @@ export default function ServicePage() {
           </Link>
         </div>
 
+        {loading ? (
+          <p className="text-slate-500 dark:text-slate-400">Loading services…</p>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((s) => {
             const badge = badgeForLevel(s.level);
@@ -291,8 +302,9 @@ export default function ServicePage() {
             );
           })}
         </div>
+        )}
 
-        {filtered.length === 0 && (
+        {!loading && filtered.length === 0 && (
           <div className="mt-10 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-10 text-center">
             <div className="text-slate-900 dark:text-white font-bold text-xl">No services found</div>
             <div className="text-slate-600 dark:text-slate-400 mt-2">Try a different keyword or switch filters.</div>

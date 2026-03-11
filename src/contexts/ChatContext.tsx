@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useCallback, type ReactNode } from
 interface ChatContextValue {
   isOpen: boolean;
   unreadCount: number;
-  /** Open chat. If initialMessage is provided, it will be sent automatically once the conversation is ready. */
+  /** Open chat. If initialMessage is provided, it will be pre-filled into the input for the user to send. */
   openChat: (initialMessage?: string) => void;
   closeChat: () => void;
   addUnread: () => void;

@@ -1,11 +1,33 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getServiceBySlug } from '../../data/services';
+import { getServiceBySlugFromDb, type ServiceRecord } from '../../lib/servicesApi';
 import { useChat } from '../../contexts/ChatContext';
 
 export function ServiceDetailsPage() {
   const { serviceSlug } = useParams<{ serviceSlug: string }>();
-  const service = serviceSlug ? getServiceBySlug(serviceSlug) : null;
+  const [service, setService] = useState<ServiceRecord | null>(null);
+  const [loading, setLoading] = useState(true);
   const { openChat } = useChat();
+
+  useEffect(() => {
+    if (!serviceSlug) {
+      setService(null);
+      setLoading(false);
+      return;
+    }
+    getServiceBySlugFromDb(serviceSlug).then((s) => {
+      setService(s);
+      setLoading(false);
+    });
+  }, [serviceSlug]);
+
+  if (loading) {
+    return (
+      <main className="max-w-7xl mx-auto px-6 py-24 pt-32 text-center">
+        <p className="text-slate-500 dark:text-slate-400">Loading…</p>
+      </main>
+    );
+  }
 
   if (!service) {
     return (
@@ -112,10 +134,6 @@ export function ServiceDetailsPage() {
                 <div className="flex justify-between">
                   <span className="text-slate-500">Level</span>
                   <span className="text-slate-900 dark:text-white font-medium">{service.level}</span>
-                </div>
-                <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
-                  <span className="text-slate-500">Amount</span>
-                  <span className="text-primary font-bold">{service.amount}</span>
                 </div>
               </div>
             </div>

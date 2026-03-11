@@ -4,7 +4,6 @@ export interface TrainingProductRow {
   id: string;
   name: string;
   slug: string;
-  amount: number;
   active: boolean;
   summary: string | null;
   created_at: string;
@@ -24,7 +23,6 @@ export async function upsertTrainingProduct(params: {
   id?: string;
   name: string;
   slug: string;
-  amount: number;
   active: boolean;
   summary?: string;
 }): Promise<{ id: string; error: Error | null }> {
@@ -34,7 +32,6 @@ export async function upsertTrainingProduct(params: {
       .update({
         name: params.name,
         slug: params.slug,
-        amount: params.amount,
         active: params.active,
         summary: params.summary ?? null,
       })
@@ -46,7 +43,6 @@ export async function upsertTrainingProduct(params: {
     .insert({
       name: params.name,
       slug: params.slug,
-      amount: params.amount,
       active: params.active,
       summary: params.summary ?? null,
     })

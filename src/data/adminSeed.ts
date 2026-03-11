@@ -1,37 +1,4 @@
-import type {
-  AdminTransaction,
-  AdminConsultating,
-  AdminConversation,
-  AdminMessage,
-} from '../types/admin';
-
-/** Training payments only. */
-export const seedTransactions: AdminTransaction[] = [
-  {
-    id: 'tx-1',
-    type: 'training',
-    reference: 'TXN-ABC123',
-    amount_ngn: 250_000,
-    status: 'paid',
-    customer_name: 'Jane Okonkwo',
-    customer_email: 'jane@example.com',
-    created_at: '2025-03-01T09:15:00Z',
-    item_slug: 'compliance-culture-training',
-    item_title: 'Compliance Culture Training',
-  },
-  {
-    id: 'tx-2',
-    type: 'training',
-    reference: 'TXN-DEF456',
-    amount_ngn: 320_000,
-    status: 'paid',
-    customer_name: 'Chidi Nnamdi',
-    customer_email: 'chidi@company.ng',
-    created_at: '2025-02-28T14:30:00Z',
-    item_slug: 'compliance-landscape-training',
-    item_title: 'Compliance Landscape Training',
-  },
-];
+import type { AdminConsultating, AdminConversation, AdminMessage } from '../types/admin';
 
 /** Consultating requests only (no payment). */
 export const seedConsultatings: AdminConsultating[] = [
@@ -103,14 +70,14 @@ export const seedMessages: AdminMessage[] = [
     id: 'msg-2',
     conversation_id: 'conv-1',
     sender_role: 'user',
-    body: 'I need info on compliance training pricing.',
+    body: 'I need info on compliance training.',
     created_at: '2025-03-02T10:15:00Z',
   },
   {
     id: 'msg-3',
     conversation_id: 'conv-1',
     sender_role: 'admin',
-    body: 'Sure! We have Compliance Culture Training at NGN 250,000 and Compliance Landscape at NGN 320,000. Would you like a brochure?',
+    body: 'Sure! We have several Compliance Culture and Landscape trainings available. Would you like a brochure?',
     created_at: '2025-03-02T10:20:00Z',
     read_at: '2025-03-02T10:25:00Z',
   },
@@ -132,7 +99,7 @@ export const seedMessages: AdminMessage[] = [
     id: 'msg-6',
     conversation_id: 'conv-2',
     sender_role: 'user',
-    body: 'What is the next step after payment?',
+    body: 'What is the next step after confirming our booking?',
     created_at: '2025-03-02T09:30:00Z',
   },
 ];

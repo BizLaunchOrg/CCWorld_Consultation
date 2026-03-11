@@ -63,7 +63,6 @@ export function ChatWidget() {
   useEffect(() => {
     if (!isOpen) return;
     clearUnread();
-    inputRef.current?.focus();
     setLoading(true);
     openOrCreateConversation(user?.id ?? null)
       .then(async (conv) => {
@@ -72,17 +71,24 @@ export function ChatWidget() {
         setMessages(list.length ? list : [DEFAULT_GREETING]);
         markRead(conv.id).catch(() => {});
 
+        // If there is a pending message, pre-fill the input instead of auto-sending
         const pending = consumePendingMessage();
         if (pending) {
-          try {
-            const created = await sendMessageApi(conv.id, pending);
-            setMessages((prev) => [...prev, created]);
-          } catch {
-            // keep current messages
-          }
+          setInput(pending);
+          requestAnimationFrame(() => {
+            inputRef.current?.focus();
+          });
+        } else {
+          inputRef.current?.focus();
         }
       })
-      .catch(() => setMessages([DEFAULT_GREETING]))
+      .catch(() => {
+        setMessages([DEFAULT_GREETING]);
+        const pending = consumePendingMessage();
+        if (pending) {
+          setInput(pending);
+        }
+      })
       .finally(() => setLoading(false));
   }, [isOpen, clearUnread, user?.id, consumePendingMessage]);
 

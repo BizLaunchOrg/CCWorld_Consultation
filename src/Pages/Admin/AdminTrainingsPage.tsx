@@ -11,10 +11,6 @@ function slugFromTitle(title: string): string {
     .replace(/^-|-$/g, '');
 }
 
-function formatNGN(n: number): string {
-  return `NGN ${n.toLocaleString('en-NG')}`;
-}
-
 export function AdminTrainingsPage() {
   const [trainings, setTrainings] = useState<TrainingProductRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,13 +20,11 @@ export function AdminTrainingsPage() {
   const [form, setForm] = useState<{
     name: string;
     slug: string;
-    amount: number;
     active: boolean;
     summary: string;
   }>({
     name: '',
     slug: '',
-    amount: 0,
     active: true,
     summary: '',
   });
@@ -59,7 +53,6 @@ export function AdminTrainingsPage() {
     setForm({
       name: '',
       slug: '',
-      amount: 0,
       active: true,
       summary: '',
     });
@@ -71,7 +64,6 @@ export function AdminTrainingsPage() {
     setForm({
       name: t.name,
       slug: t.slug,
-      amount: t.amount,
       active: t.active,
       summary: t.summary ?? '',
     });
@@ -96,7 +88,6 @@ export function AdminTrainingsPage() {
       id: editing?.id,
       name: form.name.trim(),
       slug,
-      amount: form.amount,
       active: form.active,
       summary: form.summary.trim() || undefined,
     });
@@ -108,7 +99,7 @@ export function AdminTrainingsPage() {
       setTrainings((prev) =>
         prev.map((t) =>
           t.id === editing.id
-            ? { ...t, ...form, slug, updated_at: new Date().toISOString() }
+            ? { ...t, name: form.name.trim(), slug, active: form.active, summary: form.summary.trim() || null, updated_at: new Date().toISOString() }
             : t
         )
       );
@@ -118,7 +109,6 @@ export function AdminTrainingsPage() {
           id,
           name: form.name.trim(),
           slug,
-          amount: form.amount,
           active: form.active,
           summary: form.summary.trim() || null,
           created_at: new Date().toISOString(),
@@ -136,7 +126,6 @@ export function AdminTrainingsPage() {
       id: t.id,
       name: t.name,
       slug: t.slug,
-      amount: t.amount,
       active: next,
       summary: t.summary ?? undefined,
     }).then(() => {
@@ -190,7 +179,6 @@ export function AdminTrainingsPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
                   {t.summary || '—'}
                 </p>
-                <p className="text-primary font-bold mt-2">{formatNGN(t.amount)}</p>
               </div>
               <span
                 className={`shrink-0 px-2.5 py-1 rounded-full text-xs font-bold ${
@@ -262,17 +250,6 @@ export function AdminTrainingsPage() {
             {!editing && form.slug && slugs.has(form.slug) && (
               <p className="text-xs text-red-500 mt-1">Slug already in use.</p>
             )}
-          </div>
-          <div>
-            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Amount (NGN)</label>
-            <input
-              type="number"
-              min={0}
-              value={form.amount || ''}
-              onChange={(e) => setForm((f) => ({ ...f, amount: Number(e.target.value) || 0 }))}
-              className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
-              placeholder="250000"
-            />
           </div>
           <div>
             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Summary</label>

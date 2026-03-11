@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getServiceBySlug } from '../../data/services';
 import type { ServiceContentSection } from '../../types/service';
+import { getServiceBySlugFromDb, type ServiceRecord } from '../../lib/servicesApi';
 import { useChat } from '../../contexts/ChatContext';
 
 const LICENSING_SLUGS = ['pssp', 'ptsp', 'sandbox'];
@@ -55,9 +55,30 @@ function AccordionSection({ section }: { section: ServiceContentSection }) {
 
 export function LicensingDetailPage() {
   const { slug } = useParams<{ slug: string }>();
-  const service = slug ? getServiceBySlug(slug) : null;
+  const [service, setService] = useState<ServiceRecord | null>(null);
+  const [loading, setLoading] = useState(true);
   const { openChat } = useChat();
   const isLicensing = service && LICENSING_SLUGS.includes(service.slug);
+
+  useEffect(() => {
+    if (!slug) {
+      setService(null);
+      setLoading(false);
+      return;
+    }
+    getServiceBySlugFromDb(slug).then((s) => {
+      setService(s);
+      setLoading(false);
+    });
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <main className="max-w-7xl mx-auto px-6 py-24 pt-32 text-center">
+        <p className="text-slate-500 dark:text-slate-400">Loading…</p>
+      </main>
+    );
+  }
 
   if (!service || !isLicensing) {
     return (
@@ -160,10 +181,6 @@ export function LicensingDetailPage() {
                 <div className="flex justify-between">
                   <span className="text-slate-500">Engagement</span>
                   <span className="text-slate-900 dark:text-white font-medium">{service.duration_label}</span>
-                </div>
-                <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500">Fee</span>
-                  <span className="text-primary font-bold">{service.amount}</span>
                 </div>
               </div>
             </div>

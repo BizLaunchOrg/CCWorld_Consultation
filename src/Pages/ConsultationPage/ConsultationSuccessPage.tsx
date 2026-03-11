@@ -6,7 +6,6 @@ export function ConsultatingSuccessPage() {
     fullName?: string;
     consultatingDate?: string;
     consultatingTime?: string;
-    amount?: string;
     service?: string;
   };
 
@@ -48,12 +47,6 @@ export function ConsultatingSuccessPage() {
               <div className="flex justify-between">
                 <dt className="text-slate-500">Time</dt>
                 <dd className="text-slate-900 dark:text-white font-medium">{state.consultatingTime}</dd>
-              </div>
-            )}
-            {state.amount && (
-              <div className="flex justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
-                <dt className="text-slate-500">Amount paid</dt>
-                <dd className="text-primary font-bold">{state.amount}</dd>
               </div>
             )}
           </dl>

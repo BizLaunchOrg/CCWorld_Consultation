@@ -7,24 +7,6 @@ export type AdminService = Service;
 /** Admin uses the same Training shape. */
 export type AdminTraining = Training;
 
-/** Transactions are training payments only. */
-export type AdminTransactionType = 'training';
-
-export type AdminTransactionStatus = 'pending' | 'paid' | 'failed';
-
-export interface AdminTransaction {
-  id: string;
-  type: AdminTransactionType;
-  reference: string;
-  amount_ngn: number;
-  status: AdminTransactionStatus;
-  customer_name: string;
-  customer_email: string;
-  created_at: string;
-  item_slug?: string;
-  item_title?: string;
-}
-
 export type ConsultatingStatus = 'new' | 'in_review' | 'scheduled' | 'completed' | 'cancelled';
 
 /** Engagement type from request form. */

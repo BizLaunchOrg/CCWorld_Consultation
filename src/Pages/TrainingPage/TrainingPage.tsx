@@ -8,10 +8,6 @@ const cx = (...a: Array<string | false | null | undefined>) => a.filter(Boolean)
 
 const FILTER_CHIPS = ['All', 'Training', 'Advisory'] as const;
 
-function formatPriceNGN(n: number): string {
-  return `NGN ${n.toLocaleString('en-NG')}`;
-}
-
 export function TrainingPage() {
   const [trainings, setTrainings] = useState<TrainingProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,10 +25,11 @@ export function TrainingPage() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return trainings.filter((t) => {
+      const cat = t.category ?? 'training';
       const matchFilter =
         filter === 'All' ||
-        (filter === 'Training' && t.category === 'training') ||
-        (filter === 'Advisory' && t.category === 'advisory');
+        (filter === 'Training' && cat === 'training') ||
+        (filter === 'Advisory' && cat === 'advisory');
       const matchQuery =
         !q ||
         t.name.toLowerCase().includes(q) ||
@@ -159,10 +156,12 @@ export function TrainingPage() {
                 >
                   <div className="flex items-start gap-4">
                     <span className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform">
-                      <span className="material-symbols-outlined">{t.category === 'advisory' ? 'recommend' : (t.icon || 'school')}</span>
+                      <span className="material-symbols-outlined">
+                        {(t.category ?? 'training') === 'advisory' ? 'recommend' : t.icon || 'school'}
+                      </span>
                     </span>
                     <div className="min-w-0">
-                      {t.category === 'advisory' && (
+                      {(t.category ?? 'training') === 'advisory' && (
                         <span className="text-[10px] font-bold uppercase tracking-wider text-primary">Advisory</span>
                       )}
                       <h3 className="text-slate-900 dark:text-white font-bold text-lg leading-tight">{t.name}</h3>
@@ -180,9 +179,6 @@ export function TrainingPage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6 flex items-center justify-between gap-4">
-                    <span className="text-primary font-bold text-lg">{formatPriceNGN(t.amount)}</span>
-                  </div>
                   <div className="mt-6 flex gap-3">
                     <Link
                       to={`/training/${t.slug}`}
@@ -217,31 +213,6 @@ export function TrainingPage() {
             )}
           </>
         )}
-      </section>
-
-      {/* Advisory block */}
-      <section className="max-w-7xl mx-auto px-6 md:px-20 py-14">
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-8 shadow-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-            <div className="flex items-start gap-4">
-              <span className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <span className="material-symbols-outlined">recommend</span>
-              </span>
-              <div>
-                <h3 className="text-slate-900 dark:text-white font-bold text-xl">Advisory</h3>
-                <p className="text-slate-600 dark:text-slate-400 mt-1">
-                  Work with our organization to conduct risk review and make recommendations.
-                </p>
-              </div>
-            </div>
-            <Link
-              to="/training"
-              className="shrink-0 px-6 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-all text-center shadow-lg shadow-primary/20"
-            >
-              View offerings
-            </Link>
-          </div>
-        </div>
       </section>
 
       {/* CTA */}
