@@ -84,7 +84,7 @@ export function ConsultatingPage() {
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [preferredTime, setPreferredTime] = useState<string>('');
+  const [selectedTime, setSelectedTime] = useState<string>('09:00');
 
   // Step 2 – personal details
   const [fullName, setFullName] = useState('');
@@ -109,7 +109,7 @@ export function ConsultatingPage() {
     selectedYear != null && selectedMonth != null && selectedDay != null
       ? `${MONTH_NAMES[selectedMonth - 1]} ${selectedDay}, ${selectedYear}`
       : '';
-  const consultatingTimeSlot = preferredTime ? `${preferredTime} (WAT)` : '';
+  const consultatingTimeSlot = selectedTime ? `${selectedTime} (WAT)` : '';
 
   async function submitConsultatingRequest(payload: {
     fullName: string;
@@ -123,20 +123,22 @@ export function ConsultatingPage() {
     stage?: LicensingStage;
     note: string;
     consultatingDate?: string;
-    consultatingTimeLabel?: string;
+    consultatingTime?: string;
     teamSize: string;
     region: string;
     gap?: string;
   }) {
-    if (!payload.consultatingDate) {
+    if (!payload.consultatingDate || !payload.consultatingTime) {
       return { success: false };
     }
     const [monthName, dayStr, yearStr] = payload.consultatingDate.replace(/,/g, '').split(/\s+/);
     const month = MONTH_NAMES.indexOf(monthName) + 1;
     const day = parseInt(dayStr, 10);
     const year = parseInt(yearStr, 10);
-    // Default to 9:00 AM local time; exact time preferences are captured separately in consultatingTimeLabel.
-    const scheduledAt = new Date(year, month - 1, day, 9, 0).toISOString();
+    const [hoursStr, minutesStr] = payload.consultatingTime.split(':');
+    const hours = parseInt(hoursStr, 10) || 9;
+    const minutes = parseInt(minutesStr, 10) || 0;
+    const scheduledAt = new Date(year, month - 1, day, hours, minutes).toISOString();
 
     const { data, error } = await createConsultating({
       topic: payload.service,
@@ -178,7 +180,7 @@ export function ConsultatingPage() {
     setSelectedYear(null);
     setSelectedMonth(null);
     setSelectedDay(null);
-    setPreferredTime('');
+    setSelectedTime('09:00');
     setDisplayYear(today.year);
     setDisplayMonth(today.month);
   }
@@ -187,7 +189,7 @@ export function ConsultatingPage() {
     e.preventDefault();
     if (!fullName?.trim() || !email?.trim() || !phone?.trim()) return;
     if (isLicensingEngagement(engagementType) && !licensingNote?.trim()) return;
-    if (!consultatingDate) return;
+    if (!consultatingDate || !selectedTime) return;
     setSubmitting(true);
     const note = isLicensingEngagement(engagementType) ? licensingNote.trim() : (gap?.trim() || '');
     const licenseType = engagementType === 'licensing_pssp' ? 'pssp' : engagementType === 'licensing_ptsp' ? 'ptsp' : engagementType === 'licensing_sandbox' ? 'sandbox' : undefined;
@@ -204,7 +206,7 @@ export function ConsultatingPage() {
         stage: isLicensingEngagement(engagementType) ? licensingStage : undefined,
         note,
         consultatingDate: consultatingDate || undefined,
-        consultatingTimeLabel: preferredTime || undefined,
+        consultatingTime: selectedTime || undefined,
         teamSize,
         region,
         gap: gap.trim() || undefined,
@@ -496,16 +498,15 @@ export function ConsultatingPage() {
                   )}
                 </div>
                 <div className="space-y-2 mt-6">
-                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">Preferred time (flexible)</p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">Preferred time</p>
                   <input
-                    type="text"
-                    value={preferredTime}
-                    onChange={(e) => setPreferredTime(e.target.value)}
-                    placeholder="e.g. 9–11am WAT, afternoons, or 'Anytime on weekdays'"
+                    type="time"
+                    value={selectedTime}
+                    onChange={(e) => setSelectedTime(e.target.value)}
                     className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400"
                   />
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    We&apos;ll do our best to match your preferred window and confirm exact time over email.
+                    Select any exact time that works best for you (WAT).
                   </p>
                 </div>
               </div>
