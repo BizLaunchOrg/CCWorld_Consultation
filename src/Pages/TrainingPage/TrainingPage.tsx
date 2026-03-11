@@ -168,7 +168,7 @@ export function TrainingPage() {
                       <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">{t.tagline ?? t.summary ?? ''}</p>
                     </div>
                   </div>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5">
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5 line-clamp-4">
                     {t.summary || 'Structured training and evidence of completion.'}
                   </p>
                   <ul className="mt-5 space-y-2">
