@@ -184,8 +184,11 @@ export function HomePage() {
                 </ul>
               </div>
               <div className="flex-shrink-0">
-                <Link to="/consulting" className="inline-block bg-white text-primary px-10 py-5 rounded-xl font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors">
-                  Book License Audit
+                <Link
+                  to="/consulting"
+                  className="inline-block bg-white text-primary px-10 py-5 rounded-xl font-bold text-lg hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors"
+                >
+                  Talk to Expert
                 </Link>
               </div>
             </div>

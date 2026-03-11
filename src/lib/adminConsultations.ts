@@ -35,6 +35,7 @@ function rowToAdminConsultating(r: ConsultatingRow): AdminConsultating {
     team_size: d.teamSize as string | undefined,
     region: d.region as string | undefined,
     gap: d.gap as string | undefined,
+    preferred_time_label: d.consultatingTimeLabel as string | undefined,
   };
 }
 

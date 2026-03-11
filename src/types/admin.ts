@@ -52,6 +52,8 @@ export interface AdminConsultating {
   note: string;
   preferred_date?: string;
   preferred_time?: string;
+  /** Optional free-text time preference from form (e.g. "9–11am WAT, weekdays"). */
+  preferred_time_label?: string;
   status: ConsultatingStatus;
   created_at: string;
   internal_notes?: string;

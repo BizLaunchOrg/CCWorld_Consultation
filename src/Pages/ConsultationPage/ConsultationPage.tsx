@@ -26,18 +26,6 @@ const ORG_TYPES = [
 
 const TEAM_SIZES = ['1-10 employees', '11-50 employees', '51-200 employees', '200+ employees'];
 const REGIONS = ['Lagos', 'Abuja', 'Port Harcourt', 'Other (Nigeria)'];
-const TIME_SLOTS = ['09:00 AM', '11:30 AM', '02:00 PM', '04:45 PM'];
-
-/** Parse "09:00 AM" -> { hours: 9, minutes: 0 }, "02:00 PM" -> { hours: 14, minutes: 0 } */
-function parseTimeSlot(slot: string): { hours: number; minutes: number } {
-  const match = slot.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
-  if (!match) return { hours: 9, minutes: 0 };
-  let h = parseInt(match[1], 10);
-  const m = parseInt(match[2], 10);
-  if (match[3].toUpperCase() === 'PM' && h !== 12) h += 12;
-  if (match[3].toUpperCase() === 'AM' && h === 12) h = 0;
-  return { hours: h, minutes: m };
-}
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -96,7 +84,7 @@ export function ConsultatingPage() {
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>('09:00 AM');
+  const [preferredTime, setPreferredTime] = useState<string>('');
 
   // Step 2 – personal details
   const [fullName, setFullName] = useState('');
@@ -121,7 +109,7 @@ export function ConsultatingPage() {
     selectedYear != null && selectedMonth != null && selectedDay != null
       ? `${MONTH_NAMES[selectedMonth - 1]} ${selectedDay}, ${selectedYear}`
       : '';
-  const consultatingTimeSlot = selectedTime ? `${selectedTime} (WAT)` : '';
+  const consultatingTimeSlot = preferredTime ? `${preferredTime} (WAT)` : '';
 
   async function submitConsultatingRequest(payload: {
     fullName: string;
@@ -135,20 +123,20 @@ export function ConsultatingPage() {
     stage?: LicensingStage;
     note: string;
     consultatingDate?: string;
-    consultatingTime?: string;
+    consultatingTimeLabel?: string;
     teamSize: string;
     region: string;
     gap?: string;
   }) {
-    if (!payload.consultatingDate || !payload.consultatingTime) {
+    if (!payload.consultatingDate) {
       return { success: false };
     }
-    const { hours, minutes } = parseTimeSlot(payload.consultatingTime);
     const [monthName, dayStr, yearStr] = payload.consultatingDate.replace(/,/g, '').split(/\s+/);
     const month = MONTH_NAMES.indexOf(monthName) + 1;
     const day = parseInt(dayStr, 10);
     const year = parseInt(yearStr, 10);
-    const scheduledAt = new Date(year, month - 1, day, hours, minutes).toISOString();
+    // Default to 9:00 AM local time; exact time preferences are captured separately in consultatingTimeLabel.
+    const scheduledAt = new Date(year, month - 1, day, 9, 0).toISOString();
 
     const { data, error } = await createConsultating({
       topic: payload.service,
@@ -190,7 +178,7 @@ export function ConsultatingPage() {
     setSelectedYear(null);
     setSelectedMonth(null);
     setSelectedDay(null);
-    setSelectedTime('09:00 AM');
+    setPreferredTime('');
     setDisplayYear(today.year);
     setDisplayMonth(today.month);
   }
@@ -199,9 +187,7 @@ export function ConsultatingPage() {
     e.preventDefault();
     if (!fullName?.trim() || !email?.trim() || !phone?.trim()) return;
     if (isLicensingEngagement(engagementType) && !licensingNote?.trim()) return;
-    if (!consultatingDate || !selectedTime) {
-      return;
-    }
+    if (!consultatingDate) return;
     setSubmitting(true);
     const note = isLicensingEngagement(engagementType) ? licensingNote.trim() : (gap?.trim() || '');
     const licenseType = engagementType === 'licensing_pssp' ? 'pssp' : engagementType === 'licensing_ptsp' ? 'ptsp' : engagementType === 'licensing_sandbox' ? 'sandbox' : undefined;
@@ -218,7 +204,7 @@ export function ConsultatingPage() {
         stage: isLicensingEngagement(engagementType) ? licensingStage : undefined,
         note,
         consultatingDate: consultatingDate || undefined,
-        consultatingTime: selectedTime || undefined,
+        consultatingTimeLabel: preferredTime || undefined,
         teamSize,
         region,
         gap: gap.trim() || undefined,
@@ -509,22 +495,18 @@ export function ConsultatingPage() {
                     )
                   )}
                 </div>
-                <div className="space-y-3 mt-6">
-                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">Available Times</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {TIME_SLOTS.map((time) => (
-                      <button
-                        key={time}
-                        type="button"
-                        onClick={() => setSelectedTime(time)}
-                        className={`py-2 text-sm font-medium rounded-lg border transition-colors ${
-                          selectedTime === time ? 'border-primary text-primary bg-primary/5' : 'border-slate-200 dark:border-slate-800 hover:border-primary'
-                        }`}
-                      >
-                        {time}
-                      </button>
-                    ))}
-                  </div>
+                <div className="space-y-2 mt-6">
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">Preferred time (flexible)</p>
+                  <input
+                    type="text"
+                    value={preferredTime}
+                    onChange={(e) => setPreferredTime(e.target.value)}
+                    placeholder="e.g. 9–11am WAT, afternoons, or 'Anytime on weekdays'"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400"
+                  />
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    We&apos;ll do our best to match your preferred window and confirm exact time over email.
+                  </p>
                 </div>
               </div>
               <div className="bg-primary/10 border border-primary/20 rounded-xl p-6 flex gap-4">

@@ -244,7 +244,14 @@ export function AdminConsultationsPage() {
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Job title</span>{selected.job_title || '—'}</p>
               <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Selected service / inquiry type</span>{selected.service_selected}</p>
               {selected.preferred_date && (
-                <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Preferred date / time</span>{selected.preferred_date}{selected.preferred_time ? ` ${selected.preferred_time}` : ''}</p>
+                <p>
+                  <span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">
+                    Preferred date / time
+                  </span>
+                  {selected.preferred_date}
+                  {selected.preferred_time ? ` ${selected.preferred_time}` : ''}
+                  {selected.preferred_time_label ? ` — ${selected.preferred_time_label}` : ''}
+                </p>
               )}
               {selected.team_size && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Team size</span>{selected.team_size}</p>}
               {selected.region && <p><span className="text-slate-500 dark:text-slate-400 block text-xs font-bold uppercase tracking-wider">Region</span>{selected.region}</p>}

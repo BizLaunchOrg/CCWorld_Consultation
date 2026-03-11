@@ -13,6 +13,7 @@ export interface ConsultatingDetails {
   teamSize?: string;
   region?: string;
   gap?: string;
+  consultatingTimeLabel?: string;
 }
 
 export interface CreateConsultatingInput {
