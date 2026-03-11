@@ -172,7 +172,7 @@ export function TrainingPage() {
                     {t.summary || 'Structured training and evidence of completion.'}
                   </p>
                   <ul className="mt-5 space-y-2">
-                    {(t.benefits ?? []).slice(0, 5).map((b) => (
+                    {(t.benefits ?? []).slice(0, 4).map((b) => (
                       <li key={b} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-xs">
                         <span className="material-symbols-outlined text-primary text-sm mt-0.5 shrink-0">check</span>
                         {b}
