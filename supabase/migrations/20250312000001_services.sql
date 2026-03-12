@@ -4,6 +4,9 @@
 -- =============================================================================
 -- SERVICES (compliance services; admin CRUD)
 -- =============================================================================
+-- Drop and recreate table if exists (for clean re-run)
+drop table if exists public.services cascade;
+
 create table if not exists public.services (
   id text primary key,
   title text not null,
@@ -22,6 +25,12 @@ create table if not exists public.services (
   updated_at timestamptz not null default now()
 );
 
+create trigger services_updated_at
+  before update on public.services
+  for each row execute function public.set_updated_at();
+
+-- Drop trigger if exists to recreate (in case of re-run)
+drop trigger if exists services_updated_at on public.services;
 create trigger services_updated_at
   before update on public.services
   for each row execute function public.set_updated_at();
