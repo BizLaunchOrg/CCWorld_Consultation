@@ -1,6 +1,6 @@
 import { supabase } from './supabase';
 import type { Service } from '../types/service';
-import { SERVICES_LIST, getPublishedNonLicensingServices as getLocalNonLicensing, getLicensingServices as getLocalLicensing, getPublishedServices as getLocalPublished, getServiceBySlug } from '../data/services';
+import { getPublishedNonLicensingServices as getLocalNonLicensing, getLicensingServices as getLocalLicensing, getPublishedServices as getLocalPublished, getServiceBySlug } from '../data/services';
 
 export interface ServiceRecord extends Service {
   // Supabase table is expected to mirror Service shape

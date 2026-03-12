@@ -82,7 +82,7 @@ export function LicensingPage() {
                     <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">{s.tagline}</p>
                   </div>
                 </div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5">{s.summary}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5 line-clamp-3">{s.summary}</p>
                 <span className="inline-flex items-center gap-1 text-primary font-bold text-sm mt-4">
                   View details <span className="material-symbols-outlined text-lg">arrow_forward</span>
                 </span>

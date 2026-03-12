@@ -259,7 +259,7 @@ export default function ServicePage() {
                   </div>
                   <span className={cx('px-3 py-1.5 rounded-full text-[11px] font-bold border', badge.cls)}>{badge.label}</span>
                 </div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5">{s.summary}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5 line-clamp-3">{s.summary}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {s.categories.slice(0, 4).map((c) => (
                     <span key={c} className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-bold">
