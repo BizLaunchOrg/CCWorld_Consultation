@@ -12,7 +12,7 @@ values (
   'training',
   'Organizations that need structured induction programs, role-based compliance training, and culture-building initiatives with audit-ready evidence.',
   '["Training needs assessment and calendar design","Induction programs for new hires","Role-based compliance modules","Board and leadership sessions","Culture campaigns and attestation workflows"]'::jsonb,
-  '["Custom training calendar design","Role-based learning paths","Board and senior leadership sessions","Culture campaigns with reporting","Attestation workflow and completion tracking"]'::jsonb,
+  '["Training calendar + role-based modules","Attestation workflow","Culture campaigns + reporting"]'::jsonb,
   'Online, onsite, or hybrid. Typically 2–4 sessions over 2–4 weeks.',
   '2–4 weeks',
   'school',
