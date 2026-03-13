@@ -440,7 +440,6 @@ export const DEMO_TRAININGS: Training[] = [
       'Culture campaigns and attestation workflows',
     ],
     duration_label: '2–4 weeks',
-    level: 'Foundation',
     updated_at: '2025-02-22T09:00:00Z',
     published: true,
   },
