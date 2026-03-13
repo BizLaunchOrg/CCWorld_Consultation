@@ -417,6 +417,34 @@ export const DEMO_TRAININGS: Training[] = [
     updated_at: '2026-03-10T10:00:00Z',
     published: true,
   },
+  // Training & Compliance Culture
+  {
+    id: 't13',
+    slug: 'training-and-compliance-culture',
+    icon: 'school',
+    title: 'Training & Compliance Culture',
+    tagline: 'Induction, role-based training, attestations.',
+    summary: 'We design your training calendar, role-based learning paths, board/senior leadership sessions, and culture campaigns with measurable completion evidence.',
+    benefits: [
+      'Custom training calendar design',
+      'Role-based learning paths',
+      'Board and senior leadership sessions',
+      'Culture campaigns with reporting',
+      'Attestation workflow and completion tracking',
+    ],
+    category: 'training',
+    whoItsFor: 'Organizations that need structured induction programs, role-based compliance training, and culture-building initiatives with audit-ready evidence.',
+    modules: [
+      'Training needs assessment and calendar design',
+      'Induction programs for new hires',
+      'Role-based compliance modules',
+      'Board and leadership sessions',
+      'Culture campaigns and attestation workflows',
+    ],
+    duration_label: '2–4 weeks',
+    updated_at: '2025-02-22T09:00:00Z',
+    published: true,
+  },
   // Advisory offerings
   {
     id: 'a1',
