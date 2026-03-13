@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Service } from '../../types/service';
-import { fetchPublishedNonLicensingServices, fetchTrainingServices } from '../../lib/servicesApi';
+import { fetchPublishedNonLicensingServices } from '../../lib/servicesApi';
 import { useChat } from '../../contexts/ChatContext';
 import { DEMO_TRAININGS } from '../../data/trainings';
 
@@ -9,7 +9,6 @@ const cx = (...a: Array<string | false | null | undefined>) => a.filter(Boolean)
 
 export default function ServicePage() {
   const [services, setServices] = useState<Service[]>([]);
-  const [trainingServices, setTrainingServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAllServices, setShowAllServices] = useState(false);
   const [showAllTraining, setShowAllTraining] = useState(false);
@@ -39,12 +38,8 @@ export default function ServicePage() {
   const [filter, setFilter] = useState<string>('All');
 
   useEffect(() => {
-    Promise.all([
-      fetchPublishedNonLicensingServices(),
-      fetchTrainingServices()
-    ]).then(([servicesData, trainingData]) => {
+    fetchPublishedNonLicensingServices().then((servicesData) => {
       setServices(servicesData);
-      setTrainingServices(trainingData);
       setLoading(false);
     });
   }, []);
