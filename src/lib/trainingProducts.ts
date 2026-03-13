@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { DEMO_TRAININGS } from '../data/trainings';
 
 export type TrainingCategory = 'training' | 'advisory';
 
@@ -38,7 +39,32 @@ export async function getTrainingProductBySlug(slug: string): Promise<TrainingPr
     .eq('slug', slug)
     .eq('active', true)
     .single();
-  if (error || !data) return null;
+  
+  // Fallback to local data if not found in database
+  if (error || !data) {
+    const localTraining = DEMO_TRAININGS.find(t => t.slug === slug);
+    if (localTraining) {
+      return {
+        id: localTraining.id,
+        name: localTraining.title,
+        slug: localTraining.slug,
+        active: localTraining.published,
+        summary: localTraining.summary,
+        created_at: localTraining.updated_at,
+        updated_at: localTraining.updated_at,
+        tagline: localTraining.tagline,
+        category: localTraining.category,
+        who_its_for: localTraining.whoItsFor,
+        modules: localTraining.modules,
+        benefits: localTraining.benefits,
+        delivery_format: localTraining.deliveryFormat,
+        duration_label: localTraining.duration_label,
+        icon: localTraining.icon,
+        faq: localTraining.faq,
+      };
+    }
+    return null;
+  }
   return data as TrainingProduct;
 }
 
