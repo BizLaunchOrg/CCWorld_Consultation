@@ -1,14 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Service } from '../../types/service';
-import { fetchPublishedNonLicensingServices } from '../../lib/servicesApi';
+import { fetchPublishedNonLicensingServices, fetchTrainingServices } from '../../lib/servicesApi';
 import { useChat } from '../../contexts/ChatContext';
+import { DEMO_TRAININGS } from '../../data/trainings';
 
 const cx = (...a: Array<string | false | null | undefined>) => a.filter(Boolean).join(' ');
 
 export default function ServicePage() {
   const [services, setServices] = useState<Service[]>([]);
+  const [trainingServices, setTrainingServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAllServices, setShowAllServices] = useState(false);
+  const [showAllTraining, setShowAllTraining] = useState(false);
   const { openChat } = useChat();
   const prefersReduced =
     typeof window !== 'undefined' &&
@@ -35,13 +39,17 @@ export default function ServicePage() {
   const [filter, setFilter] = useState<string>('All');
 
   useEffect(() => {
-    fetchPublishedNonLicensingServices().then((list) => {
-      setServices(list);
+    Promise.all([
+      fetchPublishedNonLicensingServices(),
+      fetchTrainingServices()
+    ]).then(([servicesData, trainingData]) => {
+      setServices(servicesData);
+      setTrainingServices(trainingData);
       setLoading(false);
     });
   }, []);
 
-  const filtered = useMemo(() => {
+  const filteredServices = useMemo(() => {
     const q = query.trim().toLowerCase();
     return services.filter((s) => {
       const matchesFilter = filter === 'All' ? true : s.categories.includes(filter);
@@ -54,6 +62,24 @@ export default function ServicePage() {
       return matchesFilter && matchesQuery;
     });
   }, [services, filter, query]);
+
+  // Filter trainings based on search query
+  const filteredTrainings = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return DEMO_TRAININGS;
+    return DEMO_TRAININGS.filter((t) =>
+      t.title.toLowerCase().includes(q) ||
+      t.tagline.toLowerCase().includes(q) ||
+      t.summary.toLowerCase().includes(q) ||
+      t.category.toLowerCase().includes(q)
+    );
+  }, [query]);
+
+  // Show 6 services initially (3x2 grid), then show more
+  const displayedServices = showAllServices ? filteredServices : filteredServices.slice(0, 6);
+  
+  // Show 4 trainings initially (2x2 grid), then show more
+  const displayedTrainings = showAllTraining ? filteredTrainings : filteredTrainings.slice(0, 4);
 
   const badgeForLevel = (level: Service['level']) => {
     switch (level) {
@@ -69,6 +95,8 @@ export default function ServicePage() {
         return { label: 'Service', cls: 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300' };
     }
   };
+
+  const isSearching = query.trim().length > 0;
 
   return (
     <main className="flex-1">
@@ -159,15 +187,15 @@ export default function ServicePage() {
         </div>
       </section>
 
-      {/* Filters */}
+      {/* Search & Filters */}
       <section className="max-w-7xl mx-auto px-6 md:px-20 pt-6 pb-4">
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-5 sm:p-6 shadow-sm">
           <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
             <div className="flex items-center gap-3">
               <span className="material-symbols-outlined text-primary">tune</span>
               <div>
-                <div className="text-slate-900 dark:text-white font-bold">Browse services</div>
-                <div className="text-slate-500 dark:text-slate-400 text-xs">Filter by pillar or search by keyword.</div>
+                <div className="text-slate-900 dark:text-white font-bold">Browse services & training</div>
+                <div className="text-slate-500 dark:text-slate-400 text-xs">Search or filter to find what you need.</div>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
@@ -177,7 +205,7 @@ export default function ServicePage() {
                   <input
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search (e.g. AML, reporting, dashboards)…"
+                    placeholder="Search services & training…"
                     className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-primary outline-none"
                   />
                 </div>
@@ -221,99 +249,202 @@ export default function ServicePage() {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="max-w-7xl mx-auto px-6 md:px-20 py-14">
+      {/* Services Section */}
+      <section className="max-w-7xl mx-auto px-6 md:px-20 py-10">
         <div className="flex items-end justify-between gap-6 mb-8">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">All Services</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+              <span className="material-symbols-outlined text-primary">design_services</span>
+              Services
+              {isSearching && (
+                <span className="text-lg font-normal text-slate-500">
+                  ({displayedServices.length} results)
+                </span>
+              )}
+            </h2>
             <p className="text-slate-600 dark:text-slate-400 mt-2">
-              {filtered.length} service{filtered.length === 1 ? '' : 's'} shown
+              {filteredServices.length} service{filteredServices.length === 1 ? '' : 's'} available
               {filter !== 'All' ? ` • filtered by ${filter}` : ''}.
             </p>
           </div>
-          <Link to="/consulting" className="hidden sm:inline-flex items-center gap-2 text-primary font-bold hover:opacity-90">
-            Need help choosing? <span className="material-symbols-outlined">arrow_forward</span>
-          </Link>
         </div>
 
         {loading ? (
           <p className="text-slate-500 dark:text-slate-400">Loading services…</p>
         ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((s) => {
-            const badge = badgeForLevel(s.level);
-            return (
-              <div
-                key={s.slug}
-                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 hover:shadow-xl hover:border-primary/30 transition-all duration-300 group"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-start gap-4">
-                    <span className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform">
-                      <span className="material-symbols-outlined">{s.icon}</span>
-                    </span>
-                    <div>
-                      <div className="text-slate-900 dark:text-white font-bold text-lg leading-tight">{s.title}</div>
-                      <div className="text-slate-600 dark:text-slate-500 text-xs mt-1">{s.tagline}</div>
+        <>
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${isSearching ? 'bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 rounded-3xl p-6 border border-primary/20' : ''}`}>
+            {displayedServices.map((s) => {
+              const badge = badgeForLevel(s.level);
+              return (
+                <div
+                  key={s.slug}
+                  className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 hover:shadow-xl hover:border-primary/30 transition-all duration-300 group"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-4">
+                      <span className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform">
+                        <span className="material-symbols-outlined">{s.icon}</span>
+                      </span>
+                      <div>
+                        <div className="text-slate-900 dark:text-white font-bold text-lg leading-tight">{s.title}</div>
+                        <div className="text-slate-600 dark:text-slate-500 text-xs mt-1">{s.tagline}</div>
+                      </div>
+                    </div>
+                    <span className={cx('px-3 py-1.5 rounded-full text-[11px] font-bold border', badge.cls)}>{badge.label}</span>
+                  </div>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5 line-clamp-3">{s.summary}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {s.categories.slice(0, 4).map((c) => (
+                      <span key={c} className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-bold">
+                        {c}
+                      </span>
+                    ))}
+                    {s.categories.length > 4 ? (
+                      <span className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-500 text-[11px] font-bold">
+                        +{s.categories.length - 4}
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-4">
+                    <div className="text-slate-600 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-3">Typical outputs</div>
+                    <div className="space-y-2">
+                      {s.outcomes.slice(0, 3).map((o) => (
+                        <div key={o} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-xs">
+                          <span className="material-symbols-outlined text-primary text-sm mt-0.5">check</span>
+                          {o}
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <span className={cx('px-3 py-1.5 rounded-full text-[11px] font-bold border', badge.cls)}>{badge.label}</span>
-                </div>
-                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5 line-clamp-3">{s.summary}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {s.categories.slice(0, 4).map((c) => (
-                    <span key={c} className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-bold">
-                      {c}
-                    </span>
-                  ))}
-                  {s.categories.length > 4 ? (
-                    <span className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-500 text-[11px] font-bold">
-                      +{s.categories.length - 4}
-                    </span>
-                  ) : null}
-                </div>
-                <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-4">
-                  <div className="text-slate-600 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-3">Typical outputs</div>
-                  <div className="space-y-2">
-                    {s.outcomes.slice(0, 3).map((o) => (
-                      <div key={o} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-xs">
-                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check</span>
-                        {o}
-                      </div>
-                    ))}
+                  <div className="mt-6 flex gap-3">
+                    <Link
+                      to={`/services/${s.slug}`}
+                      className="flex-1 text-center px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                    >
+                      View Service
+                    </Link>
+                    <Link
+                      to="/consulting"
+                      className="px-5 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+                      aria-label="Request consultation"
+                    >
+                      Consult
+                    </Link>
                   </div>
                 </div>
-                <div className="mt-6 flex gap-3">
-                  <Link
-                    to={`/services/${s.slug}`}
-                    className="flex-1 text-center px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
-                  >
-                    View Service
-                  </Link>
-                  <Link
-                    to="/consulting"
-                    className="px-5 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
-                    aria-label="Request consultation"
-                  >
-                    Consult
-                  </Link>
+              );
+            })}
+          </div>
+
+          {!loading && filteredServices.length > 4 && (
+            <div className="mt-8 text-center">
+              <button
+                type="button"
+                onClick={() => setShowAllServices(!showAllServices)}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+              >
+                {showAllServices ? 'Show Less Services' : `Show More Services (${filteredServices.length - 4})`}
+                <span className="material-symbols-outlined">{showAllServices ? 'expand_less' : 'expand_more'}</span>
+              </button>
+            </div>
+          )}
+
+          {!loading && filteredServices.length === 0 && (
+            <div className="mt-10 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-10 text-center">
+              <div className="text-slate-900 dark:text-white font-bold text-xl">No services found</div>
+              <div className="text-slate-600 dark:text-slate-400 mt-2">Try a different keyword or switch filters.</div>
+              <button
+                type="button"
+                onClick={() => { setFilter('All'); setQuery(''); }}
+                className="mt-6 px-6 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90"
+              >
+                Reset
+              </button>
+            </div>
+          )}
+        </>
+        )}
+      </section>
+
+      {/* Training Section - Under Services */}
+      <section className="max-w-7xl mx-auto px-6 md:px-20 py-10">
+        <div className="flex items-end justify-between gap-6 mb-8">
+          <div>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+              <span className="material-symbols-outlined text-primary">school</span>
+              Training Programs
+              {isSearching && (
+                <span className="text-lg font-normal text-slate-500">
+                  ({displayedTrainings.length} results)
+                </span>
+              )}
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 mt-2">
+              {filteredTrainings.length} training program{filteredTrainings.length === 1 ? '' : 's'} available
+            </p>
+          </div>
+        </div>
+
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${isSearching ? 'bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 rounded-3xl p-6 border border-primary/20' : ''}`}>
+          {displayedTrainings.map((t) => (
+            <Link
+              key={t.id}
+              to={`/training/${t.slug}`}
+              className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 hover:shadow-xl hover:border-primary/30 transition-all duration-300 group"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-4">
+                  <span className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform">
+                    <span className="material-symbols-outlined">{t.icon || 'school'}</span>
+                  </span>
+                  <div>
+                    <div className="text-slate-900 dark:text-white font-bold text-lg leading-tight">{t.title}</div>
+                    <div className="text-slate-600 dark:text-slate-500 text-xs mt-1">{t.tagline}</div>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mt-5 line-clamp-3">{t.summary}</p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-bold">
+                  {t.category}
+                </span>
+              </div>
+              <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-4">
+                <div className="text-slate-600 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-3">Duration</div>
+                <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm">
+                  <span className="material-symbols-outlined text-primary text-sm">schedule</span>
+                  {t.duration_label}
+                </div>
+              </div>
+              <div className="mt-6 flex gap-3">
+                <Link
+                  to={`/training/${t.slug}`}
+                  className="flex-1 text-center px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                >
+                  View Program
+                </Link>
+                <Link
+                  to="/consulting"
+                  className="px-5 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+                  aria-label="Request consultation"
+                >
+                  Consult
+                </Link>
+              </div>
+            </Link>
+          ))}
         </div>
-        )}
 
-        {!loading && filtered.length === 0 && (
-          <div className="mt-10 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-10 text-center">
-            <div className="text-slate-900 dark:text-white font-bold text-xl">No services found</div>
-            <div className="text-slate-600 dark:text-slate-400 mt-2">Try a different keyword or switch filters.</div>
+        {filteredTrainings.length > 4 && (
+          <div className="mt-8 text-center">
             <button
               type="button"
-              onClick={() => { setFilter('All'); setQuery(''); }}
-              className="mt-6 px-6 py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary/90"
+              onClick={() => setShowAllTraining(!showAllTraining)}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
             >
-              Reset
+              {showAllTraining ? 'Show Less Training' : `Show More Training (${filteredTrainings.length - 4})`}
+              <span className="material-symbols-outlined">{showAllTraining ? 'expand_less' : 'expand_more'}</span>
             </button>
           </div>
         )}

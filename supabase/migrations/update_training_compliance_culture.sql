@@ -1,4 +1,4 @@
--- Run this in Supabase SQL Editor to update Training & Compliance Culture
+-- Run this in Supabase SQL Editor to update Compliance Training
 
 UPDATE public.training_products 
 SET 

@@ -5,7 +5,7 @@ export const DEMO_TRAININGS: Training[] = [
   {
     id: 't1',
     slug: 'compliance-culture-training',
-    title: 'Compliance Culture Training',
+    title: 'Compliance Training',
     tagline: 'Build a culture of compliance from the ground up.',
     summary: 'Structured programs to embed compliance awareness, role-based learning paths, and measurable completion evidence across your organization.',
     benefits: [
@@ -417,12 +417,12 @@ export const DEMO_TRAININGS: Training[] = [
     updated_at: '2026-03-10T10:00:00Z',
     published: true,
   },
-  // Training & Compliance Culture - Different slug from service
+  // Compliance Training - Different slug from service
   {
     id: 't13',
     slug: 'training-and-compliance-culture',
     icon: 'school',
-    title: 'Training & Compliance Culture',
+    title: 'Compliance Training',
     tagline: 'Induction, role-based training, attestations.',
     summary: 'We design your training calendar, role-based learning paths, board/senior leadership sessions, and culture campaigns with measurable completion evidence.',
     benefits: [

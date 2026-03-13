@@ -1,10 +1,10 @@
--- Migration: Update Training & Compliance Culture with proper training details
+-- Migration: Update Compliance Training with proper training details
 -- Run this in Supabase SQL Editor to update the training product with complete training-specific details
 
 -- Update the training product with proper training details (not service details)
 UPDATE public.training_products 
 SET 
-  name = 'Training & Compliance Culture',
+  name = 'Compliance Training',
   summary = 'We design your training calendar, role-based learning paths, board/senior leadership sessions, and culture campaigns with measurable completion evidence.',
   tagline = 'Induction, role-based training, attestations.',
   benefits = '["Training calendar + role-based modules","Attestation workflow","Culture campaigns + reporting"]'::jsonb,

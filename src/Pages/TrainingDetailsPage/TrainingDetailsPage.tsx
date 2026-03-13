@@ -58,6 +58,8 @@ export function TrainingDetailsPage() {
             <nav className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 mb-4">
               <Link to="/" className="hover:text-primary">Home</Link>
               <span className="material-symbols-outlined text-xs">chevron_right</span>
+              <Link to="/services" className="hover:text-primary">Services</Link>
+              <span className="material-symbols-outlined text-xs">chevron_right</span>
               <Link to="/training" className="hover:text-primary">Training</Link>
               <span className="material-symbols-outlined text-xs">chevron_right</span>
               <span className="text-primary">{training.name}</span>

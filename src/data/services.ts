@@ -150,7 +150,7 @@ export const SERVICES_LIST: Service[] = [
     id: 'svc-7',
     slug: 'training-and-compliance-culture',
     icon: 'school',
-    title: 'Training & Compliance Culture',
+    title: 'Compliance Training',
     tagline: 'Induction, role-based training, attestations.',
     summary:
       'We design your training calendar, role-based learning paths, board/senior leadership sessions, and culture campaigns with measurable completion evidence.',
@@ -161,6 +161,7 @@ export const SERVICES_LIST: Service[] = [
     published: true,
     sort_order: 7,
     updated_at: '2025-02-22T09:00:00Z',
+    service_type: 'training',
   },
   {
     id: 'svc-8',
@@ -292,4 +293,9 @@ export function getPublishedNonLicensingServices(): Service[] {
 /** Payment licensing advisory services only. */
 export function getLicensingServices(): Service[] {
   return SERVICES_LIST.filter((s) => s.categories.includes('Licensing') && s.published).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+}
+
+/** Get all training services */
+export function getTrainingServices(): Service[] {
+  return SERVICES_LIST.filter((s) => s.service_type === 'training' && s.published).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
 }

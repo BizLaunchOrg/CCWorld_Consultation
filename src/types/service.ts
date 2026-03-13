@@ -1,6 +1,9 @@
 /** Shared Service type for public pages and admin. Single source of truth. */
 export type ServiceLevel = 'Foundation' | 'Build' | 'Advanced' | 'Managed';
 
+/** Type of service - either regular service or training */
+export type ServiceType = 'service' | 'training';
+
 /** Optional section for detail pages (e.g. licensing). Admin can edit. */
 export interface ServiceContentSection {
   heading: string;
@@ -26,4 +29,6 @@ export interface Service {
   updated_at: string;
   /** Optional content sections for detail page (e.g. licensing advisory). */
   content_sections?: ServiceContentSection[];
+  /** Type of service - training or regular service */
+  service_type?: ServiceType;
 }

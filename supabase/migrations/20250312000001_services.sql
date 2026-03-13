@@ -142,7 +142,7 @@ values
   ),
   (
     'svc-7',
-    'Training & Compliance Culture',
+    'Compliance Training',
     'training-and-compliance-culture',
     'Induction, role-based training, attestations.',
     'We design your training calendar, role-based learning paths, board/senior leadership sessions, and culture campaigns with measurable completion evidence.',
