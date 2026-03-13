@@ -7,6 +7,7 @@ export function TrainingDetailsPage() {
   const { slug } = useParams<{ slug: string }>();
   const [training, setTraining] = useState<TrainingProduct | null>(null);
   const [loading, setLoading] = useState(true);
+  const { openChat } = useChat();
 
   useEffect(() => {
     if (!slug) {
@@ -33,7 +34,7 @@ export function TrainingDetailsPage() {
       <main className="max-w-7xl mx-auto px-6 py-24 pt-32 text-center">
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Training not found</h1>
         <p className="text-slate-600 dark:text-slate-400 mb-8">
-          The training you’re looking for doesn’t exist or the link may be wrong.
+          The training you're looking for doesn't exist or the link may be wrong.
         </p>
         <Link
           to="/training"
@@ -44,16 +45,6 @@ export function TrainingDetailsPage() {
       </main>
     );
   }
-
-  const whoItsFor =
-    training.who_its_for ?? 'Compliance officers, operations leads, and staff who need structured learning and evidence of completion.';
-  const modules: string[] =
-    (training.modules ?? []).length > 0
-      ? (training.modules ?? [])
-      : ['Module 1: Introduction', 'Module 2: Core concepts', 'Module 3: Practice', 'Module 4: Assessment'];
-  const deliveryFormat =
-    training.delivery_format ?? 'Online, onsite, or hybrid. Duration and schedule agreed per engagement.';
-  const { openChat } = useChat();
 
   const handleRequestQuote = () => {
     openChat(`Hi, I need a training on ${training.name}. Can you send me a quote?`);
@@ -90,34 +81,21 @@ export function TrainingDetailsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-12">
-          <section>
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">group</span>
-              Who it’s for
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{whoItsFor}</p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">menu_book</span>
-              What you’ll learn
-            </h2>
-            <ul className="space-y-3">
-              {modules.map((m, i) => (
-                <li key={i} className="flex items-start gap-3 text-slate-600 dark:text-slate-300">
-                  <span className="text-primary font-bold">{i + 1}.</span>
-                  {m}
-                </li>
-              ))}
-            </ul>
-          </section>
+          {training.who_its_for && (
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary">groups</span>
+                Who this is for
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{training.who_its_for}</p>
+            </section>
+          )}
 
           {(training.benefits ?? []).length > 0 && (
             <section>
               <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary">check_circle</span>
-                Benefits / Outcomes
+                Key outcomes
               </h2>
               <ul className="space-y-3">
                 {(training.benefits ?? []).map((b) => (
@@ -130,15 +108,15 @@ export function TrainingDetailsPage() {
             </section>
           )}
 
-          <section>
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">schedule</span>
-              Delivery format
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{deliveryFormat}</p>
-          </section>
-
-          
+          {training.duration_label && (
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary">schedule</span>
+                Duration
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{training.duration_label}</p>
+            </section>
+          )}
         </div>
 
         <aside className="lg:col-span-1">
@@ -148,7 +126,7 @@ export function TrainingDetailsPage() {
                 Ready to start?
               </h4>
               <p className="text-white/90 text-sm leading-relaxed mb-6">
-                {training.summary ?? 'Book a diagnostic session to see how this training fits your needs.'}
+                {training.summary ?? 'Book a diagnostic session to see how this service fits your needs.'}
               </p>
               <button
                 type="button"

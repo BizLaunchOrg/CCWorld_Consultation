@@ -22,11 +22,27 @@ export function AdminTrainingsPage() {
     slug: string;
     active: boolean;
     summary: string;
+    tagline: string;
+    category: string;
+    who_its_for: string;
+    modules: string;
+    benefits: string;
+    delivery_format: string;
+    duration_label: string;
+    icon: string;
   }>({
     name: '',
     slug: '',
     active: true,
     summary: '',
+    tagline: '',
+    category: 'training',
+    who_its_for: '',
+    modules: '',
+    benefits: '',
+    delivery_format: '',
+    duration_label: '',
+    icon: 'school',
   });
 
   useEffect(() => {
@@ -55,6 +71,14 @@ export function AdminTrainingsPage() {
       slug: '',
       active: true,
       summary: '',
+      tagline: '',
+      category: 'training',
+      who_its_for: '',
+      modules: '',
+      benefits: '',
+      delivery_format: '',
+      duration_label: '',
+      icon: 'school',
     });
     setModalOpen(true);
   }
@@ -66,6 +90,14 @@ export function AdminTrainingsPage() {
       slug: t.slug,
       active: t.active,
       summary: t.summary ?? '',
+      tagline: t.tagline ?? '',
+      category: t.category ?? 'training',
+      who_its_for: t.who_its_for ?? '',
+      modules: (t.modules ?? []).join('\n'),
+      benefits: (t.benefits ?? []).join('\n'),
+      delivery_format: t.delivery_format ?? '',
+      duration_label: t.duration_label ?? '',
+      icon: t.icon ?? 'school',
     });
     setModalOpen(true);
   }
@@ -84,12 +116,30 @@ export function AdminTrainingsPage() {
     if (!slug) return;
     if (!editing && slugs.has(slug)) return;
 
+    // Parse newline-separated values into arrays
+    const modules = form.modules
+      .split('\n')
+      .map((m) => m.trim())
+      .filter((m) => m.length > 0);
+    const benefits = form.benefits
+      .split('\n')
+      .map((b) => b.trim())
+      .filter((b) => b.length > 0);
+
     const { id, error } = await upsertTrainingProduct({
       id: editing?.id,
       name: form.name.trim(),
       slug,
       active: form.active,
       summary: form.summary.trim() || undefined,
+      tagline: form.tagline.trim() || undefined,
+      category: form.category || undefined,
+      who_its_for: form.who_its_for.trim() || undefined,
+      modules: modules.length > 0 ? modules : undefined,
+      benefits: benefits.length > 0 ? benefits : undefined,
+      delivery_format: form.delivery_format.trim() || undefined,
+      duration_label: form.duration_label.trim() || undefined,
+      icon: form.icon.trim() || undefined,
     });
     if (error) {
       alert(error.message);
@@ -99,7 +149,22 @@ export function AdminTrainingsPage() {
       setTrainings((prev) =>
         prev.map((t) =>
           t.id === editing.id
-            ? { ...t, name: form.name.trim(), slug, active: form.active, summary: form.summary.trim() || null, updated_at: new Date().toISOString() }
+            ? {
+                ...t,
+                name: form.name.trim(),
+                slug,
+                active: form.active,
+                summary: form.summary.trim() || null,
+                tagline: form.tagline.trim() || null,
+                category: form.category || null,
+                who_its_for: form.who_its_for.trim() || null,
+                modules: modules.length > 0 ? modules : null,
+                benefits: benefits.length > 0 ? benefits : null,
+                delivery_format: form.delivery_format.trim() || null,
+                duration_label: form.duration_label.trim() || null,
+                icon: form.icon.trim() || null,
+                updated_at: new Date().toISOString(),
+              }
             : t
         )
       );
@@ -111,6 +176,15 @@ export function AdminTrainingsPage() {
           slug,
           active: form.active,
           summary: form.summary.trim() || null,
+          tagline: form.tagline.trim() || null,
+          category: form.category || null,
+          who_its_for: form.who_its_for.trim() || null,
+          modules: modules.length > 0 ? modules : null,
+          benefits: benefits.length > 0 ? benefits : null,
+          delivery_format: form.delivery_format.trim() || null,
+          duration_label: form.duration_label.trim() || null,
+          icon: form.icon.trim() || null,
+          faq: null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         },
@@ -227,7 +301,7 @@ export function AdminTrainingsPage() {
         onClose={() => setModalOpen(false)}
         title={editing ? 'Edit training' : 'Add training'}
       >
-        <div className="space-y-6">
+        <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
           <div>
             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Name</label>
             <input
@@ -252,6 +326,39 @@ export function AdminTrainingsPage() {
             )}
           </div>
           <div>
+            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Tagline</label>
+            <input
+              type="text"
+              value={form.tagline}
+              onChange={(e) => setForm((f) => ({ ...f, tagline: e.target.value }))}
+              className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              placeholder="Short catchy tagline"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Category</label>
+              <select
+                value={form.category}
+                onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
+                className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              >
+                <option value="training">Training</option>
+                <option value="advisory">Advisory</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Icon</label>
+              <input
+                type="text"
+                value={form.icon}
+                onChange={(e) => setForm((f) => ({ ...f, icon: e.target.value }))}
+                className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                placeholder="school"
+              />
+            </div>
+          </div>
+          <div>
             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Summary</label>
             <textarea
               value={form.summary}
@@ -260,6 +367,58 @@ export function AdminTrainingsPage() {
               className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none resize-none"
               placeholder="Short description"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Who it's for</label>
+            <textarea
+              value={form.who_its_for}
+              onChange={(e) => setForm((f) => ({ ...f, who_its_for: e.target.value }))}
+              rows={2}
+              className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none resize-none"
+              placeholder="Target audience description"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Modules (one per line)</label>
+            <textarea
+              value={form.modules}
+              onChange={(e) => setForm((f) => ({ ...f, modules: e.target.value }))}
+              rows={4}
+              className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none resize-none"
+              placeholder="Introduction to compliance culture&#10;Regulatory expectations&#10;Role-based responsibilities"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Benefits/Outcomes (one per line)</label>
+            <textarea
+              value={form.benefits}
+              onChange={(e) => setForm((f) => ({ ...f, benefits: e.target.value }))}
+              rows={4}
+              className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none resize-none"
+              placeholder="Board and senior leadership sessions&#10;Attestation and completion tracking&#10;Audit-ready evidence"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Duration</label>
+              <input
+                type="text"
+                value={form.duration_label}
+                onChange={(e) => setForm((f) => ({ ...f, duration_label: e.target.value }))}
+                className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                placeholder="2–4 weeks"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Delivery Format</label>
+              <input
+                type="text"
+                value={form.delivery_format}
+                onChange={(e) => setForm((f) => ({ ...f, delivery_format: e.target.value }))}
+                className="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                placeholder="Online or onsite"
+              />
+            </div>
           </div>
           <label className="flex items-center gap-2 cursor-pointer">
             <input

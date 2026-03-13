@@ -417,7 +417,7 @@ export const DEMO_TRAININGS: Training[] = [
     updated_at: '2026-03-10T10:00:00Z',
     published: true,
   },
-  // Training & Compliance Culture
+  // Training & Compliance Culture - Different slug from service
   {
     id: 't13',
     slug: 'training-and-compliance-culture',
@@ -439,8 +439,13 @@ export const DEMO_TRAININGS: Training[] = [
       'Board and leadership sessions',
       'Culture campaigns and attestation workflows',
     ],
+    deliveryFormat: 'Hybrid - online and/or onsite. Flexible scheduling to fit your organizational calendar.',
+    faq: [
+      { q: 'How long does the program run?', a: 'Typically 2–4 weeks with flexible scheduling.' },
+      { q: 'Do we get certificates?', a: 'Yes. Completion certificates and evidence packs for audits and compliance.' },
+    ],
     duration_label: '2–4 weeks',
-    updated_at: '2025-02-22T09:00:00Z',
+    updated_at: '2026-03-13T10:00:00Z',
     published: true,
   },
   // Advisory offerings
