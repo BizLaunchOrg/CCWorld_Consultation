@@ -33,6 +33,30 @@ export async function fetchTrainingProducts(): Promise<TrainingProduct[]> {
 }
 
 export async function getTrainingProductBySlug(slug: string): Promise<TrainingProduct | null> {
+  // First check local data
+  const localTraining = DEMO_TRAININGS.find(t => t.slug === slug);
+  if (localTraining) {
+    return {
+      id: localTraining.id,
+      name: localTraining.title,
+      slug: localTraining.slug,
+      active: localTraining.published ?? false,
+      summary: localTraining.summary,
+      created_at: localTraining.updated_at ?? new Date().toISOString(),
+      updated_at: localTraining.updated_at ?? new Date().toISOString(),
+      tagline: localTraining.tagline ?? null,
+      category: localTraining.category ?? 'training',
+      who_its_for: localTraining.whoItsFor ?? null,
+      modules: localTraining.modules ?? [],
+      benefits: localTraining.benefits ?? [],
+      delivery_format: localTraining.deliveryFormat ?? null,
+      duration_label: localTraining.duration_label ?? null,
+      icon: localTraining.icon ?? null,
+      faq: localTraining.faq ?? [],
+    };
+  }
+  
+  // Fallback to database if not found in local data
   const { data, error } = await supabase
     .from('training_products')
     .select('*')
@@ -40,31 +64,7 @@ export async function getTrainingProductBySlug(slug: string): Promise<TrainingPr
     .eq('active', true)
     .single();
   
-  // Fallback to local data if not found in database
-  if (error || !data) {
-    const localTraining = DEMO_TRAININGS.find(t => t.slug === slug);
-    if (localTraining) {
-      return {
-        id: localTraining.id,
-        name: localTraining.title,
-        slug: localTraining.slug,
-        active: localTraining.published ?? false,
-        summary: localTraining.summary,
-        created_at: localTraining.updated_at ?? new Date().toISOString(),
-        updated_at: localTraining.updated_at ?? new Date().toISOString(),
-        tagline: localTraining.tagline ?? null,
-        category: localTraining.category ?? 'training',
-        who_its_for: localTraining.whoItsFor ?? null,
-        modules: localTraining.modules ?? [],
-        benefits: localTraining.benefits ?? [],
-        delivery_format: localTraining.deliveryFormat ?? null,
-        duration_label: localTraining.duration_label ?? null,
-        icon: localTraining.icon ?? null,
-        faq: localTraining.faq ?? [],
-      };
-    }
-    return null;
-  }
+  if (error || !data) return null;
   return data as TrainingProduct;
 }
 
