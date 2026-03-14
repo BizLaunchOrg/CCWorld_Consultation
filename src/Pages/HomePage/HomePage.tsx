@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
-const COMPLIANCE_IMAGE =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuB6LJpc4vGHasROqBiQc7yRvyOSq0QGTmUZn6XcXr38VESoGVongxpQQgNPiqwTKEk0YJSbOoHxWKcdnSrgU1upHv9dqvlVtbwfbqeG05a7mwpQalkSNx0bGmIVHf7c4qqNdCa5UKUQksvIIor8qKDomdO7djIgzzTYZGNIpBmLCUf5GiGfWnlCYjdVRvWATFtle9QaFuSadjDn-uHvg51Mtrs-M1dq7PUapYNq8ypLq7Xmk-tguwhdH1uKPQVlkshLUVMEc5pXTJg';
+const COMPLIANCE_IMAGE = '/hero.png';
 
 export function HomePage() {
   const location = useLocation();
