@@ -44,7 +44,17 @@ export function ContactPage() {
       alert(error.message);
       return;
     }
-    submitContactFormToFormspree({ ...payload, message: messageWithCompany }).catch(() => {});
+
+    const formspreeResult = await submitContactFormToFormspree({
+      ...payload,
+      message: messageWithCompany,
+    });
+    if (formspreeResult.error) {
+      console.error('Formspree error:', formspreeResult.error);
+    } else {
+      console.info('Formspree submission succeeded');
+    }
+
     setSubmitting(false);
     setSuccess(true);
     setName('');

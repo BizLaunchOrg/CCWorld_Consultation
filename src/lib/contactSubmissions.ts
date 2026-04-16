@@ -64,15 +64,22 @@ export async function submitContactFormToFormspree(data: {
     _replyto: data.email.trim(),
     'Send to': getContactSendToLabel(data.send_to),
   };
-  const res = await fetch(FORMSPREE_CONTACT_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    return { error: new Error(`Formspree: ${res.status}`) };
+
+  try {
+    const res = await fetch(FORMSPREE_CONTACT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      return { error: new Error(`Formspree: ${res.status}`) };
+    }
+
+    return { error: null };
+  } catch (err) {
+    return { error: err instanceof Error ? err : new Error(String(err)) };
   }
-  return { error: null };
 }
 
 export async function fetchAdminContactSubmissions(): Promise<ContactSubmission[]> {

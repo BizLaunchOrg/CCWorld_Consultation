@@ -10,6 +10,8 @@ import {
 } from '../lib/chatApi';
 import type { Message } from '../types/chat';
 
+const WHATSAPP_URL = 'https://wa.me/2348035244102';
+
 const DEFAULT_GREETING: Message = {
   id: 'system-greeting',
   conversation_id: '',
@@ -154,6 +156,23 @@ export function ChatWidget() {
         )}
       </button>
 
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-20 right-8 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 transition-transform"
+        aria-label="Open WhatsApp"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.272-.099-.47-.149-.67.15-.197.297-.767.967-.94 1.165-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.786-1.48-1.757-1.653-2.054-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.173.198-.298.297-.497.099-.198.05-.372-.025-.521-.075-.149-.67-1.612-.916-2.203-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.075-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.148.198 2.095 3.2 5.075 4.487.709.306 1.26.489 1.691.626.71.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.312h-.005a9.87 9.87 0 01-5.031-1.378l-.361-.214-2.995.787.8-2.92-.235-.374A9.958 9.958 0 012.5 11.998c0-5.523 4.477-10 10-10 2.663 0 5.159 1.039 7.032 2.933a9.885 9.885 0 012.937 7.042c-.002 5.522-4.48 10-10.002 10m8.413-18.018A11.815 11.815 0 001.5 11.998C1.5 18.299 6.7 23.5 13 23.5c3.148 0 6.093-1.229 8.306-3.453A11.72 11.72 0 0023.5 11.999a11.8 11.8 0 00-3.615-8.206z" />
+        </svg>
+      </a>
       {isOpen && (
         <div
           className="fixed inset-0 z-50 flex items-end justify-end p-4 pb-24 sm:p-6 sm:pb-28 pointer-events-none"

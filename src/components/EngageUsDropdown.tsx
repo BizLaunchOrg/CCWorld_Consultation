@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useChat } from '../contexts/ChatContext';
-import { SITE_EMAIL } from '../lib/siteConfig';
 
-const OFFICIAL_EMAIL = SITE_EMAIL;
+const OFFICIAL_EMAIL = 'ccworldconsulting@gmail.com';
 
 function EmailRow({ email, onCopy }: { email: string; onCopy: (e: string) => void }) {
   const [copied, setCopied] = useState(false);
@@ -83,7 +82,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
         >
           Live Chat
         </button>
-        <div className="py-3 px-4 rounded-2xl border border-charcoal/10 dark:border-slate-600 bg-charcoal/5 dark:bg-slate-800">
+        <div className="space-y-3 py-3 px-4 rounded-2xl border border-charcoal/10 dark:border-slate-600 bg-charcoal/5 dark:bg-slate-800">
           <div className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">Email us</div>
           <EmailRow email={OFFICIAL_EMAIL} onCopy={handleCopy} />
         </div>
@@ -137,7 +136,7 @@ export function EngageUsDropdown({ variant = 'desktop', onClose }: { variant?: '
           >
             Live Chat
           </button>
-          <div className="p-3">
+          <div className="p-3 space-y-3">
             <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Email us</div>
             <EmailRow email={OFFICIAL_EMAIL} onCopy={handleCopy} />
           </div>
