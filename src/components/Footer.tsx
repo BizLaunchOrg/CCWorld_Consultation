@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import { SITE_COMPANY_NAME, SITE_EMAIL } from '../lib/siteConfig';
 
-const servicesLinks = [
-  { to: '/licensing', label: 'Licensing Advisory' },
-  { to: '/services/background-check', label: 'Background Check' },
-  { to: '/services', label: 'AML/CFT Frameworks' },
-  { to: '/licensing', label: 'Regulatory Sandbox' },
-  { to: '/services', label: 'Risk Management' },
+const offersList = [
+  'Building of the Compliance department for start-ups fintech',
+  'AML CFT CPF tools for proper monitoring and reporting',
+  'Background check and verification of employees',
+  'Training AML CFT CPF inline with CBN mandatory instructions',
+  'Building of policies and procedures',
+  'Licence advisors',
+  'Filling of returns and company registration',
 ] as const;
 
 const resourcesLinks = [
@@ -41,13 +43,12 @@ export function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="font-bold mb-6 text-charcoal dark:text-white">Services</h4>
-            <ul className="space-y-4 text-sm text-charcoal/60 dark:text-slate-400">
-              {servicesLinks.map(({ to, label }) => (
-                <li key={label}>
-                  <Link to={to} className="hover:text-primary transition-colors">
-                    {label}
-                  </Link>
+            <h4 className="font-bold mb-6 text-charcoal dark:text-white">CCworld Consulting LTD Offer</h4>
+            <ul className="space-y-3 text-sm text-charcoal/60 dark:text-slate-400">
+              {offersList.map((offer) => (
+                <li key={offer} className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-base leading-5 text-primary">check_circle</span>
+                  <span>{offer}</span>
                 </li>
               ))}
             </ul>
